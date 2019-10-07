@@ -4,5 +4,8 @@
 
 #pragma once
 
+#include "core/application.h"
+#include "systems/Log.h"
+
 // entry point
 #include "include/independent/core/entrypoint.h"
