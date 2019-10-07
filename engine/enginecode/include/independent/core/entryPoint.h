@@ -10,7 +10,8 @@ int main(int argc, char** argv)
 {
 	Engine::Log::Init();
 	ENG_CORE_WARN("Initialized Log!");
-	ENG_CORE_INFO("Hello!");
+	int a = 5;
+	ENG_CORE_INFO("Hello! Var = {0}", a);
 
 	auto application = Engine::startApplication();
 	application->run();
