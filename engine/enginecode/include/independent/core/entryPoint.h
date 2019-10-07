@@ -16,7 +16,7 @@ int main(int argc, char** argv)
 	auto application = Engine::startApplication();
 	application->run();
 	delete application;
-
+	//fadsf
 	//return 0;
 	system("pause");
 }
