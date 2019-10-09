@@ -20,6 +20,8 @@ namespace Engine {
 
 }
 
+// HOW MACROS WORK?
+
 //Core log macros
 
 #define ENG_CORE_ERROR(...) ::Engine::Log::GetCoreLogger()->error(__VA_ARGS__)
@@ -30,8 +32,8 @@ namespace Engine {
 
 //Client log macros
 
-#define ENG_CORE_ERROR(...) ::Engine::Log::GetClientLogger()->error(__VA_ARGS__)
-#define ENG_CORE_WARN(...)  ::Engine::Log::GetClientLogger()->warn(__VA_ARGS__)
-#define ENG_CORE_INFO(...)  ::Engine::Log::GetClientLogger()->info(__VA_ARGS__)
-#define ENG_CORE_TRACE(...) ::Engine::Log::GetClientLogger()->trace(__VA_ARGS__)
-#define ENG_CORE_FATAL(...) ::Engine::Log::GetClientLogger()->fatal(__VA_ARGS__) 
+#define ENG_CLIENT_ERROR(...) ::Engine::Log::GetClientLogger()->error(__VA_ARGS__)
+#define ENG_CLIENT_WARN(...)  ::Engine::Log::GetClientLogger()->warn(__VA_ARGS__)
+#define ENG_CLIENT_INFO(...)  ::Engine::Log::GetClientLogger()->info(__VA_ARGS__)
+#define ENG_CLIENT_TRACE(...) ::Engine::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define ENG_CLIENT_FATAL(...) ::Engine::Log::GetClientLogger()->fatal(__VA_ARGS__) 
