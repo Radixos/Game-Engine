@@ -7,5 +7,7 @@
 #include "core/application.h"
 #include "systems/Log.h"
 
+#include "core/Timestep.h"
+
 // entry point
 #include "include/independent/core/entrypoint.h"

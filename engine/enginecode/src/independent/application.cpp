@@ -5,6 +5,7 @@
 #include "engine_pch.h"
 #include "core/application.h"
 
+#include <GLFW/glfw3.h>
 
 namespace Engine {
 	Application* Application::s_instance = nullptr;
@@ -25,7 +26,9 @@ namespace Engine {
 
 	void Application::run()
 	{
-
+		float time = (float) glfwGetTime();
+		Timestep timestep = time - m_LastFrameTime;
+		m_LastFrameTime = time;
 	}
 
 }

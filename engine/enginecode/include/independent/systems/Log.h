@@ -8,10 +8,10 @@ namespace Engine {
 	class Log
 	{
 	public:
-		static void Init();
+		static void Init();	//!< Initializing constructor
 
-		inline static std::shared_ptr<spdlog::logger>&GetCoreLogger() { return s_CoreLogger; }
-		inline static std::shared_ptr<spdlog::logger>&GetClientLogger() { return s_ClientLogger; }
+		inline static std::shared_ptr<spdlog::logger>&GetCoreLogger() { return s_CoreLogger; }	//!< inline static pointer for Core Logger
+		inline static std::shared_ptr<spdlog::logger>&GetClientLogger() { return s_ClientLogger; }	//!< inline static pointer for Client Logger
 
 	private:
 		static std::shared_ptr<spdlog::logger> s_CoreLogger;
@@ -22,7 +22,7 @@ namespace Engine {
 
 // HOW MACROS WORK?
 
-//Core log macros
+//!Core log macros
 
 #define ENG_CORE_ERROR(...) ::Engine::Log::GetCoreLogger()->error(__VA_ARGS__)
 #define ENG_CORE_WARN(...)  ::Engine::Log::GetCoreLogger()->warn(__VA_ARGS__)
@@ -30,7 +30,7 @@ namespace Engine {
 #define ENG_CORE_TRACE(...) ::Engine::Log::GetCoreLogger()->trace(__VA_ARGS__)
 #define ENG_CORE_FATAL(...) ::Engine::Log::GetCoreLogger()->fatal(__VA_ARGS__) 
 
-//Client log macros
+//!Client log macros
 
 #define ENG_CLIENT_ERROR(...) ::Engine::Log::GetClientLogger()->error(__VA_ARGS__)
 #define ENG_CLIENT_WARN(...)  ::Engine::Log::GetClientLogger()->warn(__VA_ARGS__)
