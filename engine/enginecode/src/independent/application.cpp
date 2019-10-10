@@ -26,7 +26,7 @@ namespace Engine {
 
 	void Application::run()
 	{
-		float time = (float) glfwGetTime();
+		float time = (float) glfwGetTime();	//!< Getting time
 		Timestep timestep = time - m_LastFrameTime;
 		m_LastFrameTime = time;
 	}
