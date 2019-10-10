@@ -16,18 +16,22 @@ namespace Engine {
 		{
 			s_instance = this;
 		}
+		//!Starting systems
+		m_logger.reset(new Log);
+		m_logger->start();
+		ENG_CORE_INFO("Logger started");
+		//m_timer->start();	//fix the cpp
 	}
 
 	Application::~Application()
 	{
-	}
 
-	
+	}
 
 	void Application::run()
 	{
 		float time = (float) glfwGetTime();	//!< Getting time
-		Timestep timestep = time - m_LastFrameTime;
+		Timer timer = time - m_LastFrameTime;
 		m_LastFrameTime = time;
 	}
 

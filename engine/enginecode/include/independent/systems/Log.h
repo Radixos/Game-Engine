@@ -1,18 +1,21 @@
 #pragma once
 
-//#include "system.h"
+#include "system.h"
 #include "spdlog/spdlog.h"
 
 namespace Engine {
 
-	class Log
+	class Log : public System
 	{
 	public:
 		static void Init();	//!< Initializing constructor
 
 		inline static std::shared_ptr<spdlog::logger>&GetCoreLogger() { return s_CoreLogger; }	//!< inline static pointer for Core Logger
 		inline static std::shared_ptr<spdlog::logger>&GetClientLogger() { return s_ClientLogger; }	//!< inline static pointer for Client Logger
-
+	
+		virtual void start(SystemSignal init = SystemSignal::None, ...) override;
+		virtual void stop(SystemSignal close = SystemSignal::None, ...) override;
+	
 	private:
 		static std::shared_ptr<spdlog::logger> s_CoreLogger;
 		static std::shared_ptr<spdlog::logger> s_ClientLogger;
