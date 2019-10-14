@@ -2,7 +2,9 @@
 */
 #pragma once
 
-#include "core/Timestep.h"
+#include "core/Timer.h"
+#include "systems/Log.h"
+#include "Event/Event.h"
 
 namespace Engine {
 
@@ -16,13 +18,16 @@ namespace Engine {
 	{
 	protected:
 		Application(); //!< Constructor
+		std::shared_ptr<Log> m_logger;
+		std::shared_ptr<Timer> m_timer;
 	private:
 		static Application* s_instance; //!< Singleton instance of the application
-		Timestep m_Timestep; //!< Timestep for measuring time
+		//Timer m_timer; //!< Timer for measuring time
 		float m_LastFrameTime = 0.0f;
 	public:
 		virtual ~Application(); //!< Deconstructor
 		inline static Application& getInstance() { return *s_instance; } //!< Instance getter from singleton pattern
+		void onEvent(Event& e);
 		void run(); //!< Main loop
 	};
 
