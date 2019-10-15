@@ -74,8 +74,8 @@ namespace Engine {
 				onEvent(e);
 				t2 = false;
 				ENG_CORE_INFO("Time elapsed: {0}. Shutting down.", time);
-			}
-		}*/
+			}*/
+		}
 
 		//float time = (float) glfwGetTime();	//!< Getting time
 		//Timer timer = time - m_LastFrameTime;
