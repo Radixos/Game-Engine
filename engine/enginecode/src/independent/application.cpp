@@ -26,10 +26,10 @@ namespace Engine {
 	bool Application::onClose(WindowCloseEvent & e)
 	{
 		ENG_CORE_INFO("Closing application.");
-		m_running = false;	//solve m_running problem and don't forget about application.cpp and t2 in it
+		t2 = false;	//solve m_running problem and don't forget about application.cpp and t2 in it
 		return true;
 	}
-
+	
 	bool Application::onResize(WindowResizeEvent & e)
 	{
 		ENG_CORE_INFO("Resize window to {0}x{1}", e.getWidth(), e.getHeight());
@@ -60,23 +60,25 @@ namespace Engine {
 		std::chrono::high_resolution_clock::time_point start, end;
 		start = std::chrono::high_resolution_clock::now();
 		float time = 0.f;
-		bool t2 = true;
-		while (t2 = true)
+		
+		while (t2)
 		{
 			start = std::chrono::high_resolution_clock::now();
 			ENG_CLIENT_TRACE("Delta time: {0}", time/*(int)(1.0f/time)*/);
 			end = std::chrono::high_resolution_clock::now();
 			std::chrono::duration<float> diff = end - start;
 			time += diff.count();
-			/*if (time > 2.0f)
+
+			
+			if (time > 2.0f)
 			{
 				WindowResizeEvent e(1024, 720);
 				onEvent(e);
 				t2 = false;
-				ENG_CORE_INFO("Time elapsed: {0}. Shutting down.", time);
-			}*/
+				//ENG_CORE_INFO("Time elapsed: {0}. Shutting down.", time);
+			}
 		}
-
+		
 		//float time = (float) glfwGetTime();	//!< Getting time
 		//Timer timer = time - m_LastFrameTime;
 		//m_LastFrameTime = time;

@@ -4,7 +4,8 @@
 
 #include "core/Timer.h"
 #include "systems/Log.h"
-#include "Event/Event.h"
+//#include "Event/Event.h"
+#include "Event/EventSubclass.h"
 
 namespace Engine {
 
@@ -24,6 +25,10 @@ namespace Engine {
 		static Application* s_instance; //!< Singleton instance of the application
 		//Timer m_timer; //!< Timer for measuring time
 		float m_LastFrameTime = 0.0f;
+		bool t2 = true;
+
+		bool onClose(WindowCloseEvent& e);	//!< On close event
+		bool onResize(WindowResizeEvent& e);	//!< On resize event
 	public:
 		virtual ~Application(); //!< Deconstructor
 		inline static Application& getInstance() { return *s_instance; } //!< Instance getter from singleton pattern
