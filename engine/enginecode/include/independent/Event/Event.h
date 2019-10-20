@@ -34,10 +34,18 @@ namespace Engine
 		bool m_handled = false;
 	public:
 		virtual EventType getEventType() const = 0;	//!< Get the event type
+		//virtual const char* GetName() const = 0;
 		virtual int getCategoryFlags() const = 0;	//!< Get the event category
-		inline bool handled() const { return m_handled; }	//!< Has the event been handled
+		//virtual std::string ToString() const { return GetName(); }
+		//inline bool handled() const { return m_handled; }	//!< Has the event been handled
 		inline void handle(bool isHandled) { m_handled = isHandled; }	//!< Handle the event
 		inline bool isInCategory(EventCategory category) { return getCategoryFlags() & category; }	//!< Is this event in the category?
 	};
+//
+//#define EVENT_CLASS_TYPE(type) static EventType GetStaticType() { return EventType::type; }\
+//								virtual EventType GetEventType() const override { return GetStaticType(); }\
+//								virtual const char* GetName() const override { return #type; }
+//
+//#define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
 }
