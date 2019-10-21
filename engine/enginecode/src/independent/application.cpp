@@ -7,6 +7,16 @@
 
 #include <GLFW/glfw3.h>
 
+//#ifdef NG_PLATFORM_WINDOWS
+//#include "../platform/windows/GLFWWindowsSystem.h"
+//#endif
+
+//#ifdef NG_PLATFORM_WINDOWS
+//m_windows = st::shared_ptr<Windows>(new GLFWWindowsSystem());
+//#endif
+//m_windows->start();
+//ENG_CORE_INFO("Windows system initialised");
+
 namespace Engine {
 	Application* Application::s_instance = nullptr;
 
@@ -21,12 +31,14 @@ namespace Engine {
 		m_logger->start();
 		ENG_CORE_INFO("Logger started");
 		//m_timer->start();	//fix the cpp
+
+		m_Window = std::unique_ptr<Window>(Window::create());
 	}
 
 	bool Application::onClose(WindowCloseEvent & e)
 	{
 		ENG_CORE_INFO("Closing application.");
-		t2 = false;	//solve m_running problem and don't forget about application.cpp and t2 in it
+		m_running = false;	//solve m_running problem and don't forget about application.cpp and t2 in it
 		return true;
 	}
 	
@@ -61,8 +73,12 @@ namespace Engine {
 		start = std::chrono::high_resolution_clock::now();
 		float time = 0.f;
 		
-		while (t2)
+		while (m_running)
 		{
+			glClearColor(0, 0, 1, 1);	//blue
+			glClear(GL_COLOR_BUFFER_BIT);
+			m_Window->onUpdate(time);	//??? Does it make sense?
+
 			start = std::chrono::high_resolution_clock::now();
 			ENG_CLIENT_TRACE("Delta time: {0}", time/*(int)(1.0f/time)*/);
 			end = std::chrono::high_resolution_clock::now();
@@ -70,11 +86,11 @@ namespace Engine {
 			time += diff.count();
 
 			
-			if (time > 2.0f)
+			if (time > 3.0f)
 			{
 				WindowResizeEvent e(1024, 720);
 				onEvent(e);
-				t2 = false;
+				m_running = false;
 				//ENG_CORE_INFO("Time elapsed: {0}. Shutting down.", time);
 			}
 		}

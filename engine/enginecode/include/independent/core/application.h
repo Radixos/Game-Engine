@@ -6,6 +6,7 @@
 #include "systems/Log.h"
 //#include "Event/Event.h"
 #include "Event/EventSubclass.h"
+#include "windows/window.h"
 
 namespace Engine {
 
@@ -22,10 +23,12 @@ namespace Engine {
 		std::shared_ptr<Log> m_logger;
 		std::shared_ptr<Timer> m_timer;
 	private:
+		std::unique_ptr<Window> m_Window;
+
 		static Application* s_instance; //!< Singleton instance of the application
 		//Timer m_timer; //!< Timer for measuring time
 		float m_LastFrameTime = 0.0f;
-		bool t2 = true;
+		bool m_running = true;
 
 		bool onClose(WindowCloseEvent& e);	//!< On close event
 		bool onResize(WindowResizeEvent& e);	//!< On resize event
