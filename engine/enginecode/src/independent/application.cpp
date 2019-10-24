@@ -4,8 +4,8 @@
 
 #include "engine_pch.h"
 #include "core/application.h"
+#include <glad/glad.h>
 
-#include <GLFW/glfw3.h>
 
 //#ifdef NG_PLATFORM_WINDOWS
 //#include "../platform/windows/GLFWWindowsSystem.h"

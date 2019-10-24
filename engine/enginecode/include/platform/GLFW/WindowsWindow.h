@@ -21,15 +21,15 @@ namespace Engine {
 		WindowsWindow(const WindowProperties& props);
 		virtual ~WindowsWindow();
 
-		void OnUpdate(float timestep) override;
+		void onUpdate(float timestep) override;
 
-		inline unsigned int GetWidth() const override { return m_Data.Width; }
-		inline unsigned int GetHeight() const override { return m_Data.Height; }
+		inline unsigned int getWidth() const override { return m_Data.Width; }
+		inline unsigned int getHeight() const override { return m_Data.Height; }
 
 		// Window attributes
-		inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
-		void SetVSync(bool enabled) override;
-		bool IsVSync() const override;
+		inline void setEventCallback(const eventCallbackFn& callback) override { m_Data.EventCallback = callback; }
+		void setVSync(bool enabled) override;
+		bool isVSync() const override;
 
 		inline virtual void* GetNativeWindow() const { return m_Window; }
 	private:
@@ -37,7 +37,7 @@ namespace Engine {
 		virtual void Shutdown();
 	private:
 		GLFWwindow* m_Window;
-		Scope<GraphicsContext> m_Context;
+		scope<GraphicsContext> m_Context;
 
 		struct WindowData
 		{
@@ -45,7 +45,7 @@ namespace Engine {
 			unsigned int Width, Height;
 			bool VSync;
 
-			EventCallbackFn EventCallback;
+			eventCallbackFn EventCallback;
 		};
 
 		WindowData m_Data;
