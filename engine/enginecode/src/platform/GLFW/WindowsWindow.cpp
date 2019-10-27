@@ -1,5 +1,6 @@
 #include "engine_pch.h"
-#include "WindowsWindow.h"
+#include "include/platform/GLFW/WindowsWindow.h"
+#include <engine.h>
 
 namespace Engine {
 
@@ -12,7 +13,7 @@ namespace Engine {
 
 	WindowsWindow::WindowsWindow(const WindowProperties& props)
 	{
-		Init(props);
+		init(props);
 	}
 
 	WindowsWindow::~WindowsWindow()
@@ -39,7 +40,7 @@ namespace Engine {
 		m_Window = glfwCreateWindow((int)props.m_width, (int)props.m_height, (int)m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
 		glfwSetWindowUserPointer(m_Window, &m_Data);
-		SetVSync(true);
+		setVSync(true);
 	}
 
 	void WindowsWindow::Shutdown()
@@ -47,13 +48,13 @@ namespace Engine {
 		glfwDestroyWindow(m_Window);
 	}
 
-	void WindowsWindow::OnUpdate()
+	void WindowsWindow::onUpdate(float timestep)
 	{
 		glfwPollEvents();
 		glfwSwapBuffers(m_Window);
 	}
 
-	void WindowsWindow::SetVSync(bool enabled)
+	void WindowsWindow::setVSync(bool enabled)
 	{
 		if (enabled)
 			glfwSwapInterval(1);
@@ -63,7 +64,7 @@ namespace Engine {
 		m_Data.VSync = enabled;
 	}
 
-	bool WindowsWindow::IsVSync() const
+	bool WindowsWindow::isVSync() const
 	{
 		return m_Data.VSync;
 	}
