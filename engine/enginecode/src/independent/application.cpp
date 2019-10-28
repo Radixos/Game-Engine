@@ -70,16 +70,17 @@ namespace Engine {
 		//timestep/delta;
 
 		std::chrono::high_resolution_clock::time_point start, end;
-		start = std::chrono::high_resolution_clock::now();
+		//start = std::chrono::high_resolution_clock::now();
 		float time = 0.f;
 		
 		while (m_running)
 		{
 			glClearColor(0, 0, 1, 1);	//blue
 			glClear(GL_COLOR_BUFFER_BIT);
-			m_Window->onUpdate(time);	//??? Does it make sense?
+			
 
 			start = std::chrono::high_resolution_clock::now();
+			m_Window->onUpdate(time);	//??? Does it make sense?
 			ENG_CLIENT_TRACE("Delta time: {0}", time/*(int)(1.0f/time)*/);
 			end = std::chrono::high_resolution_clock::now();
 			std::chrono::duration<float> diff = end - start;

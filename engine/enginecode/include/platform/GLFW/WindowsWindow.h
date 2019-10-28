@@ -23,32 +23,36 @@ namespace Engine {
 
 		void onUpdate(float timestep) override;
 
-		inline unsigned int getWidth() const override { return m_Data.Width; }
-		inline unsigned int getHeight() const override { return m_Data.Height; }
+		inline unsigned int getWidth() const override { return m_Data.m_width; }
+		inline unsigned int getHeight() const override { return m_Data.m_height; }
 
 		// Window attributes
-		inline void setEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
+		inline void setEventCallback(const std::function<void(Event&)>& callback) override {}// { m_Data.EventCallback = callback; }
 		void setVSync(bool enabled) override;
 		bool isVSync() const override;
+		void onResize(unsigned int width, unsigned int height) override;
+		inline bool isFullScreenMode() const override { return m_Data.m_isFullScreen; }
+		inline void* getNativeWindow() const override { return m_Window; }
 
-		inline virtual void* GetNativeWindow() const { return m_Window; }
 	private:
-		virtual void init(const WindowProperties& props);
-		virtual void Shutdown();
+		void init(const WindowProperties& props) override;
+		void close();
 
 		GLFWwindow* m_Window;
 		//scope<GraphicsContext> m_Context;
 
-		struct WindowData
+		/*struct WindowData
 		{
 			std::string Title;
 			unsigned int Width, Height;
 			bool VSync;
 
-			EventCallbackFn EventCallback;
-		};
 
-		WindowData m_Data;
+			EventCallbackFn EventCallback;
+		};*/
+		WindowProperties m_Data;
+
+		//WindowData m_Data;
 	};
 
 }
