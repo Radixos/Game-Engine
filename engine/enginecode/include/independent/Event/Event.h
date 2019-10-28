@@ -35,8 +35,9 @@ namespace Engine
 	public:
 		virtual EventType getEventType() const = 0;	//!< Get the event type
 		//virtual const char* GetName() const = 0;
+		inline const char* GetName() const { return "GetName working"; };
 		virtual int getCategoryFlags() const = 0;	//!< Get the event category
-		//virtual std::string ToString() const { return GetName(); }
+		virtual std::string ToString() const { return GetName(); }
 		//inline bool handled() const { return m_handled; }	//!< Has the event been handled
 		inline void handle(bool isHandled) { m_handled = isHandled; }	//!< Handle the event
 		inline bool isInCategory(EventCategory category) { return getCategoryFlags() & category; }	//!< Is this event in the category?

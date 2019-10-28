@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Event/Event.h"
+#include <sstream>
 
 namespace Engine
 {
@@ -17,6 +18,7 @@ namespace Engine
 
 		EventType getEventType() const override { return EventType::WindowClose; }
 		int getCategoryFlags() const override { return EventCategoryWindow; }
+		//inline const char* GetName() const override {}
 	};
 
 	class WindowResizeEvent : public Event
@@ -34,9 +36,10 @@ namespace Engine
 
 		inline int getWidth() const { return m_width; }
 		inline int getHeight() const { return m_height; }
+		//inline const char* GetName() const override { return; }
 	};
 
-	/*class KeyEvent : public Event
+	class KeyEvent : public Event
 	{
 	public:
 		inline int GetKeyCode() const { return m_KeyCode; }
@@ -46,6 +49,8 @@ namespace Engine
 
 		int m_KeyCode;
 	};
+
+	//////////////////////////////////////////
 
 	class KeyPressedEvent : public KeyEvent
 	{
@@ -81,7 +86,7 @@ namespace Engine
 		EventType KeyReleased();
 	};
 
-	class KeyTypedEvent : public Event
+	class KeyTypedEvent : public KeyEvent
 	{
 	public:
 		KeyTypedEvent(int keycode)
@@ -94,5 +99,5 @@ namespace Engine
 			return ss.str();
 		}
 		EventType KeyTyped();
-	};*/
+	};
 }
