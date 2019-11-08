@@ -3,9 +3,20 @@
 
 
 #include "engine_pch.h"
-#include "core/application.h"
-#include <glad/glad.h>
 
+#pragma region TempIncludes
+// temp includes
+#include <glad/glad.h>
+#include <gl/GL.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
+
+#pragma endregion TempIncludes
+
+#include "core/application.h"
+#include "Event/EventSubclass.h"
 
 //#ifdef NG_PLATFORM_WINDOWS
 //#include "../platform/windows/GLFWWindowsSystem.h"
@@ -19,6 +30,12 @@
 
 namespace Engine {
 	Application* Application::s_instance = nullptr;
+	float Application::s_timestep = 0.f;
+	glm::ivec2 Application::s_screenResolution = glm::ivec2(0, 0);
+
+#pragma region TempGlobalVars
+	glm::mat4 FCmodel, TPmodel;
+#pragma endregion TempGlobalVars
 
 	Application::Application()
 	{
@@ -30,6 +47,8 @@ namespace Engine {
 		m_logger.reset(new Log);
 		m_logger->start();
 		ENG_CORE_INFO("Logger started");
+		//m_timer.reset(new Timer());
+		//m_timer->start();
 		//m_timer->start();	//fix the cpp
 
 		m_Window = std::unique_ptr<Window>(Window::create());

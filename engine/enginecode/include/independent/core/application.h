@@ -20,9 +20,10 @@ namespace Engine {
 	{
 	protected:
 		Application(); //!< Constructor
+	private:
 		std::shared_ptr<Log> m_logger;
 		std::shared_ptr<Timer> m_timer;
-	private:
+
 		std::unique_ptr<Window> m_Window;
 
 		static Application* s_instance; //!< Singleton instance of the application
