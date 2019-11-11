@@ -500,17 +500,22 @@ namespace Engine {
 
 	void Application::run()
 	{
-		//For fps see week 2
-		//delta = 1.0-timestep;
-		//timestep/delta;
+		////For fps see week 2
+		////delta = 1.0-timestep;
+		////timestep/delta;
 
 		std::chrono::high_resolution_clock::time_point start, end;
-		//start = std::chrono::high_resolution_clock::now();
-		float time = 0.f;
+		////start = std::chrono::high_resolution_clock::now();
+		//float time = 0.f;
+
+		s_timestep = 0;
+		//ENG_CLIENT_INFO("FPS: {0}", (int)(1.0f / s_timestep));
 		
 		while (m_running)
 		{
-			//glClearColor(0, 0, 1, 1);	//blue
+			start = std::chrono::high_resolution_clock::now();
+
+			glClearColor(0, 0, 1, 1);	//blue
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			
 			glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f); // Basic 4:3 camera
@@ -537,12 +542,11 @@ namespace Engine {
 
 
 
-			start = std::chrono::high_resolution_clock::now();
-			m_Window->onUpdate(time);	//??? Does it make sense?
-			ENG_CLIENT_TRACE("Delta time: {0}", time/*(int)(1.0f/time)*/);
-			end = std::chrono::high_resolution_clock::now();
-			std::chrono::duration<float> diff = end - start;
-			time += diff.count();
+			//m_Window->onUpdate(time);	//??? Does it make sense?
+			//ENG_CLIENT_TRACE("Delta time: {0}", time/*(int)(1.0f/time)*/);
+			//end = std::chrono::high_resolution_clock::now();
+			//std::chrono::duration<float> diff = end - start;
+			//time += diff.count();
 
 			m_timeSummed += s_timestep;
 			if (m_timeSummed > 20.0f) {
@@ -605,6 +609,9 @@ namespace Engine {
 			//	m_running = false;
 			//	//ENG_CORE_INFO("Time elapsed: {0}. Shutting down.", time);
 			//}
+			end = std::chrono::high_resolution_clock::now();
+			std::chrono::duration<float> diff = end - start;
+			s_timestep = diff.count();
 		}
 		
 		//float time = (float) glfwGetTime();	//!< Getting time
