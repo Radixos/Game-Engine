@@ -1,3 +1,5 @@
+/** \file window.h
+*/
 #pragma once
 
 #include "graphicsContext.h"

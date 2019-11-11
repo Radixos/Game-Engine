@@ -1,3 +1,6 @@
+/** \file WindowsWindow.cpp
+*/
+
 #include "engine_pch.h"
 #include <glad/glad.h>
 #include "include/platform/GLFW/WindowsWindow.h"

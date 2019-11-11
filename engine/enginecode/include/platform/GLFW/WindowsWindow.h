@@ -1,3 +1,5 @@
+/** \file WindowsWindow.h
+*/
 #pragma once
 
 #include "windows/window.h"
