@@ -1,7 +1,8 @@
 /** \file GLFWInputPoller.cpp
 */
-
+#include "engine_pch.h"
 #include "include/platform/GLFW/GLFWInputPoller.h"
+#include <GLFW\glfw3.h>
 
 namespace Engine {
 
@@ -14,7 +15,7 @@ namespace Engine {
 
 	bool GLFWInputPoller::isMouseButtonPressedImpl(int button)
 	{
-		GLFWwindow window = static_cast<GLFWwindow>(Application::getInstance().getWindow()->getNativeWindow());
+		GLFWwindow* window = static_cast<GLFWwindow>(Application::getInstance().getWindow()->getNativeWindow());
 		int result = glfwGetMouseButton(window, button);
 		return result == KEY_PRESS;
 	}

@@ -1,4 +1,6 @@
+#include "engine_pch.h"
 #include "Rendering/RenderCommand.h"
+#include <include\independent\windows\RenderAPI.h>
 
 RenderCommand* RenderCommand::setBackfaceCullingCommand(bool enabled)
 {
