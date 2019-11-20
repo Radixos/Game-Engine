@@ -18,15 +18,15 @@
 #include "core/application.h"
 #include "Event/EventSubclass.h"
 
-//#ifdef NG_PLATFORM_WINDOWS
-//#include "../platform/GLFW/GLFWWindowsSystem.h"
-//#endif
+#ifdef NG_PLATFORM_WINDOWS
+#include "../platform/GLFW/GLFWWindowsSystem.h"
+#endif
 
 //#ifdef NG_PLATFORM_WINDOWS
-//m_windows = st::shared_ptr<Windows>(new GLFWWindowsSystem());
+//m_windows = std::shared_ptr<Windows>(new GLFWWindowsSystem());
 //#endif
 //m_windows->start();
-//ENG_CORE_INFO("Windows system initialised");
+//ENG_CORE_INFO("Windows system initialised");	//Needs #include "systems/Log.h" but doesn't work
 
 namespace Engine {
 	Application* Application::s_instance = nullptr;

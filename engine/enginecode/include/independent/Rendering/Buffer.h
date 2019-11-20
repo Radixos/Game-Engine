@@ -1,4 +1,4 @@
-/** \file indexBuffer.h
+/** \file Buffer.h
 */
 
 namespace Engine {
