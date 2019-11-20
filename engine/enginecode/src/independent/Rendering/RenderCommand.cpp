@@ -1,7 +1,7 @@
 #include "engine_pch.h"
 #include "Rendering/RenderCommand.h"
 #include "systems/Log.h"
-#include "include\independent\Rendering\RenderAPI.h"
+#include "include/independent/Rendering/RenderAPI.h"
 
 RenderCommand* RenderCommand::setBackfaceCullingCommand(bool enabled)
 {
