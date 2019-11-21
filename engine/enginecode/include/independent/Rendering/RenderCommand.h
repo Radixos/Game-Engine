@@ -1,12 +1,17 @@
 #pragma once
 
-class RenderCommand
+namespace Engine
 {
-public:
-	virtual void action() = 0;
 
-	static RenderCommand* ClearDepthColourBufferCommand();
-	static RenderCommand* setClearColourCommand(float r, float g, float b, float a);
-	static RenderCommand* setDepthTestLessCommand(bool enabled);
-	static RenderCommand* setBackfaceCullingCommand(bool enabled);
-};
+
+	class RenderCommand
+	{
+	public:
+		virtual void action() = 0;
+
+		static RenderCommand* ClearDepthColourBufferCommand();
+		static RenderCommand* setClearColourCommand(float r, float g, float b, float a);
+		static RenderCommand* setDepthTestLessCommand(bool enabled);
+		static RenderCommand* setBackfaceCullingCommand(bool enabled);
+	};
+}

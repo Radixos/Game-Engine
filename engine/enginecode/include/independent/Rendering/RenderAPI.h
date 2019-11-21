@@ -2,6 +2,8 @@
 */
 
 #pragma once
+namespace Engine
+{
 
 	class RenderAPI
 	{
@@ -16,3 +18,4 @@
 	private:
 		static API s_API;
 	};
+}

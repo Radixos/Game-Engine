@@ -5,5 +5,8 @@
 #include "systems/Log.h"
 
 namespace Engine {
-	class GLFWWindowsSystem : public 
+	/*class GLFWWindowsSystem : public WindowSystem
+	{
+
+	};*/
 }

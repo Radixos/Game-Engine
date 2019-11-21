@@ -5,6 +5,12 @@
 
 /*! Adapted from glfw3.h
 */
+#define KEY_RELEASE                0
+
+
+#define KEY_PRESS                  1
+
+#define KEY_REPEAT                 2
 
 /* The unknown key */
 #define KEY_UNKNOWN            -1
