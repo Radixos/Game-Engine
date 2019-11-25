@@ -1,4 +1,4 @@
-/** \file indexBuffer.h
+/** \file indexBuffer.cpp
 */
 #include "engine_pch.h"
 

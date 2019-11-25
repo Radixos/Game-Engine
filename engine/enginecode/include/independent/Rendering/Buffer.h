@@ -5,7 +5,7 @@ namespace Engine {
 	
 	enum class ShaderDataType
 	{
-		None = 0, Float, Float2, Float3, Float4, Mat3, Mat4, Int, Int2, Int3, Int4, Bool
+		None = 0, Float, Float2, Float3, Float4, Mat3, Mat4, Int, Int2, Int3, Int4, Bool, Sampler2D
 	};
 
 	static unsigned int ShaderDataTypeSize(ShaderDataType type)
@@ -23,9 +23,69 @@ namespace Engine {
 		case ShaderDataType::Int3:     return 4 * 3;
 		case ShaderDataType::Int4:     return 4 * 4;
 		case ShaderDataType::Bool:     return 1;
+		case ShaderDataType::Sampler2D:return 1;
 		}
 
 		//ENG_CORE_ASSERT(false, "Unknown ShaderDataType!");
+		return 0;
+	}
+
+	static unsigned int ShaderDataTypeComponentCount(ShaderDataType type)
+	{
+		switch (type)
+		{
+		case ShaderDataType::Int:		return 1;
+		case ShaderDataType::Int2:		return 2;
+		case ShaderDataType::Int3:		return 3;
+		case ShaderDataType::Int4:		return 4;
+		case ShaderDataType::Float:		return 1;
+		case ShaderDataType::Float2:	return 2;
+		case ShaderDataType::Float3:	return 3;
+		case ShaderDataType::Float4:	return 4;
+		case ShaderDataType::Mat3:		return 3 * 3;
+		case ShaderDataType::Mat4:		return 4 * 4;
+		case ShaderDataType::Bool:		return 1;
+		case ShaderDataType::Sampler2D:return 1;
+		}
+		return 0;
+	}
+
+	static ShaderDataType GLSLStrToSTD(const std::string& glslSrc)
+	{
+		ShaderDataType result = ShaderDataType::None;
+		if (glslSrc == "bool") result = ShaderDataType::Bool;
+		if (glslSrc == "int") result = ShaderDataType::Int;
+		if (glslSrc == "ivec2") result = ShaderDataType::Int2;
+		if (glslSrc == "ivec3") result = ShaderDataType::Int3;
+		if (glslSrc == "ivec4") result = ShaderDataType::Int4;
+		if (glslSrc == "float") result = ShaderDataType::Float;
+		if (glslSrc == "vec2") result = ShaderDataType::Float2;
+		if (glslSrc == "vec3") result = ShaderDataType::Float3;
+		if (glslSrc == "vec4") result = ShaderDataType::Float4;
+		if (glslSrc == "mat3") result = ShaderDataType::Mat3;
+		if (glslSrc == "mat4") result = ShaderDataType::Mat4;
+		if (glslSrc == "sampler2D") result = ShaderDataType::Sampler2D;
+
+		return result;
+	}
+
+	static GLenum ShaderDataTypeToOpenGLType(ShaderDataType type)
+	{
+		switch (type)
+		{
+		case ShaderDataType::Int:		return GL_INT;
+		case ShaderDataType::Int2:		return GL_INT;
+		case ShaderDataType::Int3:		return GL_INT;
+		case ShaderDataType::Int4:		return GL_INT;
+		case ShaderDataType::Float:		return GL_FLOAT;
+		case ShaderDataType::Float2:	return GL_FLOAT;
+		case ShaderDataType::Float3:	return GL_FLOAT;
+		case ShaderDataType::Float4:	return GL_FLOAT;
+		case ShaderDataType::Mat3:		return GL_FLOAT;
+		case ShaderDataType::Mat4:		return GL_FLOAT;
+		case ShaderDataType::Bool:		return GL_BOOL;
+		}
+
 		return 0;
 	}
 
@@ -80,12 +140,12 @@ namespace Engine {
 	class BufferLayout
 	{
 	public:
-		BufferLayout() {}
+		BufferLayout() {};	//!<Default constructor
 
-		BufferLayout(const std::initializer_list<BufferElement>& elements)
+		BufferLayout(const std::initializer_list<BufferElement>& elements)	//!<Constructor through which layout elements are passed
 			: m_Elements(elements)
 		{
-			CalculateOffsetsAndStride();
+			calcStrideAndOffsets();
 		}
 
 		inline uint32_t GetStride() const { return m_Stride; }
@@ -95,8 +155,13 @@ namespace Engine {
 		std::vector<BufferElement>::iterator end() { return m_Elements.end(); }
 		std::vector<BufferElement>::const_iterator begin() const { return m_Elements.begin(); }
 		std::vector<BufferElement>::const_iterator end() const { return m_Elements.end(); }
+		void addElement(ShaderDataType datatype)
+		{
+			m_Elements.push_back(BufferElement(datatype));
+			calcStrideAndOffsets();
+		}
 	private:
-		void CalculateOffsetsAndStride()
+		void calcStrideAndOffsets()	// Calculate the stride distance and the offset for each element
 		{
 			size_t offset = 0;
 			m_Stride = 0;
@@ -108,8 +173,8 @@ namespace Engine {
 			}
 		}
 	private:
-		std::vector<BufferElement> m_Elements;
-		uint32_t m_Stride = 0;
+		std::vector<BufferElement> m_Elements;	// Buffer elements
+		unsigned int m_Stride = 0;	// Stride - distance between data lines
 	};
 
 	class VertexBuffer

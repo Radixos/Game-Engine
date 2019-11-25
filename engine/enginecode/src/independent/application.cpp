@@ -17,6 +17,7 @@
 
 #include "core/application.h"
 #include "Event/EventSubclass.h"
+#include "include/independent/Rendering/Buffer.h"
 
 //#ifdef NG_PLATFORM_WINDOWS
 //#include "../platform/GLFW/GLFWWindowsSystem.h"
@@ -156,6 +157,11 @@ namespace Engine {
 					colour = vec4(fragmentColour, 1.0);
 				}
 		)";
+
+		BufferLayout FClayout = {
+			{ShaderDataType::Float3},
+			{ShaderDataType::Float3},
+		}; //FClayout in buffer (vertex)?
 
 		GLuint FCVertShader = glCreateShader(GL_VERTEX_SHADER);
 

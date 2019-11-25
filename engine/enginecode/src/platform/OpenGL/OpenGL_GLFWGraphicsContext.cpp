@@ -1,7 +1,8 @@
 /** \file OpenGL_GLFWGraphicsContext.cpp
 */
+
 #include "engine_pch.h"
-#include "windows/OpenGL_GLFWGraphicsContext.h"
+#include "include/platform/OpenGL/OpenGL_GLFWGraphicsContext.h"
 
 //OpenGL_GLFWGraphicsContext::OpenGL_GLFWGraphicsContext(GLFWwindow* window) : m_window(window)
 //{
