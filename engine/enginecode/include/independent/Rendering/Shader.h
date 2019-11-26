@@ -1,0 +1,28 @@
+/** /class Shader
+	An interface class for creating API specific shader programmes
+*/
+#pragma once
+
+#include "glm/glm.hpp"
+#include "Buffer.h"
+#include <sstream>
+
+namespace Engine {
+	class Shader
+	{
+	public:
+		virtual unsigned int id() = 0;	//!<Get the API id of the shader programme
+		virtual void bind() = 0;	//!<Bind the shader
+		virtual void unbind() = 0;	//!<Unbind the shader
+		virtual void uploadMat4(const std::string& name, glm::mat4* data) = 0;
+		virtual void uploadFloat3(const std::string& name, float a, float b, float c) = 0;
+		virtual void uploadFloat3(const std::string& name, float* data) = 0;
+		virtual void uploadInt(const std::string& name, int data) = 0;
+
+		virtual BufferLayout getBufferLayout() const = 0;	//!<Get the buffer layout for shader
+		//virtual UniformLayout getUniformLayout() const = 0;	//!<Get the structure of the data which can be uploaded
+
+		static Shader* create(const std::string& filepath); //!<Create, compile and link API specific shader from single filepath
+		static Shader* create(const std::string& vvertexfilepath, const std::string& fragmentFilepath);	//!<Create, compile and link API specific shader from vertex filepath and fragment filepath
+	};
+}

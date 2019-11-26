@@ -1,5 +1,8 @@
+/** \file Timer.cpp
+*/
+
 #include "engine_pch.h"
-#include "Timer.h"
+#include "include/independent/core/Timer.h"
 
 void Engine::Timer::start(SystemSignal init, ...)
 {

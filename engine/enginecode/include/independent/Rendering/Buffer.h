@@ -1,6 +1,7 @@
 /** \file indexBuffer.h
 */
 
+#include <glad\glad.h>
 namespace Engine {
 	
 	enum class ShaderDataType
@@ -45,7 +46,7 @@ namespace Engine {
 		case ShaderDataType::Mat3:		return 3 * 3;
 		case ShaderDataType::Mat4:		return 4 * 4;
 		case ShaderDataType::Bool:		return 1;
-		case ShaderDataType::Sampler2D:return 1;
+		case ShaderDataType::Sampler2D:	return 1;
 		}
 		return 0;
 	}
