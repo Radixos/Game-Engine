@@ -1,6 +1,6 @@
 /** \file OpenGLSuperSimpleRenderer.cpp
 */
-
+#include "engine_pch.h"
 #include "include/platform/OpenGL/OpenGLSuperSimpleRenderer.h"
 
 namespace Engine {
@@ -18,7 +18,7 @@ namespace Engine {
 		auto uniformData = material->getData();
 		for (auto dataPair : uniformData)
 		{
-			shader->uploadData(dataPair.first, dataPair.second);
+			//shader->uploadData(dataPair.first, dataPair.second);
 		}
 
 		//Issue a draw call

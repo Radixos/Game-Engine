@@ -103,7 +103,8 @@ namespace Engine {
 		GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
 		src = fragmentShaderSrc.c_str();
-		glGetShaderSource(fragmentShader, 1, &src, 0);
+
+		glShaderSource(fragmentShader, 1, &src, 0);
 		glCompileShader(fragmentShader);
 
 		glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &isCompiled);

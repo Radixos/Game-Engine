@@ -113,8 +113,10 @@ namespace Engine {
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(sizeof(float) * 3)); // (pos 1 (colour), 3 floats, float, not normalised, 6 float between each data line, start at 3)
 
+	
 		glCreateBuffers(1, &m_FCindexBuffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_FCindexBuffer);
+
 
 
 		unsigned int indices[3 * 12] = {
