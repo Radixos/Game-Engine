@@ -1,7 +1,10 @@
-/** \file indexBuffer.h
+/** \file Buffer.h
 */
 
+#pragma once
+
 #include <glad\glad.h>
+
 namespace Engine {
 	
 	enum class ShaderDataType
