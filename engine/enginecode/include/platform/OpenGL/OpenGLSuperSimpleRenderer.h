@@ -1,3 +1,6 @@
+/** \file OpenGLSuperSimpleRenderer.h
+*/
+
 #pragma once
 
 #include "engine_pch.h"
