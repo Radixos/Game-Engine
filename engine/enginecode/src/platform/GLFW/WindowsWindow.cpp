@@ -7,6 +7,8 @@
 #include "../platform/GLFW/GLFWWindowImpl.h"
 #include "systems/Log.h"
 #include "Event/EventSubclass.h"
+#include "../platform/GLFW/GLFWCodes.h"
+#include "Event/Event.h"
 
 //#include <engine.h>
 
@@ -56,6 +58,23 @@ namespace Engine {
 			std::function<void(Event&)>& callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
 			WindowCloseEvent event;
 			callback(event);
+		});
+
+		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
+		{
+			std::function<void(Event&)>& callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
+			WindowResizeEvent event(width, height);
+			callback(event);
+		});
+
+		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
+		{
+			std::function<void(Event&)>& callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
+			switch (action)
+			{
+			case KEY_PRESS:
+				MouseButtonPressed
+			}
 		});
 	}
 
