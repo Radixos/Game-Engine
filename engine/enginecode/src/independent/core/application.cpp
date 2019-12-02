@@ -17,6 +17,7 @@
 
 #include "core/application.h"
 #include "Event/EventSubclass.h"
+#include "Event/EventDispatcher.h"
 
 #ifdef NG_PLATFORM_WINDOWS
 #include "../platform/GLFW/GLFWWindowsSystem.h"
@@ -50,14 +51,13 @@ namespace Engine {
 		m_timer.reset(new Timer());
 		m_timer->start();
 		//m_timer->start();	//fix the cpp
-//#ifdef NG_PLATFORM_WINDOWS
+
+		// Create window
+#ifdef NG_PLATFORM_WINDOWS
 		m_Window = std::shared_ptr<Window>(Window::create());
-//#endif // NG_PLATFORM_WINDOWS
+#endif NG_PLATFORM_WINDOWS
 		//m_Window->start();
 		ENG_CLIENT_INFO("Windows system initialised");
-		
-		// Create window
-		m_Window = std::shared_ptr<Window>(Window::create());
 		m_Window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 		// Set screen res
 		Application::s_screenResolution = glm::ivec2(m_Window->getWidth(), m_Window->getHeight());
@@ -471,6 +471,10 @@ namespace Engine {
 			//Cast the event
 			WindowResizeEvent resize = (WindowResizeEvent&)e;
 			ENG_CORE_INFO("Window resize event. Width {0}. Height {1}", resize.getWidth(), resize.getHeight());
+		
+			EventDispatcher dispatcher(e);
+			dispatcher.dispatch<WindowCloseEvent>(std::bind(&Application::onClose, this, std::placeholders::_1));
+			dispatcher.dispatch<WindowResizeEvent>(std::bind(&Application::onResize, this, std::placeholders::_1));
 		}
 	}
 
@@ -509,7 +513,6 @@ namespace Engine {
 		//float time = 0.f;
 
 		s_timestep = 0;
-		//ENG_CLIENT_INFO("FPS: {0}", (int)(1.0f / s_timestep));
 		
 		while (m_running)
 		{
@@ -548,11 +551,26 @@ namespace Engine {
 			//std::chrono::duration<float> diff = end - start;
 			//time += diff.count();
 
+			//ENG_CORE_INFO("FPS: {0}", (int)(1.0f / s_timestep));
+
 			m_timeSummed += s_timestep;
-			if (m_timeSummed > 20.0f) {
-				m_timeSummed = 0.f;
-				m_goingUp = !m_goingUp;
+			if (m_timeSummed > 3.0f)
+			{
+				WindowResizeEvent e1(1024, 720);
+				onEvent(e1);
+				WindowCloseEvent e2;
+				onEvent(e2);
+				//m_timeSummed = 0.f;
+				//m_goingUp = !m_goingUp;
 			}
+
+			//if (time > 3.0f)
+			//{
+			//	WindowResizeEvent e(1024, 720);
+			//	onEvent(e);
+			//	m_running = false;
+			//	//ENG_CORE_INFO("Time elapsed: {0}. Shutting down.", time);
+			//}
 
 			FCmodel = glm::rotate(FCtranslation, glm::radians(20.f) * s_timestep, glm::vec3(0.f, 1.f, 0.f)); // Spin the cube at 20 degrees per second
 			TPmodel = glm::rotate(TPtranslation, glm::radians(-20.f) * s_timestep, glm::vec3(0.f, 1.f, 0.f)); // Spin the cube at 20 degrees per second
@@ -602,13 +620,6 @@ namespace Engine {
 
 			m_Window->onUpdate(s_timestep);
 
-			//if (time > 3.0f)
-			//{
-			//	WindowResizeEvent e(1024, 720);
-			//	onEvent(e);
-			//	m_running = false;
-			//	//ENG_CORE_INFO("Time elapsed: {0}. Shutting down.", time);
-			//}
 			end = std::chrono::high_resolution_clock::now();
 			std::chrono::duration<float> diff = end - start;
 			s_timestep = diff.count();

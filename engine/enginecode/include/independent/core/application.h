@@ -53,7 +53,7 @@ namespace Engine {
 		unsigned int m_letterTexture; // Texture ID
 		unsigned int m_textureSlots[2]; // Slot where the textures are stored
 		bool m_goingUp = false; // Is the cude going up?
-		float m_timeSummed = 10.f; // How much timer has elasped?
+		float m_timeSummed = 0.f; // How much timer has elasped?
 #pragma endregion TempVars
 
 	public:

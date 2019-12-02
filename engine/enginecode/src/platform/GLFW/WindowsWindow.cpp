@@ -4,7 +4,9 @@
 #include "engine_pch.h"
 #include <glad/glad.h>
 #include "include/platform/GLFW/WindowsWindow.h"
+#include "../platform/GLFW/GLFWWindowImpl.h"
 #include "systems/Log.h"
+#include "Event/EventSubclass.h"
 
 //#include <engine.h>
 
@@ -48,6 +50,13 @@ namespace Engine {
 		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		setVSync(true);
+
+		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
+		{
+			std::function<void(Event&)>& callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
+			WindowCloseEvent event;
+			callback(event);
+		});
 	}
 
 	void WindowsWindow::close()
