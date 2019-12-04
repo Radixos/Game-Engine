@@ -73,7 +73,17 @@ namespace Engine {
 			switch (action)
 			{
 			case KEY_PRESS:
-				MouseButtonPressed
+			{
+				MouseButtonPressed event(button);
+				callback(event);
+				break;
+			}
+			case KEY_RELEASE:
+			{	
+				MouseButtonReleased event(button);
+				callback(event);
+				break;
+			}
 			}
 		});
 	}
