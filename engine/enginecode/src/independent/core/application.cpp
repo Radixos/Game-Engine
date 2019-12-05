@@ -561,7 +561,7 @@ namespace Engine {
 				WindowCloseEvent e2;
 				onEvent(e2);
 				//m_timeSummed = 0.f;
-				//m_goingUp = !m_goingUp;
+				m_goingUp = !m_goingUp;
 			}
 
 			//if (time > 3.0f)
