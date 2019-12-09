@@ -7,7 +7,7 @@
 #pragma region TempIncludes
 // temp includes
 #include <glad/glad.h>
-#include <gl/GL.h>
+//#include <gl/GL.h>
 //#include <glm/glm.hpp>
 //#include <glm/gtc/matrix_transform.hpp>
 #define STB_IMAGE_IMPLEMENTATION
@@ -19,9 +19,9 @@
 #include "Event/EventSubclass.h"
 #include "Event/EventDispatcher.h"
 
-#ifdef NG_PLATFORM_WINDOWS
-#include "../platform/GLFW/GLFWWindowsSystem.h"
-#endif
+//#ifdef NG_PLATFORM_WINDOWS
+//#include "../platform/GLFW/GLFWWindowsSystem.h"
+//#endif // NG_PLATFORM_WINDOWS
 
 //#ifdef NG_PLATFORM_WINDOWS
 //m_windows = std::shared_ptr<Windows>(new GLFWWindowsSystem());
@@ -53,9 +53,9 @@ namespace Engine {
 		//m_timer->start();	//fix the cpp
 
 		// Create window
-#ifdef NG_PLATFORM_WINDOWS
+		m_system.reset(new GLFWWindowsSystem);
+		m_system->start();
 		m_Window = std::shared_ptr<Window>(Window::create());
-#endif NG_PLATFORM_WINDOWS
 		//m_Window->start();
 		ENG_CLIENT_INFO("Windows system initialised");
 		m_Window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));

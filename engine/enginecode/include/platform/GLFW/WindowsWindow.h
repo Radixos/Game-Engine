@@ -29,7 +29,10 @@ namespace Engine {
 		inline unsigned int getHeight() const override { return m_Data.m_height; }
 
 		// Window attributes
-		inline void setEventCallback(const std::function<void(Event&)>& callback) override {}// { m_Data.EventCallback = callback; }
+		inline void setEventCallback(const std::function<void(Event&)>& callback) override { 
+			m_callback = callback;
+			glfwSetWindowUserPointer(m_Window, &m_callback);
+		}
 		void setVSync(bool enabled) override;
 		bool isVSync() const override;
 		void onResize(unsigned int width, unsigned int height) override;
@@ -53,7 +56,7 @@ namespace Engine {
 			EventCallbackFn EventCallback;
 		};*/
 		WindowProperties m_Data;
-
+		std::function<void(Event&)> m_callback;
 		//WindowData m_Data;
 	};
 

@@ -29,6 +29,10 @@
 //m_windows->start();
 //ENG_CORE_INFO("Windows system initialised");
 
+#ifdef NG_PLATFORM_WINDOWS
+#include "include/platform/GLFW/WindowsWindow.h"
+#endif // NG_PLATFORM_WINDOWS
+
 namespace Engine {
 	Application* Application::s_instance = nullptr;
 	float Application::s_timestep = 0.f;

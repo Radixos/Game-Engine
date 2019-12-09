@@ -16,10 +16,12 @@ namespace Engine {
 
 	static bool s_GLFWInitialized = false;
 
+#ifdef NG_PLATFORM_WINDOWS
 	Window* Window::create(const WindowProperties& props)
 	{
 		return new WindowsWindow(props);
 	}
+#endif // NG_PLATFORM_WINDOWS
 
 	WindowsWindow::WindowsWindow(const WindowProperties& props)
 	{
@@ -50,7 +52,7 @@ namespace Engine {
 		m_Window = glfwCreateWindow((int)props.m_width, (int)props.m_height, m_Data.m_title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
 		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		glfwSetWindowUserPointer(m_Window, &m_Data);
+		//glfwSetWindowUserPointer(m_Window, &m_Data);
 		setVSync(true);
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
@@ -86,6 +88,14 @@ namespace Engine {
 			}
 			}
 		});
+		//MAKE MOUSEMOVECALLBACK??
+
+		//glfwSetMouseMoveCallback(m_Window, [](GLFWwindow* window, int X, int Y)
+		//{
+		//	std::function<void(Event&)>& callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
+		//	if (MOUSE_MOVED)
+		//		std::cout<<"Mouse nm"
+		//});
 	}
 
 	void WindowsWindow::close()

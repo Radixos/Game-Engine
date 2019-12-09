@@ -10,6 +10,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#ifdef NG_PLATFORM_WINDOWS
+#include "../platform/GLFW/GLFWWindowsSystem.h"
+#endif // NG_PLATFORM_WINDOWS
+
 namespace Engine {
 
 	/**
@@ -22,11 +26,14 @@ namespace Engine {
 	{
 	protected:
 		Application(); //!< Constructor
+		std::shared_ptr<GLFWWindowsSystem> m_system;
 	private:
 		std::shared_ptr<Log> m_logger;
 		std::shared_ptr<Timer> m_timer;
 
 		std::shared_ptr<Window> m_Window;
+
+		
 
 		static Application* s_instance; //!< Singleton instance of the application
 		//Timer m_timer; //!< Timer for measuring time

@@ -93,6 +93,7 @@ project "Sandbox"
 		"engine/enginecode/",
 		"engine/enginecode/include/independent",
 		"engine/precompiled/",
+		"vendor/glfw/include",
 		"vendor/glm/",
 		"vendor/spdlog/include"
 	}
