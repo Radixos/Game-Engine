@@ -32,17 +32,19 @@ namespace Engine {
 		std::shared_ptr<Timer> m_timer;
 		std::shared_ptr<Window> m_Window;
 		std::shared_ptr<GLFWWindowsSystem> m_system;
-		std::shared_ptr<VertexBuffer> m_FCVertexBufferSP;
-		std::shared_ptr<VertexBuffer> m_TPVertexBufferSP;
+		std::shared_ptr<VertexBuffer> m_FCVertexBuffer;
+		std::shared_ptr<VertexBuffer> m_TPVertexBuffer;
+		std::shared_ptr<IndexBuffer> m_FCindexBuffer;
+		std::shared_ptr<IndexBuffer> m_TPindexBuffer;
 
-		BufferLayout TPlayout = {
+		BufferLayout m_TPlayout = {
 			{ShaderDataType::Float3},
 			{ShaderDataType::Float3},
 			{ShaderDataType::Float2},
 		};
-		BufferLayout FClayout = {
+		BufferLayout m_FClayout = {
 			{ShaderDataType::Float3},
-			{ShaderDataType::Float2},
+			{ShaderDataType::Float3},
 		};
 
 		static Application* s_instance; //!< Singleton instance of the application
@@ -60,11 +62,11 @@ namespace Engine {
 #pragma region TempVars
 // Temp stuff
 		unsigned int m_FCvertexArray; // Flat Colour VAO
-		unsigned int m_FCvertexBuffer;// Flat Colour VBO
+		//unsigned int m_FCvertexBuffer;// Flat Colour VBO
 		unsigned int m_TPvertexArray; // Textured Phong VAO
-		unsigned int m_TPvertexBuffer;// Textured Phong VBO
-		unsigned int m_FCindexBuffer; // Index buffer for colour cube
-		unsigned int m_TPindexBuffer; // Index buffer for texture Phong cube
+		//unsigned int m_TPvertexBuffer;// Textured Phong VBO
+		//unsigned int m_FCindexBuffer; // Index buffer for colour cube
+		//unsigned int m_TPindexBuffer; // Index buffer for texture Phong cube
 		unsigned int m_FCprogram; // Flat colour shader ID
 		unsigned int m_TPprogram; // Textured Phong shader ID
 		unsigned int m_numberTexture; // Texture ID

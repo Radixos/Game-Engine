@@ -52,6 +52,20 @@ namespace Engine {
 		m_Window = glfwCreateWindow((int)props.m_width, (int)props.m_height, m_Data.m_title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
 		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+
+		glEnable(GL_DEBUG_OUTPUT);
+		glDebugMessageCallback([](GLenum source,
+			GLenum type,
+			GLenum id,
+			GLenum severity,
+			GLsizei length,
+			const GLchar* message,
+			const void* userParm)
+		{
+			ENG_CORE_INFO("OpenGL Debug [Type {0}] [Severity {1}]; {2}", type, severity, message);
+		}, 0
+		);
+
 		//glfwSetWindowUserPointer(m_Window, &m_Data);
 		setVSync(true);
 

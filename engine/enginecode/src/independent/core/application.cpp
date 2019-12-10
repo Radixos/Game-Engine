@@ -76,31 +76,19 @@ namespace Engine {
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 
-		float TPvertices[8 * 24] = {
-			-0.5f, -0.5f, -0.5f, 0.f, 0.f, -1.f, 0.33f, 0.5f,
-			 0.5f, -0.5f, -0.5f, 0.f, 0.f, -1.f, 0.f, 0.5f,
-			 0.5f,  0.5f, -0.5f, 0.f, 0.f, -1.f, 0.f, 0.f,
-			-0.5f,  0.5f, -0.5f, 0.f, 0.f, -1.f, 0.33f, 0.f,
-			-0.5f, -0.5f, 0.5f,  0.f, 0.f, 1.f, 0.33f, 0.5f,
-			 0.5f, -0.5f, 0.5f,  0.f, 0.f, 1.f, 0.66f, 0.5f,
-			 0.5f,  0.5f, 0.5f,  0.f, 0.f, 1.f, 0.66f, 0.f,
-			-0.5f,  0.5f, 0.5f,  0.f, 0.f, 1.f, 0.33, 0.f,
-			-0.5f, -0.5f, -0.5f, 0.f, -1.f, 0.f, 1.f, 0.f,
-			 0.5f, -0.5f, -0.5f, 0.f, -1.f, 0.f, 0.66f, 0.f,
-			 0.5f, -0.5f, 0.5f,  0.f, -1.f, 0.f, 0.66f, 0.5f,
-			-0.5f, -0.5f, 0.5f,  0.f, -1.f, 0.f, 1.0f, 0.5f,
-			-0.5f, 0.5f, -0.5f,  0.f, 1.f, 0.f, 0.33f, 1.0f,
-			 0.5f, 0.5f, -0.5f,  0.f, 1.f, 0.f, 0.f, 1.0f,
-			 0.5f, 0.5f, 0.5f, 0.f, 1.f, 0.f, 0.f, 0.5f,
-			-0.5f, 0.5f, 0.5f,   0.f, 1.f, 0.f, 0.3f, 0.5f,
-			-0.5f, -0.5f, -0.5f, -1.f, 0.f, 0.f, 0.33f, 1.0f,
-			-0.5f,  0.5f, -0.5f, -1.f, 0.f, 0.f, 0.33f, 0.5f,
-			-0.5f,  0.5f, 0.5f,  -1.f, 0.f, 0.f, 0.66f, 0.5f,
-			-0.5f,  -0.5f, 0.5f, -1.f, 0.f, 0.f, 0.66f, 1.0f,
-			0.5f, -0.5f, -0.5f,  1.f, 0.f, 0.f, 1.0f, 1.0f,
-			0.5f,  0.5f, -0.5f,  1.f, 0.f, 0.f, 1.0f, 0.5f,
-			0.5f,  0.5f, 0.5f, 1.f, 0.f, 0.f,  0.66f, 0.5f,
-			0.5f,  -0.5f, 0.5f,  1.f, 0.f, 0.f, 0.66f, 1.0f
+		unsigned int indices[3 * 12] = {
+			2, 1, 0,
+			0, 3, 2,
+			4, 5, 6,
+			6, 7, 4,
+			8, 9, 10,
+			10, 11, 8,
+			14, 13, 12,
+			12, 15, 14,
+			18, 17, 16,
+			16, 19, 18,
+			20, 21, 22,
+			22, 23, 20
 		};
 
 		float FCvertices[6 * 24] = {
@@ -130,42 +118,45 @@ namespace Engine {
 			0.5f,  -0.5f, 0.5f, 0.2f, 0.2f, 0.8f
 		};
 
-		unsigned int indices[3 * 12] = {
-			2, 1, 0,
-			0, 3, 2,
-			4, 5, 6,
-			6, 7, 4,
-			8, 9, 10,
-			10, 11, 8,
-			14, 13, 12,
-			12, 15, 14,
-			18, 17, 16,
-			16, 19, 18,
-			20, 21, 22,
-			22, 23, 20
+		float TPvertices[8 * 24] = {
+			-0.5f, -0.5f, -0.5f, 0.f, 0.f, -1.f, 0.33f, 0.5f,
+			 0.5f, -0.5f, -0.5f, 0.f, 0.f, -1.f, 0.f, 0.5f,
+			 0.5f,  0.5f, -0.5f, 0.f, 0.f, -1.f, 0.f, 0.f,
+			-0.5f,  0.5f, -0.5f, 0.f, 0.f, -1.f, 0.33f, 0.f,
+			-0.5f, -0.5f, 0.5f,  0.f, 0.f, 1.f, 0.33f, 0.5f,
+			 0.5f, -0.5f, 0.5f,  0.f, 0.f, 1.f, 0.66f, 0.5f,
+			 0.5f,  0.5f, 0.5f,  0.f, 0.f, 1.f, 0.66f, 0.f,
+			-0.5f,  0.5f, 0.5f,  0.f, 0.f, 1.f, 0.33, 0.f,
+			-0.5f, -0.5f, -0.5f, 0.f, -1.f, 0.f, 1.f, 0.f,
+			 0.5f, -0.5f, -0.5f, 0.f, -1.f, 0.f, 0.66f, 0.f,
+			 0.5f, -0.5f, 0.5f,  0.f, -1.f, 0.f, 0.66f, 0.5f,
+			-0.5f, -0.5f, 0.5f,  0.f, -1.f, 0.f, 1.0f, 0.5f,
+			-0.5f, 0.5f, -0.5f,  0.f, 1.f, 0.f, 0.33f, 1.0f,
+			 0.5f, 0.5f, -0.5f,  0.f, 1.f, 0.f, 0.f, 1.0f,
+			 0.5f, 0.5f, 0.5f, 0.f, 1.f, 0.f, 0.f, 0.5f,
+			-0.5f, 0.5f, 0.5f,   0.f, 1.f, 0.f, 0.3f, 0.5f,
+			-0.5f, -0.5f, -0.5f, -1.f, 0.f, 0.f, 0.33f, 1.0f,
+			-0.5f,  0.5f, -0.5f, -1.f, 0.f, 0.f, 0.33f, 0.5f,
+			-0.5f,  0.5f, 0.5f,  -1.f, 0.f, 0.f, 0.66f, 0.5f,
+			-0.5f,  -0.5f, 0.5f, -1.f, 0.f, 0.f, 0.66f, 1.0f,
+			0.5f, -0.5f, -0.5f,  1.f, 0.f, 0.f, 1.0f, 1.0f,
+			0.5f,  0.5f, -0.5f,  1.f, 0.f, 0.f, 1.0f, 0.5f,
+			0.5f,  0.5f, 0.5f, 1.f, 0.f, 0.f,  0.66f, 0.5f,
+			0.5f,  -0.5f, 0.5f,  1.f, 0.f, 0.f, 0.66f, 1.0f
 		};
+
 
 		glGenVertexArrays(1, &m_FCvertexArray);
 		glBindVertexArray(m_FCvertexArray);
 
-		glCreateBuffers(1, &m_FCvertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_FCvertexBuffer);
-
-		glBufferData(GL_ARRAY_BUFFER, sizeof(FCvertices), FCvertices, GL_STATIC_DRAW);
+		m_FCVertexBuffer.reset(VertexBuffer::create(FCvertices, sizeof(FCvertices), m_FClayout));
 
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0); // (pos 0 (pos), 3 floats, float, not normalised, 6 float between each data line, start at 0)
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(sizeof(float) * 3)); // (pos 1 (colour), 3 floats, float, not normalised, 6 float between each data line, start at 3)
 
-	
-		glCreateBuffers(1, &m_FCindexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_FCindexBuffer);
-
-
-
-		
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		m_FCindexBuffer.reset(IndexBuffer::create(indices ,sizeof(indices)));
 
 		std::string FCvertSrc = R"(
 				#version 440 core
@@ -261,18 +252,29 @@ namespace Engine {
 		glDetachShader(m_FCprogram, FCVertShader);
 		glDetachShader(m_FCprogram, FCFragShader);
 
-		// Added textuer phong shader and cube
 
-		m_TPVertexBufferSP.reset(VertexBuffer::create(TPvertices, sizeof(TPvertices), TPlayout));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		// Added textuer phong shader and cube
 
 		glGenVertexArrays(1, &m_TPvertexArray);
 		glBindVertexArray(m_TPvertexArray);
 
-		glCreateBuffers(1, &m_TPvertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_TPvertexBuffer);
-
-		glBufferData(GL_ARRAY_BUFFER, sizeof(TPvertices), TPvertices, GL_STATIC_DRAW);
-
+		m_TPVertexBuffer.reset(VertexBuffer::create(TPvertices, sizeof(TPvertices), m_TPlayout));
+		
 		glEnableVertexAttribArray(0);
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0); // (pos 0 (pos), 3 floats, float, not normalised, 6 float between each data line, start at 0)
 		glEnableVertexAttribArray(1);
@@ -280,9 +282,7 @@ namespace Engine {
 		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(sizeof(float) * 6)); // (pos 1 (normal), 3 floats, float, not normalised, 6 float between each data line, start at 3)
 
-		/*glCreateBuffers(1, &m_TPindexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_TPindexBuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);*/
+		m_TPindexBuffer.reset(IndexBuffer::create(indices, sizeof(indices)));
 
 		std::string TPvertSrc = R"(
 				#version 440 core
@@ -416,7 +416,7 @@ namespace Engine {
 
 		int width, height, channels;
 
-		unsigned char *data = stbi_load("assets/textures/letterCube.png", &width, &height, &channels, 0);
+		unsigned char* data = stbi_load("assets/textures/letterCube.png", &width, &height, &channels, 0);
 		if (data)
 		{
 			if (channels == 3) glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -650,7 +650,7 @@ namespace Engine {
 			//std::chrono::duration<float> diff = end - start;
 			//s_timestep = diff.count();
 			s_timestep = m_timer->getTimeSinceFrameStart();
-			ENG_CORE_INFO("FPS: {0}", (int)(1.0f / s_timestep));
+			//ENG_CORE_INFO("FPS: {0}", (int)(1.0f / s_timestep));
 		}
 		
 		//float time = (float) glfwGetTime();	//!< Getting time

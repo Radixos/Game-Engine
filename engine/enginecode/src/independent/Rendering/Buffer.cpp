@@ -6,6 +6,7 @@
 #include "Rendering/Buffer.h"
 //#include "include/platform/OpenGL/OpenGLIndexBuffer"
 #include "systems/Log.h"
+#include "include/platform/OpenGL/OpenGLBuffer.h"
 
 namespace Engine {
 
@@ -17,7 +18,7 @@ namespace Engine {
 			ENG_CORE_ERROR("Lack of graphics API not supported.");
 			break;
 		case RenderAPI::API::OpenGL:
-			//return new OpenGLIndexBuffer(indices, size);
+			return new OpenGLIndexBuffer(indices, size);
 			break;
 		case RenderAPI::API::Direct3D:
 			ENG_CORE_ERROR("Direct3D not supported.");
@@ -36,7 +37,7 @@ namespace Engine {
 			ENG_CORE_ERROR("Lack of graphics API not supported.");
 			break;
 		case RenderAPI::API::OpenGL:
-			//return new OpenGLVertexBuffer(indices, size);
+			return new OpenGLVertexBuffer(vertices, size, layout);
 			break;
 		case RenderAPI::API::Direct3D:
 			ENG_CORE_ERROR("Direct3D not supported.");
