@@ -26,14 +26,12 @@ namespace Engine {
 	{
 	protected:
 		Application(); //!< Constructor
-		std::shared_ptr<GLFWWindowsSystem> m_system;
 	private:
 		std::shared_ptr<Log> m_logger;
 		std::shared_ptr<Timer> m_timer;
-
 		std::shared_ptr<Window> m_Window;
+		std::shared_ptr<GLFWWindowsSystem> m_system;
 
-		
 
 		static Application* s_instance; //!< Singleton instance of the application
 		//Timer m_timer; //!< Timer for measuring time

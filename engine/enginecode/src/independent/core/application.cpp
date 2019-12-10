@@ -48,9 +48,9 @@ namespace Engine {
 		m_logger.reset(new Log);
 		m_logger->start();
 		ENG_CORE_INFO("Logger started");
-		m_timer.reset(new Timer());
+		m_timer.reset(new Timer);
 		m_timer->start();
-		//m_timer->start();	//fix the cpp
+		ENG_CORE_INFO("Timer initialised");
 
 		// Create window
 		m_system.reset(new GLFWWindowsSystem);
@@ -508,7 +508,7 @@ namespace Engine {
 		////delta = 1.0-timestep;
 		////timestep/delta;
 
-		std::chrono::high_resolution_clock::time_point start, end;
+		//std::chrono::high_resolution_clock::time_point start, end;
 		////start = std::chrono::high_resolution_clock::now();
 		//float time = 0.f;
 
@@ -516,7 +516,7 @@ namespace Engine {
 		
 		while (m_running)
 		{
-			start = std::chrono::high_resolution_clock::now();
+			//start = std::chrono::high_resolution_clock::now();
 
 			glClearColor(0, 0, 1, 1);	//blue
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
