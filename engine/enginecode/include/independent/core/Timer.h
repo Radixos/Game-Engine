@@ -25,7 +25,7 @@ namespace Engine {
 	{
 	public:
 		Timer(float time = 0.0f) : m_time(time) {}
-		float GetSeconds() const { return 1E9; }	//why 1+9e, why not m_time or sth with std
+		float GetSeconds() const { return 1E9; }
 		float GetMilliSeconds() const { return 1E6; }
 		void start(SystemSignal init = SystemSignal::None, ...) override
 		{
@@ -45,7 +45,7 @@ namespace Engine {
 
 		void setMarkerStart() { m_markerStart = std::chrono::high_resolution_clock::now(); }
 		float getTimeSinceMarkerStart() { return (std::chrono::high_resolution_clock::now() - m_markerStart).count() / GetSeconds(); }
-		float getTimeSinceAppMarkerAsMilliseconds() { return (std::chrono::high_resolution_clock::now() - m_markerStart).count() / GetMilliSeconds(); }
+		float getTimeSinceMarkerStartAsMilliseconds() { return (std::chrono::high_resolution_clock::now() - m_markerStart).count() / GetMilliSeconds(); }
 	private:
 		float m_time;
 		std::chrono::high_resolution_clock::time_point m_appStart;

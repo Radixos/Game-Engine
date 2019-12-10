@@ -466,16 +466,21 @@ namespace Engine {
 
 	void Application::onEvent(Event & e)	//Slide 34 Week2 to finish
 	{
-		if (e.getEventType() == EventType::WindowResize)
-		{
-			//Cast the event
-			WindowResizeEvent resize = (WindowResizeEvent&)e;
-			ENG_CORE_INFO("Window resize event. Width {0}. Height {1}", resize.getWidth(), resize.getHeight());
-		
-			EventDispatcher dispatcher(e);
-			dispatcher.dispatch<WindowCloseEvent>(std::bind(&Application::onClose, this, std::placeholders::_1));
-			dispatcher.dispatch<WindowResizeEvent>(std::bind(&Application::onResize, this, std::placeholders::_1));
-		}
+		//if (e.getEventType() == EventType::WindowResize)
+		//{
+		//	//Cast the event
+		//	WindowResizeEvent resize = (WindowResizeEvent&)e;
+		//	ENG_CORE_INFO("Window resize event. Width {0}. Height {1}", resize.getWidth(), resize.getHeight());
+		//
+		//	EventDispatcher dispatcher(e);
+		//	dispatcher.dispatch<WindowCloseEvent>(std::bind(&Application::onClose, this, std::placeholders::_1));
+		//	dispatcher.dispatch<WindowResizeEvent>(std::bind(&Application::onResize, this, std::placeholders::_1));
+		//}
+
+		EventDispatcher dispatcher(e);
+		dispatcher.dispatch<WindowCloseEvent>(std::bind(&Application::onClose, this, std::placeholders::_1));
+		dispatcher.dispatch<WindowResizeEvent>(std::bind(&Application::onResize, this, std::placeholders::_1));
+		dispatcher.dispatch<WindowMoveEvent>(std::bind(&Application::onMove, this, std::placeholders::_1));
 	}
 
 	bool Application::onClose(WindowCloseEvent & e)
@@ -489,6 +494,11 @@ namespace Engine {
 	{
 		ENG_CORE_INFO("Resize window to {0}x{1}", e.getWidth(), e.getHeight());
 		return true;
+	}
+
+	bool Application::onMove(WindowMoveEvent & e)
+	{
+		//ENG_CORE_INFO("Window moved to {0}x{1}", e.)
 	}
 
 	//bool Application::onKeyPressed(KeyPressedEvent & e)
@@ -516,6 +526,8 @@ namespace Engine {
 		
 		while (m_running)
 		{
+			m_timer->setFrameStart();
+
 			//start = std::chrono::high_resolution_clock::now();
 
 			glClearColor(0, 0, 1, 1);	//blue
@@ -543,7 +555,11 @@ namespace Engine {
 				TPtranslation = glm::translate(TPmodel, glm::vec3(0.0f, 0.2f * s_timestep, 0.0f));
 			}
 
-
+			if (m_timer->getTimeSinceMarkerStart() > 2.0f)
+			{
+				m_timer->setMarkerStart();
+				m_goingUp = !m_goingUp;
+			}
 
 			//m_Window->onUpdate(time);	//??? Does it make sense?
 			//ENG_CLIENT_TRACE("Delta time: {0}", time/*(int)(1.0f/time)*/);
@@ -551,18 +567,10 @@ namespace Engine {
 			//std::chrono::duration<float> diff = end - start;
 			//time += diff.count();
 
-			//ENG_CORE_INFO("FPS: {0}", (int)(1.0f / s_timestep));
-
-			m_timeSummed += s_timestep;
-			if (m_timeSummed > 3.0f)
-			{
-				WindowResizeEvent e1(1024, 720);
-				onEvent(e1);
-				WindowCloseEvent e2;
-				onEvent(e2);
-				//m_timeSummed = 0.f;
-				m_goingUp = !m_goingUp;
-			}
+			//	WindowResizeEvent e1(1024, 720);
+			//	onEvent(e1);
+			//	WindowCloseEvent e2;
+			//	onEvent(e2);
 
 			//if (time > 3.0f)
 			//{
@@ -620,9 +628,12 @@ namespace Engine {
 
 			m_Window->onUpdate(s_timestep);
 
-			end = std::chrono::high_resolution_clock::now();
-			std::chrono::duration<float> diff = end - start;
-			s_timestep = diff.count();
+			//end = std::chrono::high_resolution_clock::now();
+			//std::chrono::duration<float> diff = end - start;
+
+			//s_timestep = diff.count();
+			s_timestep = m_timer->getTimeSinceFrameStart();
+			ENG_CORE_INFO("FPS: {0}", (int)(1.0f / s_timestep));
 		}
 		
 		//float time = (float) glfwGetTime();	//!< Getting time

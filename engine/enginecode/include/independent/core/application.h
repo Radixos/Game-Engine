@@ -40,6 +40,7 @@ namespace Engine {
 
 		bool onClose(WindowCloseEvent& e);	//!< On close event
 		bool onResize(WindowResizeEvent& e);	//!< On resize event
+		bool onMove(WindowMoveEvent& e);
 
 		static float s_timestep; //!< last frame timestep
 		static glm::ivec2 s_screenResolution; //!< Screen res
