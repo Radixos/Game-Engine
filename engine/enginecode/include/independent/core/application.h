@@ -13,6 +13,7 @@
 #ifdef NG_PLATFORM_WINDOWS
 #include "../platform/GLFW/GLFWWindowsSystem.h"
 #endif // NG_PLATFORM_WINDOWS
+#include <include\independent\Rendering\Buffer.h>
 
 namespace Engine {
 
@@ -31,7 +32,18 @@ namespace Engine {
 		std::shared_ptr<Timer> m_timer;
 		std::shared_ptr<Window> m_Window;
 		std::shared_ptr<GLFWWindowsSystem> m_system;
+		std::shared_ptr<VertexBuffer> m_FCVertexBufferSP;
+		std::shared_ptr<VertexBuffer> m_TPVertexBufferSP;
 
+		BufferLayout TPlayout = {
+			{ShaderDataType::Float3},
+			{ShaderDataType::Float3},
+			{ShaderDataType::Float2},
+		};
+		BufferLayout FClayout = {
+			{ShaderDataType::Float3},
+			{ShaderDataType::Float2},
+		};
 
 		static Application* s_instance; //!< Singleton instance of the application
 		//Timer m_timer; //!< Timer for measuring time
@@ -40,7 +52,7 @@ namespace Engine {
 
 		bool onClose(WindowCloseEvent& e);	//!< On close event
 		bool onResize(WindowResizeEvent& e);	//!< On resize event
-		bool onMove(WindowMoveEvent& e);
+		//bool onMove(WindowMoveEvent& e);
 
 		static float s_timestep; //!< last frame timestep
 		static glm::ivec2 s_screenResolution; //!< Screen res

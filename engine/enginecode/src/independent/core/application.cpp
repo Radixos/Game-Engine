@@ -7,7 +7,6 @@
 #pragma region TempIncludes
 // temp includes
 #include <glad/glad.h>
-//#include <gl/GL.h>
 //#include <glm/glm.hpp>
 //#include <glm/gtc/matrix_transform.hpp>
 #define STB_IMAGE_IMPLEMENTATION
@@ -21,13 +20,17 @@
 
 //#ifdef NG_PLATFORM_WINDOWS
 //#include "../platform/GLFW/GLFWWindowsSystem.h"
-//#endif // NG_PLATFORM_WINDOWS
+//#endif
 
 //#ifdef NG_PLATFORM_WINDOWS
-//m_windows = std::shared_ptr<Windows>(new GLFWWindowsSystem());
+//m_windows = st::shared_ptr<Windows>(new GLFWWindowsSystem());
 //#endif
 //m_windows->start();
-//ENG_CORE_INFO("Windows system initialised");	//Needs #include "systems/Log.h" but doesn't work
+//ENG_CORE_INFO("Windows system initialised");
+
+#ifdef NG_PLATFORM_WINDOWS
+#include "include/platform/GLFW/WindowsWindow.h"
+#endif // NG_PLATFORM_WINDOWS
 
 namespace Engine {
 	Application* Application::s_instance = nullptr;
@@ -52,12 +55,13 @@ namespace Engine {
 		m_timer->start();
 		ENG_CORE_INFO("Timer initialised");
 
-		// Create window
 		m_system.reset(new GLFWWindowsSystem);
 		m_system->start();
-		m_Window = std::shared_ptr<Window>(Window::create());
+		//m_Window = std::shared_ptr<Window>(Window::create());
+		m_Window.reset(Window::create());
 		//m_Window->start();
 		ENG_CLIENT_INFO("Windows system initialised");
+		// Create window
 		m_Window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 		// Set screen res
 		Application::s_screenResolution = glm::ivec2(m_Window->getWidth(), m_Window->getHeight());
@@ -72,11 +76,32 @@ namespace Engine {
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
 
-		glGenVertexArrays(1, &m_FCvertexArray);
-		glBindVertexArray(m_FCvertexArray);
-
-		glCreateBuffers(1, &m_FCvertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_FCvertexBuffer);
+		float TPvertices[8 * 24] = {
+			-0.5f, -0.5f, -0.5f, 0.f, 0.f, -1.f, 0.33f, 0.5f,
+			 0.5f, -0.5f, -0.5f, 0.f, 0.f, -1.f, 0.f, 0.5f,
+			 0.5f,  0.5f, -0.5f, 0.f, 0.f, -1.f, 0.f, 0.f,
+			-0.5f,  0.5f, -0.5f, 0.f, 0.f, -1.f, 0.33f, 0.f,
+			-0.5f, -0.5f, 0.5f,  0.f, 0.f, 1.f, 0.33f, 0.5f,
+			 0.5f, -0.5f, 0.5f,  0.f, 0.f, 1.f, 0.66f, 0.5f,
+			 0.5f,  0.5f, 0.5f,  0.f, 0.f, 1.f, 0.66f, 0.f,
+			-0.5f,  0.5f, 0.5f,  0.f, 0.f, 1.f, 0.33, 0.f,
+			-0.5f, -0.5f, -0.5f, 0.f, -1.f, 0.f, 1.f, 0.f,
+			 0.5f, -0.5f, -0.5f, 0.f, -1.f, 0.f, 0.66f, 0.f,
+			 0.5f, -0.5f, 0.5f,  0.f, -1.f, 0.f, 0.66f, 0.5f,
+			-0.5f, -0.5f, 0.5f,  0.f, -1.f, 0.f, 1.0f, 0.5f,
+			-0.5f, 0.5f, -0.5f,  0.f, 1.f, 0.f, 0.33f, 1.0f,
+			 0.5f, 0.5f, -0.5f,  0.f, 1.f, 0.f, 0.f, 1.0f,
+			 0.5f, 0.5f, 0.5f, 0.f, 1.f, 0.f, 0.f, 0.5f,
+			-0.5f, 0.5f, 0.5f,   0.f, 1.f, 0.f, 0.3f, 0.5f,
+			-0.5f, -0.5f, -0.5f, -1.f, 0.f, 0.f, 0.33f, 1.0f,
+			-0.5f,  0.5f, -0.5f, -1.f, 0.f, 0.f, 0.33f, 0.5f,
+			-0.5f,  0.5f, 0.5f,  -1.f, 0.f, 0.f, 0.66f, 0.5f,
+			-0.5f,  -0.5f, 0.5f, -1.f, 0.f, 0.f, 0.66f, 1.0f,
+			0.5f, -0.5f, -0.5f,  1.f, 0.f, 0.f, 1.0f, 1.0f,
+			0.5f,  0.5f, -0.5f,  1.f, 0.f, 0.f, 1.0f, 0.5f,
+			0.5f,  0.5f, 0.5f, 1.f, 0.f, 0.f,  0.66f, 0.5f,
+			0.5f,  -0.5f, 0.5f,  1.f, 0.f, 0.f, 0.66f, 1.0f
+		};
 
 		float FCvertices[6 * 24] = {
 			-0.5f, -0.5f, -0.5f, 0.8f, 0.2f, 0.2f, // red square
@@ -105,17 +130,6 @@ namespace Engine {
 			0.5f,  -0.5f, 0.5f, 0.2f, 0.2f, 0.8f
 		};
 
-		glBufferData(GL_ARRAY_BUFFER, sizeof(FCvertices), FCvertices, GL_STATIC_DRAW);
-
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0); // (pos 0 (pos), 3 floats, float, not normalised, 6 float between each data line, start at 0)
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(sizeof(float) * 3)); // (pos 1 (colour), 3 floats, float, not normalised, 6 float between each data line, start at 3)
-
-		glCreateBuffers(1, &m_FCindexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_FCindexBuffer);
-
-
 		unsigned int indices[3 * 12] = {
 			2, 1, 0,
 			0, 3, 2,
@@ -130,6 +144,27 @@ namespace Engine {
 			20, 21, 22,
 			22, 23, 20
 		};
+
+		glGenVertexArrays(1, &m_FCvertexArray);
+		glBindVertexArray(m_FCvertexArray);
+
+		glCreateBuffers(1, &m_FCvertexBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, m_FCvertexBuffer);
+
+		glBufferData(GL_ARRAY_BUFFER, sizeof(FCvertices), FCvertices, GL_STATIC_DRAW);
+
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0); // (pos 0 (pos), 3 floats, float, not normalised, 6 float between each data line, start at 0)
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(sizeof(float) * 3)); // (pos 1 (colour), 3 floats, float, not normalised, 6 float between each data line, start at 3)
+
+	
+		glCreateBuffers(1, &m_FCindexBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_FCindexBuffer);
+
+
+
+		
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 		std::string FCvertSrc = R"(
@@ -228,39 +263,13 @@ namespace Engine {
 
 		// Added textuer phong shader and cube
 
+		m_TPVertexBufferSP.reset(VertexBuffer::create(TPvertices, sizeof(TPvertices), TPlayout));
+
 		glGenVertexArrays(1, &m_TPvertexArray);
 		glBindVertexArray(m_TPvertexArray);
 
 		glCreateBuffers(1, &m_TPvertexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_TPvertexBuffer);
-
-
-		float TPvertices[8 * 24] = {
-			-0.5f, -0.5f, -0.5f, 0.f, 0.f, -1.f, 0.33f, 0.5f,
-			 0.5f, -0.5f, -0.5f, 0.f, 0.f, -1.f, 0.f, 0.5f,
-			 0.5f,  0.5f, -0.5f, 0.f, 0.f, -1.f, 0.f, 0.f,
-			-0.5f,  0.5f, -0.5f, 0.f, 0.f, -1.f, 0.33f, 0.f,
-			-0.5f, -0.5f, 0.5f,  0.f, 0.f, 1.f, 0.33f, 0.5f,
-			 0.5f, -0.5f, 0.5f,  0.f, 0.f, 1.f, 0.66f, 0.5f,
-			 0.5f,  0.5f, 0.5f,  0.f, 0.f, 1.f, 0.66f, 0.f,
-			-0.5f,  0.5f, 0.5f,  0.f, 0.f, 1.f, 0.33, 0.f,
-			-0.5f, -0.5f, -0.5f, 0.f, -1.f, 0.f, 1.f, 0.f,
-			 0.5f, -0.5f, -0.5f, 0.f, -1.f, 0.f, 0.66f, 0.f,
-			 0.5f, -0.5f, 0.5f,  0.f, -1.f, 0.f, 0.66f, 0.5f,
-			-0.5f, -0.5f, 0.5f,  0.f, -1.f, 0.f, 1.0f, 0.5f,
-			-0.5f, 0.5f, -0.5f,  0.f, 1.f, 0.f, 0.33f, 1.0f,
-			 0.5f, 0.5f, -0.5f,  0.f, 1.f, 0.f, 0.f, 1.0f,
-			 0.5f, 0.5f, 0.5f, 0.f, 1.f, 0.f, 0.f, 0.5f,
-			-0.5f, 0.5f, 0.5f,   0.f, 1.f, 0.f, 0.3f, 0.5f,
-			-0.5f, -0.5f, -0.5f, -1.f, 0.f, 0.f, 0.33f, 1.0f,
-			-0.5f,  0.5f, -0.5f, -1.f, 0.f, 0.f, 0.33f, 0.5f,
-			-0.5f,  0.5f, 0.5f,  -1.f, 0.f, 0.f, 0.66f, 0.5f,
-			-0.5f,  -0.5f, 0.5f, -1.f, 0.f, 0.f, 0.66f, 1.0f,
-			0.5f, -0.5f, -0.5f,  1.f, 0.f, 0.f, 1.0f, 1.0f,
-			0.5f,  0.5f, -0.5f,  1.f, 0.f, 0.f, 1.0f, 0.5f,
-			0.5f,  0.5f, 0.5f, 1.f, 0.f, 0.f,  0.66f, 0.5f,
-			0.5f,  -0.5f, 0.5f,  1.f, 0.f, 0.f, 0.66f, 1.0f
-		};
 
 		glBufferData(GL_ARRAY_BUFFER, sizeof(TPvertices), TPvertices, GL_STATIC_DRAW);
 
@@ -271,9 +280,9 @@ namespace Engine {
 		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(sizeof(float) * 6)); // (pos 1 (normal), 3 floats, float, not normalised, 6 float between each data line, start at 3)
 
-		glCreateBuffers(1, &m_TPindexBuffer);
+		/*glCreateBuffers(1, &m_TPindexBuffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_TPindexBuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);*/
 
 		std::string TPvertSrc = R"(
 				#version 440 core
@@ -467,20 +476,20 @@ namespace Engine {
 	void Application::onEvent(Event & e)	//Slide 34 Week2 to finish
 	{
 		//if (e.getEventType() == EventType::WindowResize)
-		//{
-		//	//Cast the event
-		//	WindowResizeEvent resize = (WindowResizeEvent&)e;
-		//	ENG_CORE_INFO("Window resize event. Width {0}. Height {1}", resize.getWidth(), resize.getHeight());
-		//
-		//	EventDispatcher dispatcher(e);
-		//	dispatcher.dispatch<WindowCloseEvent>(std::bind(&Application::onClose, this, std::placeholders::_1));
-		//	dispatcher.dispatch<WindowResizeEvent>(std::bind(&Application::onResize, this, std::placeholders::_1));
-		//}
+				//{
+				//	//Cast the event
+				//	WindowResizeEvent resize = (WindowResizeEvent&)e;
+				//	ENG_CORE_INFO("Window resize event. Width {0}. Height {1}", resize.getWidth(), resize.getHeight());
+				//
+				//	EventDispatcher dispatcher(e);
+				//	dispatcher.dispatch<WindowCloseEvent>(std::bind(&Application::onClose, this, std::placeholders::_1));
+				//	dispatcher.dispatch<WindowResizeEvent>(std::bind(&Application::onResize, this, std::placeholders::_1));
+				//}
 
 		EventDispatcher dispatcher(e);
 		dispatcher.dispatch<WindowCloseEvent>(std::bind(&Application::onClose, this, std::placeholders::_1));
 		dispatcher.dispatch<WindowResizeEvent>(std::bind(&Application::onResize, this, std::placeholders::_1));
-		dispatcher.dispatch<WindowMoveEvent>(std::bind(&Application::onMove, this, std::placeholders::_1));
+		//dispatcher.dispatch<WindowMoveEvent>(std::bind(&Application::onMove, this, std::placeholders::_1));
 	}
 
 	bool Application::onClose(WindowCloseEvent & e)
@@ -496,10 +505,10 @@ namespace Engine {
 		return true;
 	}
 
-	bool Application::onMove(WindowMoveEvent & e)
-	{
-		//ENG_CORE_INFO("Window moved to {0}x{1}", e.)
-	}
+	//bool Application::onMove(WindowMoveEvent & e)
+	//{
+	//	ENG_CORE_INFO("Window moved to {0}x{1}", e.)
+	//}
 
 	//bool Application::onKeyPressed(KeyPressedEvent & e)
 	//{
@@ -523,6 +532,7 @@ namespace Engine {
 		//float time = 0.f;
 
 		s_timestep = 0;
+		//ENG_CLIENT_INFO("FPS: {0}", (int)(1.0f / s_timestep));
 		
 		while (m_running)
 		{
@@ -567,10 +577,11 @@ namespace Engine {
 			//std::chrono::duration<float> diff = end - start;
 			//time += diff.count();
 
-			//	WindowResizeEvent e1(1024, 720);
-			//	onEvent(e1);
-			//	WindowCloseEvent e2;
-			//	onEvent(e2);
+			//m_timeSummed += s_timestep;
+			//if (m_timeSummed > 20.0f) {
+			//	m_timeSummed = 0.f;
+			//	m_goingUp = !m_goingUp;
+			//}
 
 			//if (time > 3.0f)
 			//{
@@ -628,9 +639,15 @@ namespace Engine {
 
 			m_Window->onUpdate(s_timestep);
 
+			//if (time > 3.0f)
+			//{
+			//	WindowResizeEvent e(1024, 720);
+			//	onEvent(e);
+			//	m_running = false;
+			//	//ENG_CORE_INFO("Time elapsed: {0}. Shutting down.", time);
+			//}
 			//end = std::chrono::high_resolution_clock::now();
 			//std::chrono::duration<float> diff = end - start;
-
 			//s_timestep = diff.count();
 			s_timestep = m_timer->getTimeSinceFrameStart();
 			ENG_CORE_INFO("FPS: {0}", (int)(1.0f / s_timestep));
@@ -640,7 +657,4 @@ namespace Engine {
 		//Timer timer = time - m_LastFrameTime;
 		//m_LastFrameTime = time;
 	}
-
-
-
 }

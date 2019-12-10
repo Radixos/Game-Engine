@@ -19,8 +19,8 @@ namespace Engine {
 		glm::vec3 m_scaleVec;
 		inline void calculateModel() {
 			m_translation = glm::translate(glm::mat4(1.0f), m_transVec);
-			m_rotation = glm::toMat4(glm::quat(m_rotVec));
-			m_scale = glm::scale(m_scaleVec);
+			//m_rotation = glm::toMat4(glm::quat(m_rotVec));
+			//m_scale = glm::scale(m_scaleVec);
 			m_model = m_translation * m_rotation * m_scale;
 		}
 	public:
@@ -62,14 +62,14 @@ namespace Engine {
 		{
 			std::pair<std::string, void*> data("u_model", (void*)&m_model[0][0]);
 			//ComponentMessage msg(ComponentMessageType::UniformSet, data);
-			sendMessage(msg);
+			//sendMessage(msg);
 		}
 		void onAttach(GameObject* owner) override
 		{
 			m_owner = owner;
 			std::pair<std::string, void*> data("u_model", (void*)&m_model[0][0]);
 			//ComponentMessage msg(ComponentMessageType::UniformSet, data);
-			sendMessage(msg);
+			//sendMessage(msg);
 		}
 	};
 }

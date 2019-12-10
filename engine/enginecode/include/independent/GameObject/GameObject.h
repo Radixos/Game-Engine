@@ -1,4 +1,6 @@
 #pragma once
+
+#include "engine_pch.h"
 #include <include\independent\Event\Event.h>
 #include <any>
 
@@ -30,7 +32,7 @@ namespace Engine {
 	class ComponentMessage
 	{
 	public:
-		ComponentMessage(ComponentMessage type, std::any data) : m_msgType(type), m_msgData(data) {};
+		//ComponentMessage(ComponentMessage type, std::any data) : m_msgType(type), m_msgData(data) {};
 		ComponentMessageType m_msgType;	//!<Message type
 		std::any m_msgData;	//!<Data associated with the message (could use a void *)
 	};

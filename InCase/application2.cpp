@@ -7,7 +7,7 @@
 #pragma region TempIncludes
 // temp includes
 #include <glad/glad.h>
-#include <gl/GL.h>
+//#include <gl/GL.h>
 //#include <glm/glm.hpp>
 //#include <glm/gtc/matrix_transform.hpp>
 #define STB_IMAGE_IMPLEMENTATION
@@ -17,21 +17,17 @@
 
 #include "core/application.h"
 #include "Event/EventSubclass.h"
-#include "include/independent/Rendering/Buffer.h"
+#include "Event/EventDispatcher.h"
 
 //#ifdef NG_PLATFORM_WINDOWS
 //#include "../platform/GLFW/GLFWWindowsSystem.h"
-//#endif
+//#endif // NG_PLATFORM_WINDOWS
 
 //#ifdef NG_PLATFORM_WINDOWS
-//m_windows = st::shared_ptr<Windows>(new GLFWWindowsSystem());
+//m_windows = std::shared_ptr<Windows>(new GLFWWindowsSystem());
 //#endif
 //m_windows->start();
-//ENG_CORE_INFO("Windows system initialised");
-
-#ifdef NG_PLATFORM_WINDOWS
-#include "include/platform/GLFW/WindowsWindow.h"
-#endif // NG_PLATFORM_WINDOWS
+//ENG_CORE_INFO("Windows system initialised");	//Needs #include "systems/Log.h" but doesn't work
 
 namespace Engine {
 	Application* Application::s_instance = nullptr;
@@ -52,17 +48,17 @@ namespace Engine {
 		m_logger.reset(new Log);
 		m_logger->start();
 		ENG_CORE_INFO("Logger started");
-		m_timer.reset(new Timer());
+		m_timer.reset(new Timer);
 		m_timer->start();
-		//m_timer->start();	//fix the cpp
-//#ifdef NG_PLATFORM_WINDOWS
-		m_Window = std::shared_ptr<Window>(Window::create());
-//#endif // NG_PLATFORM_WINDOWS
+		ENG_CORE_INFO("Timer initialised");
+
+		// Create window
+		m_system.reset(new GLFWWindowsSystem);
+		m_system->start();
+		//m_Window = std::shared_ptr<Window>(Window::create());
+		m_Window.reset(Window::create());
 		//m_Window->start();
 		ENG_CLIENT_INFO("Windows system initialised");
-		
-		// Create window
-		m_Window = std::shared_ptr<Window>(Window::create());
 		m_Window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 		// Set screen res
 		Application::s_screenResolution = glm::ivec2(m_Window->getWidth(), m_Window->getHeight());
@@ -117,10 +113,8 @@ namespace Engine {
 		glEnableVertexAttribArray(1);
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(sizeof(float) * 3)); // (pos 1 (colour), 3 floats, float, not normalised, 6 float between each data line, start at 3)
 
-	
 		glCreateBuffers(1, &m_FCindexBuffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_FCindexBuffer);
-
 
 
 		unsigned int indices[3 * 12] = {
@@ -163,11 +157,6 @@ namespace Engine {
 					colour = vec4(fragmentColour, 1.0);
 				}
 		)";
-
-		BufferLayout FClayout = {
-			{ShaderDataType::Float3},
-			{ShaderDataType::Float3},
-		}; //FClayout in buffer (vertex)?
 
 		GLuint FCVertShader = glCreateShader(GL_VERTEX_SHADER);
 
@@ -243,8 +232,8 @@ namespace Engine {
 		glGenVertexArrays(1, &m_TPvertexArray);
 		glBindVertexArray(m_TPvertexArray);
 
-		glCreateBuffers(1, &m_TPvertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_TPvertexBuffer);
+		//glCreateBuffers(1, &m_TPvertexBuffer);
+		//glBindBuffer(GL_ARRAY_BUFFER, m_TPvertexBuffer);
 
 
 		float TPvertices[8 * 24] = {
@@ -283,9 +272,10 @@ namespace Engine {
 		glEnableVertexAttribArray(2);
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(sizeof(float) * 6)); // (pos 1 (normal), 3 floats, float, not normalised, 6 float between each data line, start at 3)
 
-		glCreateBuffers(1, &m_TPindexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_TPindexBuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+		m_TPVertexBuffer.reset(VertexBuffer::create(TPvertices,sizeof(TPvertices),TPlayout));
+		//glCreateBuffers(1, &m_TPindexBuffer);
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_TPindexBuffer);
+		//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 		std::string TPvertSrc = R"(
 				#version 440 core
@@ -478,12 +468,21 @@ namespace Engine {
 
 	void Application::onEvent(Event & e)	//Slide 34 Week2 to finish
 	{
-		if (e.getEventType() == EventType::WindowResize)
-		{
-			//Cast the event
-			WindowResizeEvent resize = (WindowResizeEvent&)e;
-			ENG_CORE_INFO("Window resize event. Width {0}. Height {1}", resize.getWidth(), resize.getHeight());
-		}
+		//if (e.getEventType() == EventType::WindowResize)
+		//{
+		//	//Cast the event
+		//	WindowResizeEvent resize = (WindowResizeEvent&)e;
+		//	ENG_CORE_INFO("Window resize event. Width {0}. Height {1}", resize.getWidth(), resize.getHeight());
+		//
+		//	EventDispatcher dispatcher(e);
+		//	dispatcher.dispatch<WindowCloseEvent>(std::bind(&Application::onClose, this, std::placeholders::_1));
+		//	dispatcher.dispatch<WindowResizeEvent>(std::bind(&Application::onResize, this, std::placeholders::_1));
+		//}
+
+		EventDispatcher dispatcher(e);
+		dispatcher.dispatch<WindowCloseEvent>(std::bind(&Application::onClose, this, std::placeholders::_1));
+		dispatcher.dispatch<WindowResizeEvent>(std::bind(&Application::onResize, this, std::placeholders::_1));
+		//dispatcher.dispatch<WindowMoveEvent>(std::bind(&Application::onMove, this, std::placeholders::_1));
 	}
 
 	bool Application::onClose(WindowCloseEvent & e)
@@ -498,6 +497,11 @@ namespace Engine {
 		ENG_CORE_INFO("Resize window to {0}x{1}", e.getWidth(), e.getHeight());
 		return true;
 	}
+
+	//bool Application::onMove(WindowMoveEvent & e)
+	//{
+	//	ENG_CORE_INFO("Window moved to {0}x{1}", e.)
+	//}
 
 	//bool Application::onKeyPressed(KeyPressedEvent & e)
 	//{
@@ -516,16 +520,17 @@ namespace Engine {
 		////delta = 1.0-timestep;
 		////timestep/delta;
 
-		std::chrono::high_resolution_clock::time_point start, end;
+		//std::chrono::high_resolution_clock::time_point start, end;
 		////start = std::chrono::high_resolution_clock::now();
 		//float time = 0.f;
 
 		s_timestep = 0;
-		//ENG_CLIENT_INFO("FPS: {0}", (int)(1.0f / s_timestep));
 		
 		while (m_running)
 		{
-			start = std::chrono::high_resolution_clock::now();
+			m_timer->setFrameStart();
+
+			//start = std::chrono::high_resolution_clock::now();
 
 			glClearColor(0, 0, 1, 1);	//blue
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -552,7 +557,11 @@ namespace Engine {
 				TPtranslation = glm::translate(TPmodel, glm::vec3(0.0f, 0.2f * s_timestep, 0.0f));
 			}
 
-
+			if (m_timer->getTimeSinceMarkerStart() > 2.0f)
+			{
+				m_timer->setMarkerStart();
+				m_goingUp = !m_goingUp;
+			}
 
 			//m_Window->onUpdate(time);	//??? Does it make sense?
 			//ENG_CLIENT_TRACE("Delta time: {0}", time/*(int)(1.0f/time)*/);
@@ -560,11 +569,18 @@ namespace Engine {
 			//std::chrono::duration<float> diff = end - start;
 			//time += diff.count();
 
-			m_timeSummed += s_timestep;
-			if (m_timeSummed > 20.0f) {
-				m_timeSummed = 0.f;
-				m_goingUp = !m_goingUp;
-			}
+			//	WindowResizeEvent e1(1024, 720);
+			//	onEvent(e1);
+			//	WindowCloseEvent e2;
+			//	onEvent(e2);
+
+			//if (time > 3.0f)
+			//{
+			//	WindowResizeEvent e(1024, 720);
+			//	onEvent(e);
+			//	m_running = false;
+			//	//ENG_CORE_INFO("Time elapsed: {0}. Shutting down.", time);
+			//}
 
 			FCmodel = glm::rotate(FCtranslation, glm::radians(20.f) * s_timestep, glm::vec3(0.f, 1.f, 0.f)); // Spin the cube at 20 degrees per second
 			TPmodel = glm::rotate(TPtranslation, glm::radians(-20.f) * s_timestep, glm::vec3(0.f, 1.f, 0.f)); // Spin the cube at 20 degrees per second
@@ -614,23 +630,17 @@ namespace Engine {
 
 			m_Window->onUpdate(s_timestep);
 
-			//if (time > 3.0f)
-			//{
-			//	WindowResizeEvent e(1024, 720);
-			//	onEvent(e);
-			//	m_running = false;
-			//	//ENG_CORE_INFO("Time elapsed: {0}. Shutting down.", time);
-			//}
-			end = std::chrono::high_resolution_clock::now();
-			std::chrono::duration<float> diff = end - start;
-			s_timestep = diff.count();
+			//end = std::chrono::high_resolution_clock::now();
+			//std::chrono::duration<float> diff = end - start;
+
+			//s_timestep = diff.count();
+			s_timestep = m_timer->getTimeSinceFrameStart();
+			ENG_CORE_INFO("FPS: {0}", (int)(1.0f / s_timestep));
 		}
 		
 		//float time = (float) glfwGetTime();	//!< Getting time
 		//Timer timer = time - m_LastFrameTime;
 		//m_LastFrameTime = time;
 	}
-
-
 
 }
