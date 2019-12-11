@@ -83,6 +83,13 @@ namespace Engine {
 			callback(event);
 		});
 
+		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
+		{
+			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
+			MouseMoved event(xPos, yPos);
+			callback(event);
+		});
+
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
 		{
 			std::function<void(Event&)>& callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
@@ -102,13 +109,38 @@ namespace Engine {
 			}
 			}
 		});
-		//MAKE MOUSEMOVECALLBACK??
 
-		//glfwSetMouseMoveCallback(m_Window, [](GLFWwindow* window, int X, int Y)
+		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int unicodeCodePoint)
+		{
+			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
+			KeyTyped event(unicodeCodePoint);
+			callback(event);
+			std::cout << (char)unicodeCodePoint;
+		});
+
+		/*glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int keycode, int action, int repeatCount)
+		{
+			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
+			switch (action)
+			{
+			case KEY_PRESS:
+			{
+				KeyPressed event(keycode);
+				callback(event);
+				break;
+			}
+			case KEY_RELEASE:
+			{
+				KeyReleased event(keycode);
+				callback(event);
+				break;
+			}
+			}
+		});*/
+
+		//glfwSetScrollCallback(m_Window, [](GLFWwindow* window, float Xoffset, float Yoffset)
 		//{
-		//	std::function<void(Event&)>& callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
-		//	if (MOUSE_MOVED)
-		//		std::cout<<"Mouse nm"
+
 		//});
 	}
 

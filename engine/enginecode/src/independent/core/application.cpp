@@ -7,7 +7,6 @@
 #pragma region TempIncludes
 // temp includes
 #include <glad/glad.h>
-//#include <glm/glm.hpp>
 //#include <glm/gtc/matrix_transform.hpp>
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
@@ -30,6 +29,7 @@
 
 #ifdef NG_PLATFORM_WINDOWS
 #include "include/platform/GLFW/WindowsWindow.h"
+//#include "include/platform/GLFW/InputPoller.h"
 #endif // NG_PLATFORM_WINDOWS
 
 namespace Engine {
@@ -59,11 +59,12 @@ namespace Engine {
 		m_system->start();
 		//m_Window = std::shared_ptr<Window>(Window::create());
 		m_Window.reset(Window::create());
+		m_Window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 		//m_Window->start();
 		ENG_CLIENT_INFO("Windows system initialised");
 		// Create window
 		m_Window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
-		// Set screen res
+		// Set screen resolution
 		Application::s_screenResolution = glm::ivec2(m_Window->getWidth(), m_Window->getHeight());
 
 #pragma region TempSetup
@@ -251,12 +252,6 @@ namespace Engine {
 
 		glDetachShader(m_FCprogram, FCVertShader);
 		glDetachShader(m_FCprogram, FCFragShader);
-
-
-
-
-
-
 
 
 
@@ -489,26 +484,75 @@ namespace Engine {
 		EventDispatcher dispatcher(e);
 		dispatcher.dispatch<WindowCloseEvent>(std::bind(&Application::onClose, this, std::placeholders::_1));
 		dispatcher.dispatch<WindowResizeEvent>(std::bind(&Application::onResize, this, std::placeholders::_1));
-		//dispatcher.dispatch<WindowMoveEvent>(std::bind(&Application::onMove, this, std::placeholders::_1));
+		dispatcher.dispatch<WindowLostFocus>(std::bind(&Application::onLostFocus, this, std::placeholders::_1));
+		dispatcher.dispatch<MouseMoved>(std::bind(&Application::onMouseMoved, this, std::placeholders::_1));
+		dispatcher.dispatch<MouseButtonPressed>(std::bind(&Application::onMouseButtonPressed, this, std::placeholders::_1));
+		dispatcher.dispatch<MouseButtonReleased>(std::bind(&Application::onMouseButtonReleased, this, std::placeholders::_1));
 	}
 
-	bool Application::onClose(WindowCloseEvent & e)
+	bool Application::onClose(WindowCloseEvent& e)
 	{
 		ENG_CORE_INFO("Closing application.");
 		m_running = false;	//solve m_running problem and don't forget about application.cpp and t2 in it
 		return true;
 	}
 
-	bool Application::onResize(WindowResizeEvent & e)
+	bool Application::onResize(WindowResizeEvent& e)
 	{
 		ENG_CORE_INFO("Resize window to {0}x{1}", e.getWidth(), e.getHeight());
 		return true;
 	}
 
-	//bool Application::onMove(WindowMoveEvent & e)
+	bool Application::onLostFocus(WindowLostFocus& e)
+	{
+		ENG_CORE_INFO("Window lost focus on Pos X: {0} / Pos Y: {1}", e.getposX(), e.getposY());
+		return true;
+	}
+
+	bool Application::onMouseMoved(MouseMoved& e)
+	{
+		ENG_CORE_INFO("Mouse current Pos X: {0} | {1}", e.getoffsetX(), e.getoffsetY());
+		return true;
+	}
+
+	bool Application::onMouseButtonPressed(MouseButtonPressed& e)
+	{
+		if (e.getButton() == GLFW_MOUSE_BUTTON_LEFT) std::cout << "Left Mouse Button pressed" << std::endl;
+		if (e.getButton() == GLFW_MOUSE_BUTTON_MIDDLE) std::cout << "Middle Mouse Button pressed" << std::endl;
+		if (e.getButton() == GLFW_MOUSE_BUTTON_RIGHT) std::cout << "Right Mouse Button pressed" << std::endl;
+		return true;
+	}
+
+	bool Application::onMouseButtonReleased(MouseButtonReleased& e)
+	{
+		if (e.getButton() == GLFW_MOUSE_BUTTON_LEFT) std::cout << "Left Mouse Button released" << std::endl;
+		if (e.getButton() == GLFW_MOUSE_BUTTON_MIDDLE) std::cout << "Middle Mouse Button released" << std::endl;
+		if (e.getButton() == GLFW_MOUSE_BUTTON_RIGHT) std::cout << "Right Mouse Button released" << std::endl;
+		return true;
+	}
+
+	//bool Application::onMouseScrolled(MouseScrolled& e)
 	//{
-	//	ENG_CORE_INFO("Window moved to {0}x{1}", e.)
+	//	if(e.get == GLFW)
 	//}
+
+	bool Application::onKeyPressed(KeyPressed& e)
+	{
+		//ENG_CORE_ASSERT("Key {0} pressed.", e.getKeycode);
+		return true;
+	}
+
+	bool Application::onKeyReleased(KeyReleased& e)
+	{
+		//ENG_CORE_ASSERT("Key {0} released.", e.getKeycode());
+		return true;
+	}
+
+	bool Application::onKeyTyped(KeyTyped& e)
+	{
+		ENG_CORE_INFO("Key {0} typed", e.getKeycode());	//Why the text doesn't show up? (Check WindowsWindow.cpp)
+		return true;
+	}
 
 	//bool Application::onKeyPressed(KeyPressedEvent & e)
 	//{

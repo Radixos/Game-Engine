@@ -52,9 +52,16 @@ namespace Engine {
 		float m_LastFrameTime = 0.0f;
 		bool m_running = true;
 
-		bool onClose(WindowCloseEvent& e);	//!< On close event
-		bool onResize(WindowResizeEvent& e);	//!< On resize event
-		//bool onMove(WindowMoveEvent& e);
+		bool onClose(WindowCloseEvent& e);	//!<On close event
+		bool onResize(WindowResizeEvent& e);	//!<On resize event
+		bool onLostFocus(WindowLostFocus& e);	//!<On lost focus event
+		bool onMouseMoved(MouseMoved& e);	//!<On mouse moved event
+		bool onMouseButtonPressed(MouseButtonPressed& e);	//!<On mouse button pressed
+		bool onMouseButtonReleased(MouseButtonReleased& e);	//!<On mouse button released
+		//bool onMouseScrolled(MouseScrolled& e);	//!<On mouse scrolled
+		bool onKeyPressed(KeyPressed& e);	//!<On key pressed
+		bool onKeyReleased(KeyReleased& e);	//!<On key released
+		bool onKeyTyped(KeyTyped& e);	//!<On key Typed
 
 		static float s_timestep; //!< last frame timestep
 		static glm::ivec2 s_screenResolution; //!< Screen res
