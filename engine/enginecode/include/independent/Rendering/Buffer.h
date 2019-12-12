@@ -15,7 +15,7 @@ namespace Engine {
 		unsigned int m_offset;
 		bool m_normalised;
 
-		BufferElement() {}
+		BufferElement() {}	//!<Default constructor
 		BufferElement(ShaderDataType dataType, bool normalised = false) :
 			m_dataType(dataType), m_size(ShaderDataTypeSize(dataType)), m_offset(0), m_normalised(normalised) {};
 
@@ -73,12 +73,17 @@ namespace Engine {
 		std::vector<BufferElement>::iterator end() { return m_Elements.end(); }
 		std::vector<BufferElement>::const_iterator begin() const { return m_Elements.begin(); }
 		std::vector<BufferElement>::const_iterator end() const { return m_Elements.end(); }
+		
 		void addElement(ShaderDataType datatype)
 		{
 			m_Elements.push_back(BufferElement(datatype));
 			calcStrideAndOffsets();
 		}
+	
 	private:
+		std::vector<BufferElement> m_Elements;	// Buffer elements
+		unsigned int m_Stride = 0;	// Stride - distance between data lines
+		
 		void calcStrideAndOffsets()	// Calculate the stride distance and the offset for each element
 		{
 			size_t offset = 0;
@@ -90,9 +95,6 @@ namespace Engine {
 				m_Stride += element.m_size;
 			}
 		}
-	private:
-		std::vector<BufferElement> m_Elements;	// Buffer elements
-		unsigned int m_Stride = 0;	// Stride - distance between data lines
 	};
 
 	class VertexBuffer

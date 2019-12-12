@@ -14,6 +14,7 @@
 #include "../platform/GLFW/GLFWWindowsSystem.h"
 #endif // NG_PLATFORM_WINDOWS
 #include <include\independent\Rendering\Buffer.h>
+#include <include\platform\OpenGL\OpenGLShader.h>
 
 namespace Engine {
 
@@ -36,6 +37,9 @@ namespace Engine {
 		std::shared_ptr<VertexBuffer> m_TPVertexBuffer;
 		std::shared_ptr<IndexBuffer> m_FCindexBuffer;
 		std::shared_ptr<IndexBuffer> m_TPindexBuffer;
+
+		std::shared_ptr<OpenGLShader> m_FCShader;
+		std::shared_ptr<OpenGLShader> m_TPShader;
 
 		BufferLayout m_TPlayout = {
 			{ShaderDataType::Float3},
@@ -62,6 +66,8 @@ namespace Engine {
 		bool onKeyPressed(KeyPressed& e);	//!<On key pressed
 		bool onKeyReleased(KeyReleased& e);	//!<On key released
 		bool onKeyTyped(KeyTyped& e);	//!<On key Typed
+
+		int temp = 0;
 
 		static float s_timestep; //!< last frame timestep
 		static glm::ivec2 s_screenResolution; //!< Screen res

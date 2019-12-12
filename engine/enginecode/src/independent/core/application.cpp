@@ -58,7 +58,9 @@ namespace Engine {
 		m_system.reset(new GLFWWindowsSystem);
 		m_system->start();
 		//m_Window = std::shared_ptr<Window>(Window::create());
+#ifdef NG_PLATFORM_WINDOWS
 		m_Window.reset(Window::create());
+#endif // NG_PLATFORM_WINDOWS
 		m_Window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 		//m_Window->start();
 		ENG_CLIENT_INFO("Windows system initialised");
@@ -76,21 +78,6 @@ namespace Engine {
 		// Enabling backface culling to ensure triangle vertices are correct ordered (CCW)
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
-
-		unsigned int indices[3 * 12] = {
-			2, 1, 0,
-			0, 3, 2,
-			4, 5, 6,
-			6, 7, 4,
-			8, 9, 10,
-			10, 11, 8,
-			14, 13, 12,
-			12, 15, 14,
-			18, 17, 16,
-			16, 19, 18,
-			20, 21, 22,
-			22, 23, 20
-		};
 
 		float FCvertices[6 * 24] = {
 			-0.5f, -0.5f, -0.5f, 0.8f, 0.2f, 0.2f, // red square
@@ -146,6 +133,20 @@ namespace Engine {
 			0.5f,  -0.5f, 0.5f,  1.f, 0.f, 0.f, 0.66f, 1.0f
 		};
 
+		unsigned int indices[3 * 12] = {
+			2, 1, 0,
+			0, 3, 2,
+			4, 5, 6,
+			6, 7, 4,
+			8, 9, 10,
+			10, 11, 8,
+			14, 13, 12,
+			12, 15, 14,
+			18, 17, 16,
+			16, 19, 18,
+			20, 21, 22,
+			22, 23, 20
+		};
 
 		glGenVertexArrays(1, &m_FCvertexArray);
 		glBindVertexArray(m_FCvertexArray);
@@ -609,7 +610,14 @@ namespace Engine {
 				TPtranslation = glm::translate(TPmodel, glm::vec3(0.0f, 0.2f * s_timestep, 0.0f));
 			}
 
-			if (m_timer->getTimeSinceMarkerStart() > 2.0f)
+			//if (m_timer->getTimeSinceMarkerStart() == 2.0f && temp == 0)
+			//{
+			//	m_timer->setMarkerStart();
+			//	m_goingUp = !m_goingUp;
+			//	temp++;
+			//}
+
+			if (m_timer->getTimeSinceMarkerStart() > 4.0f /*&& temp > 0*/)
 			{
 				m_timer->setMarkerStart();
 				m_goingUp = !m_goingUp;
@@ -658,8 +666,12 @@ namespace Engine {
 			MVPLoc = glGetUniformLocation(m_TPprogram, "u_MVP");
 			glUniformMatrix4fv(MVPLoc, 1, GL_FALSE, &tpMVP[0][0]);
 
+			//GLuint loc;
+
 			GLuint modelLoc = glGetUniformLocation(m_TPprogram, "u_model");
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &TPmodel[0][0]);
+
+			//m_FCShader->uploadMat4("u_MVP", &fcMVP[0][0]);
 
 			GLuint colLoc = glGetUniformLocation(m_TPprogram, "u_objectColour");
 			glUniform3f(colLoc, 0.2f, 0.8f, 0.5f);
