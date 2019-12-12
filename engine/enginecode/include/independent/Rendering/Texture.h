@@ -3,8 +3,10 @@
 */
 #pragma once
 
-//namespace Engine
-//{
+#include <sstream>
+
+namespace Engine
+{
 	class Texture
 	{
 	public:
@@ -16,4 +18,4 @@
 		static Texture* createFromFile(const std::string& filepath);	//!<Create an API specific texture
 		static Texture* createFromRawData(unsigned int width, unsigned int height, unsigned int channels, unsigned char* texData);	//!<Create an API specific texture
 	};
-//}
+}

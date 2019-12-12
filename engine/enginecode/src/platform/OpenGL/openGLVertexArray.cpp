@@ -23,7 +23,6 @@ namespace Engine {
 	case ShaderDataType::Mat4:		return GL_FLOAT;
 	case ShaderDataType::Bool:		return GL_BOOL;
 	}
-
 	return 0;
 }
 
