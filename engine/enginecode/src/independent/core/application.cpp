@@ -79,6 +79,8 @@ namespace Engine {
 		// Set screen resolution
 		Application::s_screenResolution = glm::ivec2(m_Window->getWidth(), m_Window->getHeight());
 
+		m_FCVAO.reset(VertexArray::create());
+
 #pragma region TempSetup
 		//  Temporary set up code to be abstracted
 
@@ -157,10 +159,6 @@ namespace Engine {
 			20, 21, 22,
 			22, 23, 20
 		};
-
-		m_FCVAO.reset(VertexArray::create());
-		//glGenVertexArrays(1, &m_FCvertexArray);
-		//glBindVertexArray(m_FCvertexArray);
 
 		m_FClayout = { ShaderDataType::Float3, ShaderDataType::Float3 };
 		m_FCVertexBuffer.reset(VertexBuffer::create(FCvertices, sizeof(FCvertices), m_FClayout));
