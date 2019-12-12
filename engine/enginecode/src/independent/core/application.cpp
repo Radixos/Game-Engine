@@ -80,6 +80,7 @@ namespace Engine {
 		Application::s_screenResolution = glm::ivec2(m_Window->getWidth(), m_Window->getHeight());
 
 		m_FCVAO.reset(VertexArray::create());
+		m_TPVAO.reset(VertexArray::create());
 
 #pragma region TempSetup
 		//  Temporary set up code to be abstracted
@@ -160,7 +161,7 @@ namespace Engine {
 			22, 23, 20
 		};
 
-		m_FClayout = { ShaderDataType::Float3, ShaderDataType::Float3 };
+		//m_FClayout = { ShaderDataType::Float3, ShaderDataType::Float3 };
 		m_FCVertexBuffer.reset(VertexBuffer::create(FCvertices, sizeof(FCvertices), m_FClayout));
 		m_FCVAO->setVertexBuffer(m_FCVertexBuffer);
 
@@ -274,19 +275,26 @@ namespace Engine {
 
 		// Added textuer phong shader and cube
 
-		glGenVertexArrays(1, &m_TPvertexArray);
-		glBindVertexArray(m_TPvertexArray);
-
 		m_TPVertexBuffer.reset(VertexBuffer::create(TPvertices, sizeof(TPvertices), m_TPlayout));
-		
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0); // (pos 0 (pos), 3 floats, float, not normalised, 6 float between each data line, start at 0)
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(sizeof(float) * 3)); // (pos 1 (normal), 3 floats, float, not normalised, 6 float between each data line, start at 3)
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(sizeof(float) * 6)); // (pos 1 (normal), 3 floats, float, not normalised, 6 float between each data line, start at 3)
+		m_TPVAO->setVertexBuffer(m_TPVertexBuffer);
+
 
 		m_TPindexBuffer.reset(IndexBuffer::create(indices, sizeof(indices)));
+		m_TPVAO->setindexBuffer(m_TPindexBuffer);
+
+		//glGenVertexArrays(1, &m_TPvertexArray);
+		//glBindVertexArray(m_TPvertexArray);
+
+		//m_TPVertexBuffer.reset(VertexBuffer::create(TPvertices, sizeof(TPvertices), m_TPlayout));
+		//
+		//glEnableVertexAttribArray(0);
+		//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0); // (pos 0 (pos), 3 floats, float, not normalised, 6 float between each data line, start at 0)
+		//glEnableVertexAttribArray(1);
+		//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(sizeof(float) * 3)); // (pos 1 (normal), 3 floats, float, not normalised, 6 float between each data line, start at 3)
+		//glEnableVertexAttribArray(2);
+		//glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(sizeof(float) * 6)); // (pos 1 (normal), 3 floats, float, not normalised, 6 float between each data line, start at 3)
+
+		//m_TPindexBuffer.reset(IndexBuffer::create(indices, sizeof(indices)));
 
 		std::string TPvertSrc = R"(
 				#version 440 core
@@ -666,15 +674,16 @@ namespace Engine {
 
 			glm::mat4 tpMVP = projection * view * TPmodel;
 			unsigned int texSlot;
+
 			if (m_goingUp) texSlot = m_textureSlots[0];
 			else texSlot = m_textureSlots[1];
 
 			glUseProgram(m_TPprogram);
-			glBindVertexArray(m_TPvertexArray);
-
+			//glBindVertexArray(m_TPvertexArray);
+			m_TPVAO->bind();
 			MVPLoc = glGetUniformLocation(m_TPprogram, "u_MVP");
 			glUniformMatrix4fv(MVPLoc, 1, GL_FALSE, &tpMVP[0][0]);
-
+			
 			//GLuint loc;
 
 			GLuint modelLoc = glGetUniformLocation(m_TPprogram, "u_model");
@@ -697,7 +706,7 @@ namespace Engine {
 			GLuint texDataLoc = glGetUniformLocation(m_TPprogram, "u_texData");
 			glUniform1i(texDataLoc, texSlot);
 
-			glDrawElements(GL_TRIANGLES, 3 * 12, GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, m_TPVAO->getDrawCount(), GL_UNSIGNED_INT, nullptr);
 
 			// End temporary code
 #pragma endregion TempDrawCode

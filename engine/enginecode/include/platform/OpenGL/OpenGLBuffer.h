@@ -9,8 +9,8 @@ namespace Engine {
 		OpenGLVertexBuffer(float* vertices, unsigned int size, BufferLayout& layout);
 		~OpenGLVertexBuffer() override;
 
-		void Bind() const override;
-		void Unbind() const override;
+		void bind() const override;
+		void unBind() const override;
 		void edit(float* vertices, unsigned int size, unsigned int offset) override {};
 		const BufferLayout& GetLayout() const override { return m_Layout; };
 		void SetLayout(const BufferLayout& layout) override { m_Layout = layout; };
@@ -25,8 +25,8 @@ namespace Engine {
 		OpenGLIndexBuffer(unsigned int* indices, unsigned int size);
 		~OpenGLIndexBuffer() override;
 
-		void Bind() const override;
-		void Unbind() const override;
+		void bind() const override;
+		void unBind() const override;
 		unsigned int GetCount() const override { return m_Count; };
 	private:
 		unsigned int m_RendererID;

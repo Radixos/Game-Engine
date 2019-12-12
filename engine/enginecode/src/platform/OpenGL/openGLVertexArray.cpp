@@ -36,19 +36,25 @@ namespace Engine {
 	void OpenGLVertexArray::bind() const
 	{
 		glBindVertexArray(m_id);
+		m_vertexBuffer->bind();
+		m_indexBuffer->bind();
 	}
 
 	void OpenGLVertexArray::unbind() const
 	{
 		glBindVertexArray(0);
+		m_vertexBuffer->unBind();
+		m_indexBuffer->unBind();
 	}
 
-	void OpenGLVertexArray::setVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBeffer)
+	void OpenGLVertexArray::setVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
 	{
-		m_vertexBuffer = vertexBeffer;
+		glBindVertexArray(m_id);
+		vertexBuffer->bind();
+		m_vertexBuffer = vertexBuffer;
 
 		unsigned int index = 0;
-		auto layout = vertexBeffer->GetLayout();
+		auto layout = vertexBuffer->GetLayout();
 		for (auto element : layout)
 		{
 			glEnableVertexAttribArray(index);
@@ -76,6 +82,9 @@ namespace Engine {
 
 	void OpenGLVertexArray::setindexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer)
 	{
+		glBindVertexArray(m_id);
+		indexBuffer->bind();
+
 		m_indexBuffer = indexBuffer;
 	}
 }

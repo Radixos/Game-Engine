@@ -35,6 +35,7 @@ namespace Engine {
 		std::shared_ptr<Window> m_Window;
 		std::shared_ptr<GLFWWindowsSystem> m_system;
 		std::shared_ptr<VertexArray> m_FCVAO;
+		std::shared_ptr<VertexArray> m_TPVAO;
 		std::shared_ptr<VertexBuffer> m_FCVertexBuffer;
 		std::shared_ptr<VertexBuffer> m_TPVertexBuffer;
 		std::shared_ptr<IndexBuffer> m_FCindexBuffer;
