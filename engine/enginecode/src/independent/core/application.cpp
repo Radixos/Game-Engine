@@ -1,6 +1,16 @@
 /** \file application.cpp
 */
 
+/* 
+Composable Game Objects
+Layer Stack
+Draw 2D text
+Cameras
+JSON Loader
+Testing
+dOxygen
+Report
+*/
 
 #include "engine_pch.h"
 
@@ -8,7 +18,7 @@
 // temp includes
 #include <glad/glad.h>
 //#include <glm/gtc/matrix_transform.hpp>
-#define STB_IMAGE_IMPLEMENTATION
+
 #include <stb_image.h>
 
 #pragma endregion TempIncludes
@@ -148,17 +158,17 @@ namespace Engine {
 			22, 23, 20
 		};
 
-		glGenVertexArrays(1, &m_FCvertexArray);
-		glBindVertexArray(m_FCvertexArray);
+		m_FCVAO.reset(VertexArray::create());
+		//glGenVertexArrays(1, &m_FCvertexArray);
+		//glBindVertexArray(m_FCvertexArray);
 
+		m_FClayout = { ShaderDataType::Float3, ShaderDataType::Float3 };
 		m_FCVertexBuffer.reset(VertexBuffer::create(FCvertices, sizeof(FCvertices), m_FClayout));
+		m_FCVAO->setVertexBuffer(m_FCVertexBuffer);
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0); // (pos 0 (pos), 3 floats, float, not normalised, 6 float between each data line, start at 0)
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(sizeof(float) * 3)); // (pos 1 (colour), 3 floats, float, not normalised, 6 float between each data line, start at 3)
-
+		
 		m_FCindexBuffer.reset(IndexBuffer::create(indices ,sizeof(indices)));
+		m_FCVAO->setindexBuffer(m_FCindexBuffer);
 
 		std::string FCvertSrc = R"(
 				#version 440 core
@@ -650,10 +660,11 @@ namespace Engine {
 
 			glm::mat4 fcMVP = projection * view * FCmodel;
 			glUseProgram(m_FCprogram);
-			glBindVertexArray(m_FCvertexArray);
+			//glBindVertexArray(m_FCvertexArray);
+			m_FCVAO->bind();
 			GLuint MVPLoc = glGetUniformLocation(m_FCprogram, "u_MVP");
 			glUniformMatrix4fv(MVPLoc, 1, GL_FALSE, &fcMVP[0][0]);
-			glDrawElements(GL_TRIANGLES, 3 * 12, GL_UNSIGNED_INT, nullptr);
+			glDrawElements(GL_TRIANGLES, m_FCVAO->getDrawCount() , GL_UNSIGNED_INT, nullptr);
 
 			glm::mat4 tpMVP = projection * view * TPmodel;
 			unsigned int texSlot;

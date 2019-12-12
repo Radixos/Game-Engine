@@ -14,6 +14,7 @@
 #include "../platform/GLFW/GLFWWindowsSystem.h"
 #endif // NG_PLATFORM_WINDOWS
 #include <include\independent\Rendering\Buffer.h>
+#include <include\independent\Rendering\VertexArray.h>
 #include <include\platform\OpenGL\OpenGLShader.h>
 
 namespace Engine {
@@ -33,6 +34,7 @@ namespace Engine {
 		std::shared_ptr<Timer> m_timer;
 		std::shared_ptr<Window> m_Window;
 		std::shared_ptr<GLFWWindowsSystem> m_system;
+		std::shared_ptr<VertexArray> m_FCVAO;
 		std::shared_ptr<VertexBuffer> m_FCVertexBuffer;
 		std::shared_ptr<VertexBuffer> m_TPVertexBuffer;
 		std::shared_ptr<IndexBuffer> m_FCindexBuffer;

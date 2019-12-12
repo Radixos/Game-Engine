@@ -1,6 +1,7 @@
 /**file VertexArray.h 
 */
-#include "engine_pch.h"
+#pragma once
+
 #include "Buffer.h"
 namespace Engine {
 	class VertexArray {
