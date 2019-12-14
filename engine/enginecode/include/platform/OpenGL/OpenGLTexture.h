@@ -8,7 +8,7 @@ namespace Engine
 	{
 	public:
 		OpenGLTexture(const std::string& filepath);
-		OpenGLTexture(unsigned int width,unsigned int height, unsigned int channels, unsigned char* textData);
+		//OpenGLTexture(unsigned int width,unsigned int height, unsigned int channels, unsigned char* textData);
 		unsigned int getWidth() const override { return m_width; }
 		unsigned int getHeight() const override { return m_height; };
 		unsigned int getChannels() const override { return m_channels; };
@@ -16,9 +16,9 @@ namespace Engine
 	private:
 		static unsigned int s_textureSlot;
 
-		std::string& m_filepath;
-		unsigned int m_width;
-		unsigned int m_height;
+		const std::string& m_filepath;
+		int m_width;	//was unsigned
+		int m_height;	//was unsigned
 		unsigned int m_textureSlot;
 		unsigned int m_texID;
 		int m_channels;

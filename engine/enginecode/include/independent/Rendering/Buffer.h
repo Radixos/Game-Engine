@@ -97,6 +97,65 @@ namespace Engine {
 		}
 	};
 
+	////////////////////////////////////////////////////////////////////////////////////////// TO CHECK
+
+	class UniformBufferElement
+	{
+	public:
+		ShaderDataType m_dataType;
+		unsigned int m_size;
+		unsigned int m_offset;
+		bool m_normalised;
+
+		UniformBufferElement() {}	//!<Default constructor
+		UniformBufferElement(ShaderDataType dataType, bool normalised = false) :
+			m_dataType(dataType), m_size(ShaderDataTypeSize(dataType)), m_offset(0), m_normalised(normalised) {};
+	};
+
+	class UniformBufferLayout
+	{
+	public:
+		UniformBufferLayout() {};	//!<Default constructor
+
+		UniformBufferLayout(const std::initializer_list<UniformBufferElement>& elements)	//!<Constructor through which layout elements are passed
+			: m_Elements(elements)
+		{
+			calcStrideAndOffsets();
+		}
+
+		inline unsigned int GetStride() const { return m_Stride; }	//uint32_t=unsigned int ???
+		inline const std::vector<UniformBufferElement>& GetElements() const { return m_Elements; }
+
+		std::vector<UniformBufferElement>::iterator begin() { return m_Elements.begin(); }
+		std::vector<UniformBufferElement>::iterator end() { return m_Elements.end(); }
+		std::vector<UniformBufferElement>::const_iterator begin() const { return m_Elements.begin(); }
+		std::vector<UniformBufferElement>::const_iterator end() const { return m_Elements.end(); }
+
+		void addElement(ShaderDataType datatype)
+		{
+			m_Elements.push_back(UniformBufferElement(datatype));
+			calcStrideAndOffsets();
+		}
+
+	private:
+		std::vector<UniformBufferElement> m_Elements;	// Buffer elements
+		unsigned int m_Stride = 0;	// Stride - distance between data lines
+
+		void calcStrideAndOffsets()	// Calculate the stride distance and the offset for each element
+		{
+			size_t offset = 0;
+			m_Stride = 0;
+			for (auto& element : m_Elements)
+			{
+				element.m_offset = offset;
+				offset += element.m_size;
+			}
+			m_Stride = offset;
+		}
+	};
+
+	////////////////////////////////////////////////////////////////////////////////////////// END TO CHECK
+
 	class VertexBuffer
 	{
 	public:
