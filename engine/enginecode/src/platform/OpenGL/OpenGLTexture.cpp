@@ -3,7 +3,6 @@
 
 #include <glad/glad.h>
 #include <stb_image.h>
-#include <src\platform\OpenGL\openGLVertexArray.cpp>
 
 namespace Engine {
 

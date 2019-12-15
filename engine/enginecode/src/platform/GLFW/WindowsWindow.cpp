@@ -118,15 +118,20 @@ namespace Engine {
 			std::cout << (char)unicodeCodePoint;
 		});
 
-		/*glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int keycode, int action, int repeatCount)
+		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int keycode, int scanCode, int action ,int mods)
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
 			switch (action)
 			{
 			case KEY_PRESS:
 			{
-				KeyPressed event(keycode);
+				KeyPressed event(keycode,0);
 				callback(event);
+				if (keycode == KEY_ESCAPE)
+				{
+					WindowCloseEvent exit;
+					callback(exit);
+				}
 				break;
 			}
 			case KEY_RELEASE:
@@ -136,7 +141,7 @@ namespace Engine {
 				break;
 			}
 			}
-		});*/
+		});
 
 		//glfwSetScrollCallback(m_Window, [](GLFWwindow* window, float Xoffset, float Yoffset)
 		//{

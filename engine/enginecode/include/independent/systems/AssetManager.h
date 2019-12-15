@@ -1,8 +1,8 @@
 /** /file AssetManager.h
 */
 #pragma once
-
-#include <sstream>
+#include <iostream>
+#include <map>
 
 namespace Engine {
 	template <class G>

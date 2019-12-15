@@ -27,6 +27,8 @@ Report
 #include "core/application.h"
 #include "Event/EventSubclass.h"
 #include "Event/EventDispatcher.h"
+#include <include\platform\OpenGL\OpenGLShader.h>
+#include <include\platform\OpenGL\OpenGLTexture.h>
 
 //#ifdef NG_PLATFORM_WINDOWS
 //#include "../platform/GLFW/GLFWWindowsSystem.h"
@@ -415,58 +417,8 @@ namespace Engine {
 		glDetachShader(m_TPprogram, FCVertShader);
 		glDetachShader(m_TPprogram, FCFragShader);
 
-
-		glGenTextures(1, &m_letterTexture);
-		glActiveTexture(GL_TEXTURE0);
-		m_textureSlots[0] = 0;
-		glBindTexture(GL_TEXTURE_2D, m_letterTexture);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		int width, height, channels;
-
-		unsigned char* data = stbi_load("assets/textures/letterCube.png", &width, &height, &channels, 0);
-		if (data)
-		{
-			if (channels == 3) glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-			else if (channels == 4) glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-			else return;
-			glGenerateMipmap(GL_TEXTURE_2D);
-		}
-		else
-		{
-			return;
-		}
-		stbi_image_free(data);
-
-		glGenTextures(1, &m_numberTexture);
-		glActiveTexture(GL_TEXTURE0 + 1);
-		m_textureSlots[1] = 1;
-		glBindTexture(GL_TEXTURE_2D, m_numberTexture);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		data = stbi_load("assets/textures/numberCube.png", &width, &height, &channels, 0);
-		if (data)
-		{
-			if (channels == 3) glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-			else if (channels == 4) glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-			else return;
-			glGenerateMipmap(GL_TEXTURE_2D);
-		}
-		else
-		{
-			return;
-		}
-		stbi_image_free(data);
+		m_TPNumberTex.reset(Texture::createFromFile("assets/textures/letterCube.png"));
+		m_TPLetterTex.reset(Texture::createFromFile("assets/textures/numberCube.png"));
 
 		FCmodel = glm::translate(glm::mat4(1), glm::vec3(1.5, 0, 3));
 		TPmodel = glm::translate(glm::mat4(1), glm::vec3(-1.5, 0, 3));
@@ -676,8 +628,8 @@ namespace Engine {
 			glm::mat4 tpMVP = projection * view * TPmodel;
 			unsigned int texSlot;
 
-			if (m_goingUp) texSlot = m_textureSlots[0];
-			else texSlot = m_textureSlots[1];
+			if (m_goingUp) texSlot = m_TPLetterTex->getSlot();
+			else texSlot = m_TPNumberTex->getSlot();
 
 			glUseProgram(m_TPprogram);
 			//glBindVertexArray(m_TPvertexArray);

@@ -15,7 +15,8 @@
 #endif // NG_PLATFORM_WINDOWS
 #include <include\independent\Rendering\Buffer.h>
 #include <include\independent\Rendering\VertexArray.h>
-#include <include\platform\OpenGL\OpenGLShader.h>
+#include "Rendering/Texture.h"
+#include "Rendering/Shader.h"
 
 namespace Engine {
 
@@ -40,16 +41,20 @@ namespace Engine {
 		std::shared_ptr<VertexBuffer> m_TPVertexBuffer;
 		std::shared_ptr<IndexBuffer> m_FCindexBuffer;
 		std::shared_ptr<IndexBuffer> m_TPindexBuffer;
+		std::shared_ptr<Texture> m_TPNumberTex;
+		std::shared_ptr<Texture> m_TPLetterTex;
 
-		std::shared_ptr<OpenGLShader> m_FCShader;
-		std::shared_ptr<OpenGLShader> m_TPShader;
+		std::shared_ptr<Shader> m_FCShader;
+		std::shared_ptr<Shader> m_TPShader;
 
-		BufferLayout m_TPlayout = {
+		BufferLayout m_TPlayout = 
+		{
 			{ShaderDataType::Float3},
 			{ShaderDataType::Float3},
 			{ShaderDataType::Float2},
 		};
-		BufferLayout m_FClayout = {
+		BufferLayout m_FClayout = 
+		{
 			{ShaderDataType::Float3},
 			{ShaderDataType::Float3},
 		};
@@ -77,7 +82,7 @@ namespace Engine {
 
 #pragma region TempVars
 // Temp stuff
-		unsigned int m_FCvertexArray; // Flat Colour VAO
+		//unsigned int m_FCvertexArray; // Flat Colour VAO
 		//unsigned int m_FCvertexBuffer;// Flat Colour VBO
 		unsigned int m_TPvertexArray; // Textured Phong VAO
 		//unsigned int m_TPvertexBuffer;// Textured Phong VBO
@@ -85,9 +90,9 @@ namespace Engine {
 		//unsigned int m_TPindexBuffer; // Index buffer for texture Phong cube
 		unsigned int m_FCprogram; // Flat colour shader ID
 		unsigned int m_TPprogram; // Textured Phong shader ID
-		unsigned int m_numberTexture; // Texture ID
-		unsigned int m_letterTexture; // Texture ID
-		unsigned int m_textureSlots[2]; // Slot where the textures are stored
+		//unsigned int m_numberTexture; // Texture ID
+		//unsigned int m_letterTexture; // Texture ID
+		//unsigned int m_textureSlots[2]; // Slot where the textures are stored
 		bool m_goingUp = false; // Is the cude going up?
 		float m_timeSummed = 0.f; // How much timer has elasped?
 #pragma endregion TempVars
