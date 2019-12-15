@@ -164,11 +164,9 @@ namespace Engine {
 			22, 23, 20
 		};
 
-		//m_FClayout = { ShaderDataType::Float3, ShaderDataType::Float3 };
 		m_FCVertexBuffer.reset(VertexBuffer::create(FCvertices, sizeof(FCvertices), m_FClayout));
 		m_FCVAO->setVertexBuffer(m_FCVertexBuffer);
 
-		
 		m_FCindexBuffer.reset(IndexBuffer::create(indices ,sizeof(indices)));
 		m_FCVAO->setindexBuffer(m_FCindexBuffer);
 
