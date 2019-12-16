@@ -170,6 +170,8 @@ namespace Engine {
 		m_FCindexBuffer.reset(IndexBuffer::create(indices ,sizeof(indices)));
 		m_FCVAO->setindexBuffer(m_FCindexBuffer);
 
+		//m_FCShader = m_resources->
+
 		std::string FCvertSrc = R"(
 				#version 440 core
 			
@@ -264,38 +266,13 @@ namespace Engine {
 		glDetachShader(m_FCprogram, FCVertShader);
 		glDetachShader(m_FCprogram, FCFragShader);
 
-
-
-
-
-
-
-
-
-
-
 		// Added textuer phong shader and cube
 
 		m_TPVertexBuffer.reset(VertexBuffer::create(TPvertices, sizeof(TPvertices), m_TPlayout));
 		m_TPVAO->setVertexBuffer(m_TPVertexBuffer);
 
-
 		m_TPindexBuffer.reset(IndexBuffer::create(indices, sizeof(indices)));
 		m_TPVAO->setindexBuffer(m_TPindexBuffer);
-
-		//glGenVertexArrays(1, &m_TPvertexArray);
-		//glBindVertexArray(m_TPvertexArray);
-
-		//m_TPVertexBuffer.reset(VertexBuffer::create(TPvertices, sizeof(TPvertices), m_TPlayout));
-		//
-		//glEnableVertexAttribArray(0);
-		//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0); // (pos 0 (pos), 3 floats, float, not normalised, 6 float between each data line, start at 0)
-		//glEnableVertexAttribArray(1);
-		//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(sizeof(float) * 3)); // (pos 1 (normal), 3 floats, float, not normalised, 6 float between each data line, start at 3)
-		//glEnableVertexAttribArray(2);
-		//glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(sizeof(float) * 6)); // (pos 1 (normal), 3 floats, float, not normalised, 6 float between each data line, start at 3)
-
-		//m_TPindexBuffer.reset(IndexBuffer::create(indices, sizeof(indices)));
 
 		std::string TPvertSrc = R"(
 				#version 440 core
@@ -461,7 +438,7 @@ namespace Engine {
 	bool Application::onClose(WindowCloseEvent& e)
 	{
 		ENG_CORE_INFO("Closing application.");
-		m_running = false;	//solve m_running problem and don't forget about application.cpp and t2 in it
+		m_running = false;
 		return true;
 	}
 
@@ -618,12 +595,35 @@ namespace Engine {
 			glm::mat4 fcMVP = projection * view * FCmodel;
 			glUseProgram(m_FCprogram);
 			//glBindVertexArray(m_FCvertexArray);
+
+			//m_FCShader->bind();
 			m_FCVAO->bind();
+
+			GLuint loc;
+
+			//loc = glGetUniformLocation(m_FCShader->id(), "u_MVP");
+			//glUniformMatrix4fv(loc, 1, GL_FALSE, &fcMVP[0][0]);
+
 			GLuint MVPLoc = glGetUniformLocation(m_FCprogram, "u_MVP");
 			glUniformMatrix4fv(MVPLoc, 1, GL_FALSE, &fcMVP[0][0]);
 			glDrawElements(GL_TRIANGLES, m_FCVAO->getDrawCount() , GL_UNSIGNED_INT, nullptr);
 
 			glm::mat4 tpMVP = projection * view * TPmodel;
+			m_TPShader->bind();
+			m_TPVAO->bind();
+
+			m_TPShader->uploadData("u_MVP", (void*)&tpMVP[0][0]);
+			m_TPShader->uploadData("u_model", (void*)&tpMVP[0][0]);
+
+			m_lightPosition = glm::vec3(0.0f, 3.0f, -6.0f);
+			m_viewPosition = glm::vec3(0.0f, 0.0f, -4.5f);
+			m_lightColour = glm::vec3(1.0f, 1.0f, 1.0f);
+
+			m_TPShader->uploadFloat3("u_lightPos", (void*)&m_lightPosition[0]);
+			m_TPShader->uploadFloat3("u_viewPos", (void*)&m_viewPosition[0]);
+			m_TPShader->uploadFloat3("u_lightColour", (void*)&m_lightColour[0]);
+			m_TPShader->uploadInt("u_texData", (void*)&m_texSlot);
+
 			unsigned int texSlot;
 
 			if (m_goingUp) texSlot = m_TPLetterTex->getSlot();
@@ -632,11 +632,9 @@ namespace Engine {
 			glUseProgram(m_TPprogram);
 			//glBindVertexArray(m_TPvertexArray);
 			m_TPVAO->bind();
-			MVPLoc = glGetUniformLocation(m_TPprogram, "u_MVP");
-			glUniformMatrix4fv(MVPLoc, 1, GL_FALSE, &tpMVP[0][0]);
+			loc = glGetUniformLocation(m_TPprogram, "u_MVP");
+			glUniformMatrix4fv(loc, 1, GL_FALSE, &tpMVP[0][0]);
 			
-			//GLuint loc;
-
 			GLuint modelLoc = glGetUniformLocation(m_TPprogram, "u_model");
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &TPmodel[0][0]);
 

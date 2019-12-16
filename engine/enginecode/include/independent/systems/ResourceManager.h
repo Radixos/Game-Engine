@@ -39,7 +39,7 @@ namespace Engine
 		static std::shared_ptr<Texture> addTexture(const std::string& name, unsigned int width, unsigned int height, unsigned int channel);	//or channels?
 		static std::shared_ptr<VertexArray> addVAO(const std::string& name);
 		static std::shared_ptr<VertexBuffer> addVBO(const std::string& name, float* vertices, unsigned int size, BufferLayout& layout);
-		//static std::shared_ptr<UniformBuffer> addUBO(const std::string& name, unsigned int size, UniformBufferLayout& layout);
+		static std::shared_ptr<UniformBuffer> addUBO(const std::string& name, unsigned int size, UniformBufferLayout& layout);
 		static std::shared_ptr<UniformBuffer> addUBO(const std::string& name, unsigned int size, unsigned int rangeStart, unsigned int rangeEnd);
 		//static std::shared_ptr<Material> addMaterial(const std::string& name, const std::shared_ptr<Shader& shader, const std::...);
 		static void populateCharacters(std::unordered_map<std::string, unsigned int> fontsAndSizes);

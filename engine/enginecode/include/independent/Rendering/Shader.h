@@ -3,7 +3,7 @@
 */
 #pragma once
 
-#include "glm/glm.hpp"
+//#include "glm/glm.hpp"
 #include "Buffer.h"
 #include <sstream>
 
@@ -14,10 +14,16 @@ namespace Engine {
 		virtual unsigned int id() = 0;	//!<Get the API id of the shader programme
 		virtual void bind() = 0;	//!<Bind the shader
 		virtual void unbind() = 0;	//!<Unbind the shader
-		virtual void uploadMat4(const std::string& name, glm::mat4* data) = 0;
+		virtual void uploadMat4(const std::string& name, float* data) = 0;
 		virtual void uploadFloat3(const std::string& name, float a, float b, float c) = 0;
 		virtual void uploadFloat3(const std::string& name, float* data) = 0;
 		virtual void uploadInt(const std::string& name, int data) = 0;
+		virtual void uploadInt2(const std::string& name, int a, int b) = 0;
+		virtual void uploadBool(const std::string& name, bool data) = 0;
+		virtual void uploadVec2(const std::string& name, glm::vec2 data) = 0;
+		virtual void uploadVec3(const std::string& name, glm::vec3 data) = 0;
+		virtual void uploadMat4(const std::string& name, int size, bool transpose, glm::mat4 data) = 0;
+		//virtual void dispatchUniformUpload(ShaderDataType type, GLuint location, void* data) = 0;
 
 		virtual BufferLayout getBufferLayout() const = 0;	//!<Get the buffer layout for shader
 		//virtual UniformLayout getUniformLayout() const = 0;	//!<Get the structure of the data which can be uploaded
