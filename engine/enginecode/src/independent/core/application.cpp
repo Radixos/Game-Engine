@@ -402,7 +402,7 @@ namespace Engine {
 
 #pragma endregion TempSetup
 
-				// Reset timer
+		// Reset timer
 		m_timer->GetSeconds();
 	}
 
@@ -413,19 +413,8 @@ namespace Engine {
 		m_logger->stop();
 	}
 
-	void Application::onEvent(Event & e)	//Slide 34 Week2 to finish
+	void Application::onEvent(Event & e)
 	{
-		//if (e.getEventType() == EventType::WindowResize)
-				//{
-				//	//Cast the event
-				//	WindowResizeEvent resize = (WindowResizeEvent&)e;
-				//	ENG_CORE_INFO("Window resize event. Width {0}. Height {1}", resize.getWidth(), resize.getHeight());
-				//
-				//	EventDispatcher dispatcher(e);
-				//	dispatcher.dispatch<WindowCloseEvent>(std::bind(&Application::onClose, this, std::placeholders::_1));
-				//	dispatcher.dispatch<WindowResizeEvent>(std::bind(&Application::onResize, this, std::placeholders::_1));
-				//}
-
 		EventDispatcher dispatcher(e);
 		dispatcher.dispatch<WindowCloseEvent>(std::bind(&Application::onClose, this, std::placeholders::_1));
 		dispatcher.dispatch<WindowResizeEvent>(std::bind(&Application::onResize, this, std::placeholders::_1));
@@ -567,26 +556,6 @@ namespace Engine {
 				m_goingUp = !m_goingUp;
 			}
 
-			//m_Window->onUpdate(time);	//??? Does it make sense?
-			//ENG_CLIENT_TRACE("Delta time: {0}", time/*(int)(1.0f/time)*/);
-			//end = std::chrono::high_resolution_clock::now();
-			//std::chrono::duration<float> diff = end - start;
-			//time += diff.count();
-
-			//m_timeSummed += s_timestep;
-			//if (m_timeSummed > 20.0f) {
-			//	m_timeSummed = 0.f;
-			//	m_goingUp = !m_goingUp;
-			//}
-
-			//if (time > 3.0f)
-			//{
-			//	WindowResizeEvent e(1024, 720);
-			//	onEvent(e);
-			//	m_running = false;
-			//	//ENG_CORE_INFO("Time elapsed: {0}. Shutting down.", time);
-			//}
-
 			FCmodel = glm::rotate(FCtranslation, glm::radians(20.f) * s_timestep, glm::vec3(0.f, 1.f, 0.f)); // Spin the cube at 20 degrees per second
 			TPmodel = glm::rotate(TPtranslation, glm::radians(-20.f) * s_timestep, glm::vec3(0.f, 1.f, 0.f)); // Spin the cube at 20 degrees per second
 
@@ -596,33 +565,22 @@ namespace Engine {
 			glUseProgram(m_FCprogram);
 			//glBindVertexArray(m_FCvertexArray);
 
-			//m_FCShader->bind();
+			//m_FCShader->bind();	//TO FINISH
 			m_FCVAO->bind();
 
 			GLuint loc;
 
-			//loc = glGetUniformLocation(m_FCShader->id(), "u_MVP");
-			//glUniformMatrix4fv(loc, 1, GL_FALSE, &fcMVP[0][0]);
+			//m_FCShader->uploadMat4("u_MVP", &fcMVP[0][0]);
 
 			GLuint MVPLoc = glGetUniformLocation(m_FCprogram, "u_MVP");
 			glUniformMatrix4fv(MVPLoc, 1, GL_FALSE, &fcMVP[0][0]);
 			glDrawElements(GL_TRIANGLES, m_FCVAO->getDrawCount() , GL_UNSIGNED_INT, nullptr);
 
 			glm::mat4 tpMVP = projection * view * TPmodel;
-			m_TPShader.reset(new OpenGLShader);	//TO FINISH
+			//m_FCShader.reset(Shader::create("assets/shaders/flatColour.glsl"));
+			m_TPShader.reset(Shader::create("assets/shaders/texturedPhong.glsl"));	//TO FINISH	//TO FINISH
 			m_TPShader->bind();
 			m_TPVAO->bind();
-
-			m_TPShader->uploadMat4("u_MVP", &tpMVP[0][0]);
-			m_TPShader->uploadMat4("u_model", &tpMVP[0][0]);
-
-			glm::vec3 m_lightPosition (0.0f, 3.0f, -6.0f);
-			glm::vec3 m_viewPosition (0.0f, 0.0f, -4.5f);	//m_viewPosition = glm::vec3(0.0f, 0.0f, -4.5f);
-			glm::vec3 m_lightColour (1.0f, 1.0f, 1.0f);
-
-			m_TPShader->uploadFloat3("u_lightPos", &m_lightPosition[0]);
-			m_TPShader->uploadFloat3("u_viewPos", &m_viewPosition[0]);
-			m_TPShader->uploadFloat3("u_lightColour", &m_lightColour[0]);
 
 			unsigned int m_texSlot;
 
@@ -634,28 +592,40 @@ namespace Engine {
 			glUseProgram(m_TPprogram);
 			//glBindVertexArray(m_TPvertexArray);
 			m_TPVAO->bind();
+
+			glm::vec3 m_objectColour(0.2f, 0.8f, 0.5f);
+			glm::vec3 m_lightColour(1.0f, 1.0f, 1.0f);
+			glm::vec3 m_lightPosition(0.0f, 3.0f, -6.0f);
+			glm::vec3 m_viewPosition(0.0f, 0.0f, -4.5f);	//m_viewPosition = glm::vec3(0.0f, 0.0f, -4.5f);
+
 			loc = glGetUniformLocation(m_TPprogram, "u_MVP");
 			glUniformMatrix4fv(loc, 1, GL_FALSE, &tpMVP[0][0]);
-			
+			//m_TPShader->uploadMat4("u_MVP", &tpMVP[0][0]);
+
 			GLuint modelLoc = glGetUniformLocation(m_TPprogram, "u_model");
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &TPmodel[0][0]);
-
-			//m_FCShader->uploadMat4("u_MVP", &fcMVP[0][0]);
+			//m_TPShader->uploadMat4("u_model", &TPmodel[0][0]);
 
 			GLuint colLoc = glGetUniformLocation(m_TPprogram, "u_objectColour");
 			glUniform3f(colLoc, 0.2f, 0.8f, 0.5f);
+			//m_TPShader->uploadFloat3("u_objectColour", &m_objectColour[0]);
 
 			GLuint lightColLoc = glGetUniformLocation(m_TPprogram, "u_lightColour");
 			glUniform3f(lightColLoc, 1.0f, 1.0f, 1.0f);
+			//m_TPShader->uploadFloat3("u_lightColour", &m_lightColour[0]);
 
-			GLuint lightPosLoc = glGetUniformLocation(m_TPprogram, "u_lightPos");
-			glUniform3f(lightPosLoc, 1.0f, 4.0f, -6.0f);
+			//GLuint lightPosLoc = glGetUniformLocation(m_TPprogram, "u_lightPos");
+			//glUniform3f(lightPosLoc, 1.0f, 4.0f, -6.0f);
+			//m_TPShader->uploadFloat3("u_lightPos", &m_lightPosition[0]);
+			//m_TPShader->uploadFloat3("u_lightPos", m_lightPosition.x, m_lightPosition.y, m_lightPosition.z);
 
 			GLuint viewPosLoc = glGetUniformLocation(m_TPprogram, "u_viewPos");
 			glUniform3f(viewPosLoc, 0.0f, 0.0f, -4.5f);
+			//m_TPShader->uploadFloat3("u_viewPos", &m_viewPosition[0]);
 
 			GLuint texDataLoc = glGetUniformLocation(m_TPprogram, "u_texData");
 			glUniform1i(texDataLoc, m_texSlot);
+			//m_TPShader->uploadInt("u_texData", m_texSlot);
 
 			glDrawElements(GL_TRIANGLES, m_TPVAO->getDrawCount(), GL_UNSIGNED_INT, nullptr);
 

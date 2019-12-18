@@ -205,10 +205,15 @@ namespace Engine {
 		// To finish
 	}
 
-	void OpenGLShader::uploadMat4(const std::string& name, int count, bool transpose, glm::mat4 fnMat4)
+	/*void OpenGLShader::uploadFloatVector4(const std::string& name, GLfloat* data)
 	{
 		GLuint loc = glGetUniformLocation(id(), name.c_str());
-		glUniformMatrix4fv(loc, count, 1, &fnMat4[0][0]);
+		glUniform4fv(loc, 1, data);
+	}*/
+
+	BufferLayout OpenGLShader::getBufferLayout() const
+	{
+		return BufferLayout();
 	}
 
 	/*void OpenGLShader::dispatchUniformUpload(ShaderDataType type, GLuint location, void* data)

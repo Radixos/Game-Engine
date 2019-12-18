@@ -21,8 +21,10 @@ namespace Engine {
 		void uploadBool(const std::string& name, bool data) override;
 		void uploadVec2(const std::string& name, glm::vec2 data) override;
 		void uploadVec3(const std::string& name, glm::vec3 data) override;
-		void uploadMat4(const std::string& name, int count, bool transpose, glm::mat4 fnMat4) override;
+		//void uploadFloatVector4(const std::string& name, GLfloat* data) override;
 		//void dispatchUniformUpload(ShaderDataType type, GLuint location, void* data) override;
+
+		BufferLayout getBufferLayout() const override;	//!<Get the buffer layout for shader
 	private:
 		unsigned int m_OpenGL_ID;	//!<Shader ID
 		void compileAndLink(const std::string& vertexShaderSrc, const std::string& fragmentShaderSrc);	//!<Compile and link
