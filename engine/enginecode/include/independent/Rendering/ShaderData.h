@@ -68,6 +68,4 @@ namespace Engine {
 
 		return result;
 	}
-
-
 }

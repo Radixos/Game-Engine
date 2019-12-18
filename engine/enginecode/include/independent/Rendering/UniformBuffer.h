@@ -17,6 +17,6 @@ namespace Engine {
 		virtual UniformBufferLayout getLayout() const = 0;	//!<Get the layout of this buffer
 
 		static UniformBuffer* create(unsigned int size, UniformBufferLayout& layout);	//!<Returns an Rendering API specific UniformBuffer
-		static UniformBuffer* create(unsigned int size, unsigned int rangeStart, unsigned int rangeEnd, UniformBufferLayout& layout);	//!<
+		//static UniformBuffer* create(unsigned int size, unsigned int rangeStart, unsigned int rangeEnd, UniformBufferLayout& layout);	//!<
 	};
 }

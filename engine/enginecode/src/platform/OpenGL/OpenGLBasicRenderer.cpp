@@ -2,9 +2,10 @@
 */
 #include "engine_pch.h"
 #include "include/platform/OpenGL/OpenGLBasicRenderer.h"
+#include <engine.h>
 
 namespace Engine {
-	/*void OpenGLBasicRenderer::actionCommand(RenderCommand* command)
+	void OpenGLBasicRenderer::actionCommand(RenderCommand* command)
 	{
 		command->action();
 		delete command;
@@ -42,5 +43,5 @@ namespace Engine {
 			shader->uploadData(dataPair.first, dataPair.second);
 		}
 		glDrawElements(GL_TRIANGLES, geometry->getDrawCount(), GL_UNSIGNED_INT, nullptr);
-	}*/
+	}
 }

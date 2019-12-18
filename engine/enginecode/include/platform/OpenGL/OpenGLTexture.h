@@ -8,7 +8,7 @@ namespace Engine
 	{
 	public:
 		OpenGLTexture(const std::string& filepath);
-		//OpenGLTexture(unsigned int width,unsigned int height, unsigned int channels, unsigned char* textData);
+		//OpenGLTexture(unsigned int width, unsigned int height, unsigned int channels, unsigned char* textData);
 		unsigned int getWidth() const override { return m_width; }
 		unsigned int getHeight() const override { return m_height; };
 		unsigned int getChannels() const override { return m_channels; };

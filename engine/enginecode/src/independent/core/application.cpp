@@ -44,6 +44,7 @@ Report
 #include "include/platform/GLFW/WindowsWindow.h"
 //#include "include/platform/GLFW/InputPoller.h"
 #endif // NG_PLATFORM_WINDOWS
+#include <include\independent\Rendering\RenderCommand.h>
 
 namespace Engine {
 	Application* Application::s_instance = nullptr;
@@ -87,13 +88,15 @@ namespace Engine {
 
 #pragma region TempSetup
 		//  Temporary set up code to be abstracted
-
+		m_renderer.reset(Renderer::createBasic3D());
 		// Enable standard depth detest (Z-buffer)
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
 		// Enabling backface culling to ensure triangle vertices are correct ordered (CCW)
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
+		m_renderer->actionCommand(RenderCommand::setBackfaceCullingCommand(true));
+		//glEnable(GL_CULL_FACE);
+		//glCullFace(GL_BACK);
+		//setBackfaceCullingCommand();
 
 		float FCvertices[6 * 24] = {
 			-0.5f, -0.5f, -0.5f, 0.8f, 0.2f, 0.2f, // red square
@@ -501,16 +504,7 @@ namespace Engine {
 
 	void Application::run()
 	{
-		////For fps see week 2
-		////delta = 1.0-timestep;
-		////timestep/delta;
-
-		//std::chrono::high_resolution_clock::time_point start, end;
-		////start = std::chrono::high_resolution_clock::now();
-		//float time = 0.f;
-
 		s_timestep = 0;
-		//ENG_CLIENT_INFO("FPS: {0}", (int)(1.0f / s_timestep));
 		
 		while (m_running)
 		{
@@ -562,6 +556,8 @@ namespace Engine {
 			// End of code to make the cube move.
 
 			glm::mat4 fcMVP = projection * view * FCmodel;
+			m_FCShader.reset(Shader::create("assets/shaders/flatColour.glsl"));
+
 			glUseProgram(m_FCprogram);
 			//glBindVertexArray(m_FCvertexArray);
 
@@ -570,14 +566,13 @@ namespace Engine {
 
 			GLuint loc;
 
-			//m_FCShader->uploadMat4("u_MVP", &fcMVP[0][0]);
+			//GLuint MVPLoc = glGetUniformLocation(m_FCprogram, "u_MVP");
+			//glUniformMatrix4fv(MVPLoc, 1, GL_FALSE, &fcMVP[0][0]);
+			m_FCShader->uploadMat4("u_MVP", &fcMVP[0][0]);
 
-			GLuint MVPLoc = glGetUniformLocation(m_FCprogram, "u_MVP");
-			glUniformMatrix4fv(MVPLoc, 1, GL_FALSE, &fcMVP[0][0]);
 			glDrawElements(GL_TRIANGLES, m_FCVAO->getDrawCount() , GL_UNSIGNED_INT, nullptr);
 
 			glm::mat4 tpMVP = projection * view * TPmodel;
-			//m_FCShader.reset(Shader::create("assets/shaders/flatColour.glsl"));
 			m_TPShader.reset(Shader::create("assets/shaders/texturedPhong.glsl"));	//TO FINISH	//TO FINISH
 			m_TPShader->bind();
 			m_TPVAO->bind();
@@ -590,7 +585,7 @@ namespace Engine {
 			m_TPShader->uploadInt("u_texData", m_texSlot);
 
 			glUseProgram(m_TPprogram);
-			//glBindVertexArray(m_TPvertexArray);
+			//glBindVertexArray(m_TPvertexArray);	//TO FIX
 			m_TPVAO->bind();
 
 			glm::vec3 m_objectColour(0.2f, 0.8f, 0.5f);

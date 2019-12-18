@@ -17,6 +17,7 @@
 #include <include\independent\Rendering\VertexArray.h>
 #include "Rendering/Texture.h"
 #include "Rendering/Shader.h"
+#include "Rendering/Renderer.h"
 
 namespace Engine {
 
@@ -43,6 +44,8 @@ namespace Engine {
 		std::shared_ptr<IndexBuffer> m_TPindexBuffer;
 		std::shared_ptr<Texture> m_TPNumberTex;
 		std::shared_ptr<Texture> m_TPLetterTex;
+
+		std::shared_ptr<Renderer> m_renderer;
 
 		std::shared_ptr<Shader> m_FCShader;
 		std::shared_ptr<Shader> m_TPShader;
@@ -84,7 +87,7 @@ namespace Engine {
 // Temp stuff
 		//unsigned int m_FCvertexArray; // Flat Colour VAO
 		//unsigned int m_FCvertexBuffer;// Flat Colour VBO
-		unsigned int m_TPvertexArray; // Textured Phong VAO
+		//unsigned int m_TPvertexArray; // Textured Phong VAO
 		//unsigned int m_TPvertexBuffer;// Textured Phong VBO
 		//unsigned int m_FCindexBuffer; // Index buffer for colour cube
 		//unsigned int m_TPindexBuffer; // Index buffer for texture Phong cube

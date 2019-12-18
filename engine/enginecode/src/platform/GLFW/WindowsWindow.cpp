@@ -102,7 +102,7 @@ namespace Engine {
 				break;
 			}
 			case KEY_RELEASE:
-			{	
+			{
 				MouseButtonReleased event(button);
 				callback(event);
 				break;
@@ -118,14 +118,14 @@ namespace Engine {
 			std::cout << (char)unicodeCodePoint;
 		});
 
-		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int keycode, int scanCode, int action ,int mods)
+		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int keycode, int scanCode, int action, int mods)
 		{
 			std::function<void(Event&)> callback = *(std::function<void(Event&)>*)glfwGetWindowUserPointer(window);
 			switch (action)
 			{
 			case KEY_PRESS:
 			{
-				KeyPressed event(keycode,0);
+				KeyPressed event(keycode, 0);
 				callback(event);
 				if (keycode == KEY_ESCAPE)
 				{
@@ -180,7 +180,4 @@ namespace Engine {
 		m_Data.m_width = width;
 		m_Data.m_height = height;
 	}
-
-
-
 }
