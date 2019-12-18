@@ -3,7 +3,6 @@
 #pragma once
 
 #include "Rendering/Shader.h"
-#include <glm/glm.hpp>
 
 namespace Engine {
 	class OpenGLShader : public Shader
@@ -22,7 +21,7 @@ namespace Engine {
 		void uploadBool(const std::string& name, bool data) override;
 		void uploadVec2(const std::string& name, glm::vec2 data) override;
 		void uploadVec3(const std::string& name, glm::vec3 data) override;
-		void uploadMat4(const std::string& name, int size, bool transpose, glm::mat4 data) override;
+		void uploadMat4(const std::string& name, int count, bool transpose, glm::mat4 fnMat4) override;
 		//void dispatchUniformUpload(ShaderDataType type, GLuint location, void* data) override;
 	private:
 		unsigned int m_OpenGL_ID;	//!<Shader ID

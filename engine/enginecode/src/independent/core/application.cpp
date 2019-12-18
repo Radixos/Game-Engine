@@ -609,25 +609,27 @@ namespace Engine {
 			glDrawElements(GL_TRIANGLES, m_FCVAO->getDrawCount() , GL_UNSIGNED_INT, nullptr);
 
 			glm::mat4 tpMVP = projection * view * TPmodel;
+			m_TPShader.reset(new OpenGLShader);	//TO FINISH
 			m_TPShader->bind();
 			m_TPVAO->bind();
 
-			m_TPShader->uploadData("u_MVP", (void*)&tpMVP[0][0]);
-			m_TPShader->uploadData("u_model", (void*)&tpMVP[0][0]);
+			m_TPShader->uploadMat4("u_MVP", &tpMVP[0][0]);
+			m_TPShader->uploadMat4("u_model", &tpMVP[0][0]);
 
-			m_lightPosition = glm::vec3(0.0f, 3.0f, -6.0f);
-			m_viewPosition = glm::vec3(0.0f, 0.0f, -4.5f);
-			m_lightColour = glm::vec3(1.0f, 1.0f, 1.0f);
+			glm::vec3 m_lightPosition (0.0f, 3.0f, -6.0f);
+			glm::vec3 m_viewPosition (0.0f, 0.0f, -4.5f);	//m_viewPosition = glm::vec3(0.0f, 0.0f, -4.5f);
+			glm::vec3 m_lightColour (1.0f, 1.0f, 1.0f);
 
-			m_TPShader->uploadFloat3("u_lightPos", (void*)&m_lightPosition[0]);
-			m_TPShader->uploadFloat3("u_viewPos", (void*)&m_viewPosition[0]);
-			m_TPShader->uploadFloat3("u_lightColour", (void*)&m_lightColour[0]);
-			m_TPShader->uploadInt("u_texData", (void*)&m_texSlot);
+			m_TPShader->uploadFloat3("u_lightPos", &m_lightPosition[0]);
+			m_TPShader->uploadFloat3("u_viewPos", &m_viewPosition[0]);
+			m_TPShader->uploadFloat3("u_lightColour", &m_lightColour[0]);
 
-			unsigned int texSlot;
+			unsigned int m_texSlot;
 
-			if (m_goingUp) texSlot = m_TPLetterTex->getSlot();
-			else texSlot = m_TPNumberTex->getSlot();
+			if (m_goingUp) m_texSlot = m_TPLetterTex->getSlot();
+			else m_texSlot = m_TPNumberTex->getSlot();
+
+			m_TPShader->uploadInt("u_texData", m_texSlot);
 
 			glUseProgram(m_TPprogram);
 			//glBindVertexArray(m_TPvertexArray);
@@ -653,7 +655,7 @@ namespace Engine {
 			glUniform3f(viewPosLoc, 0.0f, 0.0f, -4.5f);
 
 			GLuint texDataLoc = glGetUniformLocation(m_TPprogram, "u_texData");
-			glUniform1i(texDataLoc, texSlot);
+			glUniform1i(texDataLoc, m_texSlot);
 
 			glDrawElements(GL_TRIANGLES, m_TPVAO->getDrawCount(), GL_UNSIGNED_INT, nullptr);
 
