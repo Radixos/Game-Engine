@@ -598,34 +598,14 @@ namespace Engine {
 			glm::vec3 m_lightPosition(0.0f, 3.0f, -6.0f);
 			glm::vec3 m_viewPosition(0.0f, 0.0f, -4.5f);	//m_viewPosition = glm::vec3(0.0f, 0.0f, -4.5f);
 
-			loc = glGetUniformLocation(m_TPprogram, "u_MVP");
-			glUniformMatrix4fv(loc, 1, GL_FALSE, &tpMVP[0][0]);
-			//m_TPShader->uploadMat4("u_MVP", &tpMVP[0][0]);
-
-			GLuint modelLoc = glGetUniformLocation(m_TPprogram, "u_model");
-			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, &TPmodel[0][0]);
-			//m_TPShader->uploadMat4("u_model", &TPmodel[0][0]);
-
-			GLuint colLoc = glGetUniformLocation(m_TPprogram, "u_objectColour");
-			glUniform3f(colLoc, 0.2f, 0.8f, 0.5f);
-			//m_TPShader->uploadFloat3("u_objectColour", &m_objectColour[0]);
-
-			GLuint lightColLoc = glGetUniformLocation(m_TPprogram, "u_lightColour");
-			glUniform3f(lightColLoc, 1.0f, 1.0f, 1.0f);
-			//m_TPShader->uploadFloat3("u_lightColour", &m_lightColour[0]);
-
-			//GLuint lightPosLoc = glGetUniformLocation(m_TPprogram, "u_lightPos");
-			//glUniform3f(lightPosLoc, 1.0f, 4.0f, -6.0f);
-			//m_TPShader->uploadFloat3("u_lightPos", &m_lightPosition[0]);
+			m_TPShader->uploadMat4("u_MVP", &tpMVP[0][0]);
+			m_TPShader->uploadMat4("u_model", &TPmodel[0][0]);
+			m_TPShader->uploadFloat3("u_objectColour", &m_objectColour[0]);
+			m_TPShader->uploadFloat3("u_lightColour", &m_lightColour[0]);
+			m_TPShader->uploadFloat3("u_lightPos", &m_lightPosition[0]);
 			//m_TPShader->uploadFloat3("u_lightPos", m_lightPosition.x, m_lightPosition.y, m_lightPosition.z);
-
-			GLuint viewPosLoc = glGetUniformLocation(m_TPprogram, "u_viewPos");
-			glUniform3f(viewPosLoc, 0.0f, 0.0f, -4.5f);
-			//m_TPShader->uploadFloat3("u_viewPos", &m_viewPosition[0]);
-
-			GLuint texDataLoc = glGetUniformLocation(m_TPprogram, "u_texData");
-			glUniform1i(texDataLoc, m_texSlot);
-			//m_TPShader->uploadInt("u_texData", m_texSlot);
+			m_TPShader->uploadFloat3("u_viewPos", &m_viewPosition[0]);
+			m_TPShader->uploadInt("u_texData", m_texSlot);
 
 			glDrawElements(GL_TRIANGLES, m_TPVAO->getDrawCount(), GL_UNSIGNED_INT, nullptr);
 
