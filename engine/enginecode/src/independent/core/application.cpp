@@ -603,7 +603,6 @@ namespace Engine {
 			m_TPShader->uploadFloat3("u_objectColour", &m_objectColour[0]);
 			m_TPShader->uploadFloat3("u_lightColour", &m_lightColour[0]);
 			m_TPShader->uploadFloat3("u_lightPos", &m_lightPosition[0]);
-			//m_TPShader->uploadFloat3("u_lightPos", m_lightPosition.x, m_lightPosition.y, m_lightPosition.z);
 			m_TPShader->uploadFloat3("u_viewPos", &m_viewPosition[0]);
 			m_TPShader->uploadInt("u_texData", m_texSlot);
 
@@ -627,9 +626,5 @@ namespace Engine {
 			s_timestep = m_timer->getTimeSinceFrameStart();
 			//ENG_CORE_INFO("FPS: {0}", (int)(1.0f / s_timestep));
 		}
-		
-		//float time = (float) glfwGetTime();	//!< Getting time
-		//Timer timer = time - m_LastFrameTime;
-		//m_LastFrameTime = time;
 	}
 }
