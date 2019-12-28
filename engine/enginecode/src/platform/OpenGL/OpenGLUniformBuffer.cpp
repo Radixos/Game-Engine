@@ -3,13 +3,13 @@
 #include <glad\glad.h>
 
 namespace Engine {
-	/*OpenGLUniformBuffer::OpenGLUniformBuffer(unsigned int id, unsigned int size)
+	OpenGLUniformBuffer::OpenGLUniformBuffer(unsigned int id, unsigned int size)
 	{
 		glGenBuffers(1, &id);
 		glBindBuffer(GL_UNIFORM_BUFFER, id);
 		glBufferData(GL_UNIFORM_BUFFER, size, NULL, GL_DYNAMIC_DRAW);
-		glBindBuffer(GL_UNIFORM_BUFFER, m_bindingPoint, id, 0, size);
-	}*/
+		glBindBufferRange(GL_UNIFORM_BUFFER, m_bindingPoint, id, 0, size);	//After m_binding point was ", id, 0, size"
+	}
 
 	void OpenGLUniformBuffer::bind()
 	{
