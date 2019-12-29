@@ -211,6 +211,80 @@ namespace Engine {
 		glUniform4fv(loc, 1, data);
 	}*/
 
+	void OpenGLShader::uniformLayout(const std::string& path)
+	{
+		std::fstream readPath(path, std::ios::in);
+
+		if (readPath.is_open() == false)
+		{
+			ENG_CORE_ERROR("Could not open {0}", path);
+		}
+
+		std::string line;	//line
+		std::string uniform;	//uniform
+		std::string type;	//type
+		std::string name;	//name
+
+		while (getline(readPath, line))
+		{
+			if (line.find("uniform") != std::string::npos)
+			{
+				std::stringstream ss(line);
+				ss >> uniform;
+				ss >> type;
+				ss >> name;
+
+				if (name.at(name.length() - 1) == ';')
+				{
+					name.pop_back();
+				}
+
+				unsigned int loc = glGetUniformLocation(m_OpenGL_ID, name.c_str());	//location
+
+				m_uniform[name] = std::pair<ShaderDataType, unsigned int>(ShaderData::StringToDataType(type), loc);
+
+				switch (ShaderData::StringToDataType(type))
+				{
+				case ShaderDataType::None:
+					m_dispatcher[name] = [](void* data)
+					{
+						return false;
+					};
+					break;
+				case ShaderDataType::Int:
+					m_dispatcher[name] = [loc](void* data)
+					{
+						glUniform1i(loc, (GLint)data);
+						return true;
+					};
+					break;
+				case ShaderDataType::Int2:
+					m_dispatcher[name] = [loc](void* data)
+					{
+						glUniform2iv(loc, 1, (GLint*)data);
+						return true;
+					};
+					break;
+				case ShaderDataType::Int3:
+					m_dispatcher[name] = [loc](void* data)
+					{
+						glUniform3iv(loc, 1, (GLint*)data);
+						return true;
+					};
+					break;
+				case ShaderDataType::Int4:
+					m_dispatcher[name] = [loc](void* data)
+					{
+						glUniform4iv(loc, 1, (GLint*)data);
+						return true;
+					};
+					break;
+
+				}
+			}
+		}
+	}
+
 	BufferLayout OpenGLShader::getBufferLayout() const
 	{
 		return BufferLayout();

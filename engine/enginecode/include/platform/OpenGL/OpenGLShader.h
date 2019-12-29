@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Rendering/Shader.h"
+#include <map>
 
 namespace Engine {
 	class OpenGLShader : public Shader
@@ -28,5 +29,8 @@ namespace Engine {
 	private:
 		unsigned int m_OpenGL_ID;	//!<Shader ID
 		void compileAndLink(const std::string& vertexShaderSrc, const std::string& fragmentShaderSrc);	//!<Compile and link
+	
+		void uniformLayout(const std::string& path);	//!<Get uniform buffer layout path
+		std::map<std::string, std::function<bool(void* data)>> m_dispatcher;	//!<Set map for uniform
 	};
 }
