@@ -241,9 +241,9 @@ namespace Engine {
 
 				unsigned int loc = glGetUniformLocation(m_OpenGL_ID, name.c_str());	//location
 
-				m_uniform[name] = std::pair<ShaderDataType, unsigned int>(ShaderData::StringToDataType(type), loc);
+				m_uniform[name] = std::pair<ShaderDataType, unsigned int>(GLSLStrToSTD(type), loc);
 
-				switch (ShaderData::StringToDataType(type))
+				switch (GLSLStrToSTD(type))	//ShaderDataType::StringToDataType
 				{
 				case ShaderDataType::None:
 					m_dispatcher[name] = [](void* data)
@@ -279,7 +279,83 @@ namespace Engine {
 						return true;
 					};
 					break;
-
+				case ShaderDataType::Mat3:
+					m_dispatcher[name] = [loc](void* data)
+					{
+						glUniformMatrix3fv(loc, 1, GL_FALSE, (GLfloat*)data);
+						return true;
+					};
+					break;
+				case ShaderDataType::Mat4:
+					m_dispatcher[name] = [loc](void* data)
+					{
+						glUniformMatrix4fv(loc, 1, GL_FALSE, (GLfloat*)data);
+						return true;
+					};
+					break;
+				//case ShaderDataType::Float:
+				//	m_dispatcher[name] = [loc](void* data)
+				//	{
+				//		glUniform1f(loc, /*???*/);
+				//		return true;
+				//	};
+				//	break;
+				//case ShaderDataType::Float2:
+				//	m_dispatcher[name] = [loc](void* data)
+				//	{
+				//		glUniform2f(loc, /*???*/);
+				//		return true;
+				//	};
+				//	break;
+				//case ShaderDataType::Float3:
+				//	m_dispatcher[name] = [loc](void* data)
+				//	{
+				//		glUniform3f(loc, /*???*/);
+				//		return true;
+				//	};
+				//	break;
+				case ShaderDataType::Float:
+					m_dispatcher[name] = [loc](void* data)
+					{
+						glUniform1fv(loc, 1, (GLfloat*)data);
+						return true;
+					};
+					break;
+				case ShaderDataType::Float2:
+					m_dispatcher[name] = [loc](void* data)
+					{
+						glUniform2fv(loc, 1, (GLfloat*)data);
+						return true;
+					};
+					break;
+				case ShaderDataType::Float3:
+					m_dispatcher[name] = [loc](void* data)
+					{
+						glUniform3fv(loc, 1, (GLfloat*)data);
+						return true;
+					};
+					break;
+				case ShaderDataType::Float4:
+					m_dispatcher[name] = [loc](void* data)
+					{
+						glUniform4fv(loc, 1, (GLfloat*)data);
+						return true;
+					};
+					break;
+				case ShaderDataType::Sampler2D:
+					/*m_dispatcher[name] = [loc](void* data)
+					{
+						glUniform4fv(loc, 1, (GLfloat*)data);
+						return true;
+					};*/
+					break;
+				case ShaderDataType::Bool:
+					m_dispatcher[name] = [loc](void* data)
+					{
+						glUniform4fv(loc, 1, (GLfloat*)data);
+						return true;
+					};
+					break;
 				}
 			}
 		}
