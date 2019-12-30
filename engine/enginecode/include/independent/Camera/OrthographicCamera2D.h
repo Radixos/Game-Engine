@@ -9,10 +9,6 @@ namespace Engine {
 		glm::vec2 m_position = glm::vec2(0.f);
 		float m_rotation = 0.f;
 
-		/*glm::mat4 m_projection = glm::ortho(left, right, bottom, top);
-		glm::mat4 m_view = glm::mat4(1.f);
-		glm::mat4 m_viewProjection = m_projection * m_view;*/
-
 		void updateView() override;
 	public:
 		OrthographicCamera2D(float left, float right, float bottom, float top);
