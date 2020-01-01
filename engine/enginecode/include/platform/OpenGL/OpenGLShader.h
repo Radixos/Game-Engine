@@ -26,7 +26,7 @@ namespace Engine {
 		//void dispatchUniformUpload(ShaderDataType type, GLuint location, void* data) override;
 
 		BufferLayout getBufferLayout() const override;	//!<Get the buffer layout for shader
-	private:
+	private:	//Change to protected?
 		unsigned int m_OpenGL_ID;	//!<Shader ID
 		void compileAndLink(const std::string& vertexShaderSrc, const std::string& fragmentShaderSrc);	//!<Compile and link
 	

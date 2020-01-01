@@ -229,10 +229,10 @@ namespace Engine {
 		{
 			if (line.find("uniform") != std::string::npos)
 			{
-				std::stringstream ss(line);
-				ss >> uniform;
-				ss >> type;
-				ss >> name;
+				std::stringstream stringStream(line);
+				stringStream >> uniform;
+				stringStream >> type;
+				stringStream >> name;
 
 				if (name.at(name.length() - 1) == ';')
 				{

@@ -109,7 +109,7 @@ namespace Engine {
 
 		UniformBufferElement() {}	//!<Default constructor
 		UniformBufferElement(
-			Type dataType, bool normalised = false) :
+			ShaderDataType dataType, bool normalised = false) :
 			m_dataType(dataType), m_size(ShaderDataTypeSize(dataType)), m_offset(0), m_normalised(normalised) {};
 	private:
 		BufferLayout m_Layout;	//???

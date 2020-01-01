@@ -14,7 +14,8 @@ namespace Engine {
 		glm::vec3 m_up;
 		glm::vec3 m_right;
 		glm::vec3 m_worldUp;
-		float m_view;
+		float m_yaw;
+		//float m_view;
 		float m_pitch;
 		float m_translationSpeed = 2.0f;
 		float m_rotationSpeed = 2.0f;
@@ -22,7 +23,7 @@ namespace Engine {
 		void updateView();
 	public:
 		FPSCameraControllerEuler();
-		void init(float fov = 45.f, float aspectRatio = 4.0f / 3.0f, float nearClip = 0.1f, float farClip = 100.f) override;
+		void init(float fov = 45.f, float aspectRatio = 4.0f / 3.0f, float nearClip = 0.1f, float farClip = 100.f) override {};	//Added {}???
 		std::shared_ptr<Camera> getCamera() override { return m_camera; }
 		void onUpdate(float timestep) override;
 		void onEvent(Event& e) override;
