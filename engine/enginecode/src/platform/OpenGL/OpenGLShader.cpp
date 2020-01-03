@@ -361,9 +361,19 @@ namespace Engine {
 		}
 	}
 
+	bool OpenGLShader::uploadData(const std::string& dataName, void* data)
+	{
+		return m_dispatcher[dataName](data);
+	}
+
 	BufferLayout OpenGLShader::getBufferLayout() const
 	{
 		return BufferLayout();
+	}
+
+	std::map<std::string, std::pair<ShaderDataType, unsigned int>> OpenGLShader::getUniform()
+	{
+		return m_uniform;
 	}
 
 	/*void OpenGLShader::dispatchUniformUpload(ShaderDataType type, GLuint location, void* data)

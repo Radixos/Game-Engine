@@ -1,3 +1,7 @@
+/**
+\class PositionComponent class
+*/
+
 #pragma once
 
 #include <glm/glm.hpp>
@@ -7,7 +11,7 @@
 #include <engine.h>
 
 namespace Engine {
-	class PositionComponent : public Component
+	class PositionComponent : public Component	//!<PositionComponent class publicly inhariting from Component
 	{
 	private:
 		glm::mat4 m_model;

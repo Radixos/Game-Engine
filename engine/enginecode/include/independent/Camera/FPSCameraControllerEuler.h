@@ -1,3 +1,6 @@
+/** \class FPSCameraControllerEuler class
+*/
+
 #pragma once
 
 #include "CameraController.h"
@@ -15,19 +18,19 @@ namespace Engine {
 		glm::vec3 m_right;
 		glm::vec3 m_worldUp;
 		float m_yaw;
-		//float m_view;
 		float m_pitch;
 		float m_translationSpeed = 2.0f;
 		float m_rotationSpeed = 2.0f;
 		glm::vec2 m_lastMousePosition;
-		void updateView();
+
+		void updateView();	//!<Declaring updateView function
 	public:
-		FPSCameraControllerEuler();
-		void init(float fov = 45.f, float aspectRatio = 4.0f / 3.0f, float nearClip = 0.1f, float farClip = 100.f) override {};	//Added {}???
-		std::shared_ptr<Camera> getCamera() override { return m_camera; }
-		void onUpdate(float timestep) override;
-		void onEvent(Event& e) override;
-		void onResize() override {};
-		bool onMouseButton(MouseButtonPressed& e);
+		FPSCameraControllerEuler();	//!<Default constructor
+		void init(float fov = 45.f, float aspectRatio = 4.0f / 3.0f, float nearClip = 0.1f, float farClip = 100.f) override {};	//Added {}???	//!<Overrided init function
+		std::shared_ptr<Camera> getCamera() override { return m_camera; }	//!<Overrided getCamera function for returning the camera
+		void onUpdate(float timestep) override;	//!<Overrided onUpdate function
+		void onEvent(Event& e) override;	//!<Overrided onEvent function
+		void onResize() override {};	//!<Overrided onResize function
+		bool onMouseButton(MouseButtonPressed& e);	//!<Declaring onMouseButton function
 	};
 }

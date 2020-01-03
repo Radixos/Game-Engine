@@ -1,3 +1,7 @@
+/**
+\class GameObject class
+*/
+
 #pragma once
 
 #include "engine_pch.h"
@@ -11,16 +15,16 @@ namespace Engine {
 	{
 	protected:
 		GameObject* m_owner = nullptr;	//Owner of the component, using a raw pointer as there is no ownership yet
-		virtual void sendMessage(const ComponentMessage& msg);
+		virtual void sendMessage(const ComponentMessage& msg);	//Should there be "=0" or "{}"	//!<sendMessage virtual function
 	public:
-		virtual void onAttach(GameObject* owner) { m_owner = owner; };
-		virtual void onDetach() { m_owner = nullptr; };
-		virtual void onUpdate(float timestep) {};
-		virtual void onEvent(Event& e) {};
-		virtual void receiveMessage(const ComponentMessage& msg) = 0;
+		virtual void onAttach(GameObject* owner) { m_owner = owner; };	//!<Attach virtual function
+		virtual void onDetach() { m_owner = nullptr; };	//!<Dettach virtual function
+		virtual void onUpdate(float timestep) {};	//!<Update virtual function
+		virtual void onEvent(Event& e) {};	//!<Event virtual function
+		virtual void receiveMessage(const ComponentMessage& msg) = 0;	//!<Attach virtual function
 	};
 
-	enum class ComponentMessageType {
+	enum class ComponentMessageType {	//!<Enum class for ComponentMessageType
 		None = 0,
 		PositionIntegrate, PositionSet, RelativePositionSet,
 		VelocityIntegrate, VelocitySetLinear, VelocitySetAngular,
@@ -29,7 +33,7 @@ namespace Engine {
 		UniformSet, TextureSet
 	};
 
-	class ComponentMessage
+	class ComponentMessage	//!<ComponentMessage class
 	{
 	public:
 		//ComponentMessage(ComponentMessage type, std::any data) : m_msgType(type), m_msgData(data) {};
@@ -37,7 +41,7 @@ namespace Engine {
 		std::any m_msgData;	//!<Data associated with the message (could use a void *)
 	};
 
-	class GameObject
+	class GameObject	//!<GameObject class
 	{
 	protected:
 		std::vector<std::shared_ptr<Component>> m_components;
@@ -56,7 +60,7 @@ namespace Engine {
 			}
 			return result;
 		}
-		inline std::vector<std::shared_ptr<Component>>::iterator begin() { return m_components.begin(); }
-		inline std::vector<std::shared_ptr<Component>>::iterator end() { return m_components.end(); }
+		inline std::vector<std::shared_ptr<Component>>::iterator begin() { return m_components.begin(); }	//!<Begin iterator
+		inline std::vector<std::shared_ptr<Component>>::iterator end() { return m_components.end(); }	//!<End iterator
 	};
 }

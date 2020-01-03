@@ -102,9 +102,9 @@ namespace Engine {
 
 	public:
 		virtual ~Application(); //!< Deconstructor
-		inline static Application& getInstance() { return *s_instance; } //!< Instance getter from singleton pattern
-		inline static float getTimestep() { return s_timestep; }
-		inline std::shared_ptr<Window> getWindow() { return m_Window; }
+		inline static Application& getInstance() { return *s_instance; }	//!< Instance getter from singleton pattern
+		inline static float getTimestep() { return s_timestep; }	//!<Declaring and defining function for returning the timestep
+		inline std::shared_ptr<Window> getWindow() { return m_Window; }	//!<Declaring and defining function for returning the window
 		void onEvent(Event& e);	//!< Called when an event happens
 		//bool onClose(WindowCloseEvent& e); //!< On close event
 		//bool onResize(WindowResizeEvent& e); //!< On resize event

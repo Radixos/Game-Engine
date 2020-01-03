@@ -1,3 +1,6 @@
+/** \class FreeOrthoCameraController2D class
+*/
+
 #pragma once
 
 #include "CameraController.h"
@@ -13,11 +16,11 @@ namespace Engine {
 		float m_translationSpeed = 100.f;
 		float m_rotationSpeed = 10.f;
 	public:
-		FreeOrthoCameraController2D();
-		void init(float left, float top, float width, float height) override;
-		std::shared_ptr<Camera> getCamera() override { return m_camera; }
-		void onUpdate(float timestep) override;
-		void onEvent(Event& e) override {};
-		void onResize() override {};
+		FreeOrthoCameraController2D();	//!<Default constructor
+		void init(float left, float top, float width, float height) override;	//!<Overrided init function
+		std::shared_ptr<Camera> getCamera() override { return m_camera; }	//!<Overrided getCamera function for returning the camera
+		void onUpdate(float timestep) override;	//!<Overrided onUpdate function
+		void onEvent(Event& e) override {};	//Should there be anything added in {}?	//!<Overrided onEvent function
+		void onResize() override {};	//Should there be anything added in {}?	//!<Overrided onResize function
 	};
 }

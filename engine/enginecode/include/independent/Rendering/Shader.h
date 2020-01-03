@@ -29,6 +29,8 @@ namespace Engine {
 		virtual BufferLayout getBufferLayout() const = 0;	//!<Get the buffer layout for shader
 		//virtual UniformLayout getUniformLayout() const = 0;	//!<Get the structure of the data which can be uploaded
 
+		virtual bool uploadData(const std::string& dataName, void* data) = 0;
+
 		static Shader* create(const std::string& filepath); //!<Create, compile and link API specific shader from single filepath
 		static Shader* create(const std::string& vvertexfilepath, const std::string& fragmentFilepath);	//!<Create, compile and link API specific shader from vertex filepath and fragment filepath
 	};

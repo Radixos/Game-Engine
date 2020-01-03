@@ -1,5 +1,5 @@
 /**
-\class Event dispatcher
+\class EventDispatcher class
 */
 
 #pragma once
@@ -10,16 +10,16 @@ namespace Engine {
 
 	class EventDispatcher
 	{
-		template<typename T>
+		template<typename T>	//!<Template for EventDispatcher
 		using EventFunc = std::function<bool(T&)>;
 	public:
-		EventDispatcher(Event& event) : m_event(event)
+		EventDispatcher(Event& event) : m_event(event)	//!<EventDispatcher constructor
 		{
-
+			//Should there be anuthing here??
 		}
 
-		template<typename T>
-		bool dispatch(EventFunc<T> func)
+		template<typename T>	//!<Template for EventDispatcher
+		bool dispatch(EventFunc<T> func)	//!<Dispatch function
 		{
 			if (m_event.getEventType() == T::getStaticType())
 			{

@@ -1,3 +1,7 @@
+/**
+\class VelocityComponent class
+*/
+
 #pragma once
 
 #include <engine.h>
@@ -6,7 +10,7 @@
 #include "GameObject.h"
 
 namespace Engine {
-	class VelocityComponent : public Component
+	class VelocityComponent : public Component	//!<VelocityComponent class publicly inhariting from Component
 	{
 	private:
 		glm::vec3 m_linear;
