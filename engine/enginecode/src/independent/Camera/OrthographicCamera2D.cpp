@@ -1,5 +1,6 @@
 #include "engine_pch.h"
 #include "include/independent/Camera/OrthographicCamera2D.h"
+#include "glm/gtc/matrix_transform.hpp"
 
 namespace Engine {
 	void OrthographicCamera2D::updateView()

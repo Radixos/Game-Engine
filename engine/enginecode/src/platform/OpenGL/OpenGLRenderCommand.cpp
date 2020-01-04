@@ -3,7 +3,7 @@
 #include <glad\glad.h>
 
 namespace Engine {
-	void ClearDepthColourBufferCommand::action()
+	void OpenGLClearDepthColourBufferCommand::action()
 	{
 		glClearColor(m_r, m_g, m_b, m_a);	//(0, 0, 1, 1) - blue
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -14,13 +14,13 @@ namespace Engine {
 		glClearColor(m_r, m_g, m_b, m_a);	//(0, 0, 1, 1) - blue
 	}
 
-	void setDepthTestLessCommand::action()
+	void OpenGLSetDepthTestLessCommand::action()
 	{
 		glEnable(GL_DEPTH_TEST);
 		glDepthFunc(GL_LESS);
 	}
 
-	void setBackfaceCullingCommand::action()
+	void OpenGLSetBackfaceCullingCommand::action()
 	{
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);

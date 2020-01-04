@@ -347,7 +347,8 @@ namespace Engine {
 
 			glm::mat4 fcMVP = projection * view * FCmodel;
 
-			glUseProgram(m_FCprogram);
+			m_FCShader->bind();
+			//glUseProgram(m_FCprogram);
 			//glBindVertexArray(m_FCvertexArray);
 
 			//m_FCShader->bind();	//TO FINISH
@@ -372,7 +373,8 @@ namespace Engine {
 
 			m_TPShader->uploadInt("u_texData", m_texSlot);
 
-			glUseProgram(m_TPprogram);
+			m_TPShader->bind();
+			//glUseProgram(m_TPprogram);
 			//glBindVertexArray(m_TPvertexArray);	//TO FIX
 			m_TPVAO->bind();
 

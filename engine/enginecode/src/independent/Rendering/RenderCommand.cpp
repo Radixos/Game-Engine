@@ -15,7 +15,7 @@ namespace Engine
 			ENG_CORE_ERROR("Lack of graphics API not supported.");
 			break;
 		case RenderAPI::API::OpenGL:
-			ClearDepthColourBufferCommand(0, 0, 1, 1);	//(0, 0, 1, 1) - blue
+			return new OpenGLClearDepthColourBufferCommand(0, 0, 1, 1);	//(0, 0, 1, 1) - blue
 			break;
 		case RenderAPI::API::Direct3D:
 			ENG_CORE_ERROR("Direct3D not supported.");
@@ -34,7 +34,7 @@ namespace Engine
 			ENG_CORE_ERROR("Lack of graphics API not supported.");
 			break;
 		case RenderAPI::API::OpenGL:
-			setClearColourCommand(0, 0, 1, 1);	//(0, 0, 1, 1) - blue
+			return new OpenGLSetClearColourCommand(0, 0, 1, 1);	//(0, 0, 1, 1) - blue
 			break;
 		case RenderAPI::API::Direct3D:
 			ENG_CORE_ERROR("Direct3D not supported.");
@@ -53,7 +53,7 @@ namespace Engine
 			ENG_CORE_ERROR("Lack of graphics API not supported.");
 			break;
 		case RenderAPI::API::OpenGL:
-			setDepthTestLessCommand(enabled);
+			return new OpenGLSetDepthTestLessCommand(enabled);
 			break;
 		case RenderAPI::API::Direct3D:
 			ENG_CORE_ERROR("Direct3D not supported.");
@@ -72,7 +72,7 @@ namespace Engine
 			ENG_CORE_ERROR("Lack of graphics API not supported.");
 			break;
 		case RenderAPI::API::OpenGL:
-			setBackfaceCullingCommand(enabled);
+			return new OpenGLSetBackfaceCullingCommand(enabled);
 			break;
 		case RenderAPI::API::Direct3D:
 			ENG_CORE_ERROR("Direct3D not supported.");

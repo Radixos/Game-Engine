@@ -5,6 +5,7 @@
 
 #include <memory>
 #include "Camera.h"
+#include "Event/Event.h"
 
 namespace Engine {
 	class CameraController
