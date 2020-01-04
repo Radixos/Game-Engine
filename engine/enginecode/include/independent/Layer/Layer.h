@@ -1,3 +1,7 @@
+/**
+\class Layer class
+*/
+
 #pragma once
 
 #include <memory>
@@ -8,16 +12,16 @@ namespace Engine {
 	class Layer
 	{
 	public:
-		Layer(const std::string& name = "Layer") : m_debugName(name) {}	//???
-		virtual ~Layer() = default; /*{}*/
+		Layer(const std::string& name = "Layer") : m_debugName(name) {}	//???	//!<Constructor
+		virtual ~Layer() = default; /*{}*/	//!<Destructor
 
-		virtual void onAttach() {}
-		virtual void onDetach() {}
-		virtual void onUpdate(float timestep) {}
-		virtual void onImGuiRender() {}
-		virtual void onEvent(Engine::Event& event) {}
+		virtual void onAttach() {}	//!<Virtual onAttach function
+		virtual void onDetach() {}	//!<Virtual onDetach function
+		virtual void onUpdate(float timestep) {}	//!<Virtual onUpdate function
+		virtual void onImGuiRender() {}	//!<Virtual onImGuiRender function
+		virtual void onEvent(Engine::Event& event) {}	//!<Virtual onEvent function
 
-		inline const std::string& getName() const { return m_debugName; }
+		inline const std::string& getName() const { return m_debugName; }	//!<Inline function returning name
 	protected:
 		std::string m_debugName;
 	};

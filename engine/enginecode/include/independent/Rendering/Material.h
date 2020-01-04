@@ -1,4 +1,4 @@
-/** \file Material.h
+/** \class Material class
 */
 #pragma once
 

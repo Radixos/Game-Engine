@@ -1,4 +1,9 @@
+/**
+\class Renderer class
+*/
+
 #pragma once
+
 #include <unordered_map>
 #include <include\independent\Rendering\RenderCommand.h>
 #include <memory>
