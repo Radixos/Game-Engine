@@ -2,7 +2,6 @@
 */
 #include "engine_pch.h"
 #include "include/platform/OpenGL/OpenGLBasicRenderer.h"
-#include <engine.h>
 
 namespace Engine {
 	void OpenGLBasicRenderer::actionCommand(RenderCommand* command)
@@ -19,13 +18,13 @@ namespace Engine {
 			unsigned int size;
 			int i = 0;
 
-			UniformBufferLayout layout = uboPair.first->getLayout();
+			//UniformBufferLayout layout = uboPair.first->getLayout();
 
-			for (auto bufferElement : layout)
+			/*for (auto bufferElement : layout)
 			{
 				uboPair.first->setData(bufferElement.m_offset, bufferElement.m_size, uboPair.second[i]);
 				i++;
-			}
+			}*/
 		}
 	}
 
@@ -40,8 +39,8 @@ namespace Engine {
 		auto perDrawData = material->getData();
 		for (auto dataPair : perDrawData)
 		{
-			shader->uploadData(dataPair.first, dataPair.second);
+			//shader->uploadData(dataPair.first, dataPair.second);
 		}
-		glDrawElements(GL_TRIANGLES, geometry->getDrawCount(), GL_UNSIGNED_INT, nullptr);
+		//glDrawElements(GL_TRIANGLES, geometry->getDrawCount(), GL_UNSIGNED_INT, nullptr);
 	}
 }

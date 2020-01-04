@@ -25,7 +25,7 @@ namespace Engine {
 		//void uploadFloatVector4(const std::string& name, GLfloat* data) override;
 		//void dispatchUniformUpload(ShaderDataType type, GLuint location, void* data) override;
 
-		bool uploadData(const std::string& dataName, void* data) override;
+		//bool uploadData(const std::string& dataName, void* data) override;
 
 		BufferLayout getBufferLayout() const override;	//!<Get the buffer layout for shader
 		std::map<std::string, std::pair<ShaderDataType, unsigned int>> getUniform();
@@ -34,6 +34,6 @@ namespace Engine {
 		void compileAndLink(const std::string& vertexShaderSrc, const std::string& fragmentShaderSrc);	//!<Compile and link
 	
 		void uniformLayout(const std::string& path);	//!<Get uniform buffer layout path
-		std::map<std::string, std::function<bool(void* data)>> m_dispatcher;	//!<Set map for uniform
+		//std::map<std::string, std::function<bool(void* data)>> m_dispatcher;	//!<Set map for uniform
 	};
 }

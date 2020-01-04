@@ -4,6 +4,8 @@
 #include "include/platform/GLFW/InputPoller.h"
 #include "include/platform/GLFW/GLFWCodes.h"
 #include "include/independent/Event/EventDispatcher.h"
+#include "glm/ext/matrix_transform.hpp"
+#include "GLFW/glfw3.h"
 
 namespace Engine {
 	void FPSCameraControllerEuler::updateView()

@@ -3,12 +3,12 @@
 //#include <glad\glad.h>
 
 namespace Engine {
-	enum class ShaderDataType
+	enum class ShaderDataType	//!<ShaderDataType enum class
 	{
 		None = 0, Float, Float2, Float3, Float4, Mat3, Mat4, Int, Int2, Int3, Int4, Bool, Sampler2D
 	};
 
-	static unsigned int ShaderDataTypeSize(ShaderDataType type)
+	static unsigned int ShaderDataTypeSize(ShaderDataType type)	//!<Static for ShaderDataTypeSize
 	{
 		switch (type)
 		{
@@ -30,7 +30,7 @@ namespace Engine {
 		return 0;
 	}
 
-	static unsigned int ShaderDataTypeComponentCount(ShaderDataType type)
+	static unsigned int ShaderDataTypeComponentCount(ShaderDataType type)	//!<Static for ShaderDataTypeComponentCount
 	{
 		switch (type)
 		{
@@ -50,7 +50,7 @@ namespace Engine {
 		return 0;
 	}
 
-	static ShaderDataType GLSLStrToSTD(const std::string& glslSrc)
+	static ShaderDataType GLSLStrToSTD(const std::string& glslSrc)	//!<Static function for GLSL string to STD
 	{
 		ShaderDataType result = ShaderDataType::None;
 		if (glslSrc == "bool") result = ShaderDataType::Bool;

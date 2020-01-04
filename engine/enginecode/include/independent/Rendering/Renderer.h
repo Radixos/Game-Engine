@@ -15,11 +15,11 @@
 //Interface for rendering
 namespace Engine
 {
-	using SceneData = std::unordered_map<std::shared_ptr<UniformBufferElement>, std::vector<void*>>;
-	using PerDrawData = std::map<std::string, void*>;
+	using SceneData = std::unordered_map<std::shared_ptr<UniformBufferElement>, std::vector<void*>>;	//!<Unordered map for SceneData
+	using PerDrawData = std::map<std::string, void*>;	//!<Map for PerDrawData
 
 	//Interface for rendering
-	class Renderer
+	class Renderer	//!<Renderer class
 	{
 	public:
 		virtual void actionCommand(RenderCommand* command) = 0;	//!<Action a render command
@@ -28,7 +28,7 @@ namespace Engine
 		virtual void submit(const std::shared_ptr<Material>& material) = 0;	//!<Submit a material for drawing
 		virtual void flush() = 0;	//!<Draw everything
 
-		static Renderer* createBasic3D();
-		static Renderer* createBasicTextRenderer2D();
+		static Renderer* createBasic3D();	//!<Static function to create basic3D
+		static Renderer* createBasicTextRenderer2D();	//!<Static function to create basic text renderer2D
 	};
 }

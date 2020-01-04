@@ -85,7 +85,9 @@ project "Sandbox"
 	{
 		"%{prj.name}/include/**.h",
 		"%{prj.name}/src/**.cpp",
-		"vendor/stb_image/stb_image.cpp"
+		"vendor/stb_image/stb_image.cpp",
+		"%{prj.name}/assets/shaders/**.glsl",
+		"%{prj.name}/assets/textures/**.png"
 	}
 
 	includedirs

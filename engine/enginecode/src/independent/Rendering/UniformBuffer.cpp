@@ -5,7 +5,7 @@
 #include "systems/Log.h"
 
 namespace Engine {
-	UniformBuffer* UniformBuffer::create(unsigned int size, UniformBufferLayout& layout)
+	UniformBuffer* UniformBuffer::create(unsigned int size, unsigned int layout)
 	{
 		{
 			switch (RenderAPI::getApi())
@@ -14,7 +14,7 @@ namespace Engine {
 				ENG_CORE_ERROR("Lack of graphics API not supported.");
 				break;
 			case RenderAPI::API::OpenGL:
-				OpenGLUniformBuffer(size, layout);
+				return new OpenGLUniformBuffer(size, layout);
 				break;
 			case RenderAPI::API::Direct3D:
 				ENG_CORE_ERROR("Direct3D not supported.");

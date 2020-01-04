@@ -5,6 +5,7 @@
 
 #include "CameraController.h"
 #include "PerspectiveCamera3D.h"
+#include "Event/EventSubclass.h"
 
 namespace Engine {
 	class FPSCameraControllerEuler : public CameraController

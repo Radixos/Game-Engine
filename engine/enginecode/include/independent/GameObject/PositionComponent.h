@@ -8,7 +8,8 @@
 
 #include "GameObject.h"
 #include "MaterialComponent.h"
-#include <engine.h>
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 namespace Engine {
 	class PositionComponent : public Component	//!<PositionComponent class publicly inhariting from Component

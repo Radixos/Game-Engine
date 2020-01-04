@@ -15,7 +15,7 @@ namespace Engine {
 	public:
 		EventDispatcher(Event& event) : m_event(event)	//!<EventDispatcher constructor
 		{
-			//Should there be anuthing here??
+			
 		}
 
 		template<typename T>	//!<Template for EventDispatcher
@@ -31,5 +31,4 @@ namespace Engine {
 	private:
 		Event& m_event;
 	};
-
 }

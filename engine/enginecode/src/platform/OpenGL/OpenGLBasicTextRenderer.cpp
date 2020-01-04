@@ -20,7 +20,7 @@ namespace Engine {
 		auto perDrawData = material->getData();
 		for (auto dataPair : perDrawData)
 		{
-			shader->upload(dataPair.first, dataPair.second);
+			//shader->upload(dataPair.first, dataPair.second);
 		}
 		glDrawElements(GL_TRIANGLES, geometry->getDrawCount(), GL_UNSIGNED_INT, nullptr);
 	}

@@ -3,7 +3,7 @@
 #include "include/platform/OpenGL/OpenGLBasicRenderer.h"
 #include "include/platform/OpenGL/OpenGLBasicTextRenderer.h"
 #include <include\independent\Rendering\RenderAPI.h>
-#include <engine.h>
+#include "systems/Log.h"
 
 namespace Engine {
 	Renderer* Renderer::createBasic3D()
