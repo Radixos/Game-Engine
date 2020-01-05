@@ -5,7 +5,6 @@
 #include "include/platform/GLFW/GLFWCodes.h"
 #include "include/independent/Event/EventDispatcher.h"
 #include "glm/ext/matrix_transform.hpp"
-#include "GLFW/glfw3.h"
 
 namespace Engine {
 	void FPSCameraControllerEuler::updateView()
@@ -37,7 +36,7 @@ namespace Engine {
 		if (InputPoller::isKeyPressed(KEY_A)) { m_position -= m_right * m_translationSpeed * timestep; }
 		if (InputPoller::isKeyPressed(KEY_D)) { m_position += m_right * m_translationSpeed * timestep; }
 	
-		if (InputPoller::isMouseButtonPressed(GLFW_MOUSE_BUTTON_LEFT))
+		if (InputPoller::isMouseButtonPressed(MOUSE_BUTTON_LEFT))
 		{
 			glm::vec2 currentMousePosition = InputPoller::getMousePosition();
 			glm::vec2 mouseDelta = currentMousePosition - m_lastMousePosition;
@@ -63,7 +62,7 @@ namespace Engine {
 
 	bool FPSCameraControllerEuler::onMouseButton(MouseButtonPressed& e)
 	{
-		if (e.getButton() == GLFW_MOUSE_BUTTON_LEFT)
+		if (e.getButton() == MOUSE_BUTTON_LEFT)
 			m_lastMousePosition = InputPoller::getMousePosition();
 
 		return true;

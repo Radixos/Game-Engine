@@ -2,6 +2,7 @@
 */
 #include "engine_pch.h"
 #include "include/platform/OpenGL/OpenGLBasicRenderer.h"
+#include <glad\glad.h>
 
 namespace Engine {
 	void OpenGLBasicRenderer::actionCommand(RenderCommand* command)
@@ -39,8 +40,8 @@ namespace Engine {
 		auto perDrawData = material->getData();
 		for (auto dataPair : perDrawData)
 		{
-			//shader->uploadData(dataPair.first, dataPair.second);
+			shader->uploadData(dataPair.first, dataPair.second);
 		}
-		//glDrawElements(GL_TRIANGLES, geometry->getDrawCount(), GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_TRIANGLES, geometry->getDrawCount(), GL_UNSIGNED_INT, nullptr);
 	}
 }

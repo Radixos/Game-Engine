@@ -3,7 +3,7 @@
 #pragma once
 
 #include "windows/graphicsContext.h"
-#include "include/platform/GLFW/GLFWWindowImpl.h"
+#include "include/platform/GLFW/WindowsWindow.h"
 
 class OpenGL_GLFWGraphicsContext : public GraphicsContext
 {

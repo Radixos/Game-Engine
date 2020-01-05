@@ -93,8 +93,7 @@ namespace Engine {
 		//  Temporary set up code to be abstracted
 		m_renderer.reset(Renderer::createBasic3D());
 		// Enable standard depth detest (Z-buffer)
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LESS);
+		m_renderer->actionCommand(RenderCommand::setDepthTestLessCommand(true));
 		// Enabling backface culling to ensure triangle vertices are correct ordered (CCW)
 		m_renderer->actionCommand(RenderCommand::setBackfaceCullingCommand(true));
 
@@ -297,11 +296,8 @@ namespace Engine {
 		{
 			m_timer->setFrameStart();
 
-			//start = std::chrono::high_resolution_clock::now();
+			m_renderer->actionCommand(RenderCommand::ClearDepthColourBufferCommand(0, 0, 1, 1));	//BLUE
 
-			glClearColor(0, 0, 1, 1);	//blue
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			
 			glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f); // Basic 4:3 camera
 
 			glm::mat4 view = glm::lookAt(
@@ -324,13 +320,6 @@ namespace Engine {
 				TPtranslation = glm::translate(TPmodel, glm::vec3(0.0f, 0.2f * s_timestep, 0.0f));
 			}
 
-			//if (m_timer->getTimeSinceMarkerStart() == 2.0f && temp == 0)
-			//{
-			//	m_timer->setMarkerStart();
-			//	m_goingUp = !m_goingUp;
-			//	temp++;
-			//}
-
 			if (m_timer->getTimeSinceMarkerStart() > 4.0f /*&& temp > 0*/)
 			{
 				m_timer->setMarkerStart();
@@ -345,16 +334,11 @@ namespace Engine {
 			glm::mat4 fcMVP = projection * view * FCmodel;
 
 			m_FCShader->bind();
-			//glUseProgram(m_FCprogram);
-			//glBindVertexArray(m_FCvertexArray);
 
-			//m_FCShader->bind();	//TO FINISH
 			m_FCVAO->bind();
 
 			GLuint loc;
 
-			//GLuint MVPLoc = glGetUniformLocation(m_FCprogram, "u_MVP");
-			//glUniformMatrix4fv(MVPLoc, 1, GL_FALSE, &fcMVP[0][0]);
 			m_FCShader->uploadData("u_MVP", &fcMVP[0][0]);
 
 			glDrawElements(GL_TRIANGLES, m_FCVAO->getDrawCount() , GL_UNSIGNED_INT, nullptr);
@@ -369,8 +353,6 @@ namespace Engine {
 			else m_texSlot = m_TPNumberTex->getSlot();
 
 			m_TPShader->bind();
-			//glUseProgram(m_TPprogram);
-			//glBindVertexArray(m_TPvertexArray);	//TO FIX
 			m_TPVAO->bind();
 
 			//glm::vec3 m_objectColour(0.2f, 0.8f, 0.5f);

@@ -4,13 +4,10 @@
 #include "engine_pch.h"
 #include <glad/glad.h>
 #include "include/platform/GLFW/WindowsWindow.h"
-#include "../platform/GLFW/GLFWWindowImpl.h"
 #include "systems/Log.h"
 #include "Event/EventSubclass.h"
 #include "../platform/GLFW/GLFWCodes.h"
 #include "Event/Event.h"
-
-//#include <engine.h>
 
 namespace Engine {
 

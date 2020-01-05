@@ -1,4 +1,5 @@
-/** \file WindowsWindow.h
+/**
+\class WindowsWindow class
 */
 #pragma once
 
