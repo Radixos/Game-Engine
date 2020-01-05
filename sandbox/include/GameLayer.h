@@ -34,8 +34,23 @@
 		std::shared_ptr<Engine::Renderer> m_renderer;
 		std::shared_ptr<Engine::Shader> m_FCShader;
 		std::shared_ptr<Engine::Shader> m_TPShader;
+
+		glm::mat4 FCmodel, TPmodel;
+
+		Engine::BufferLayout m_TPlayout =
+		{
+			{Engine::ShaderDataType::Float3},
+			{Engine::ShaderDataType::Float3},
+			{Engine::ShaderDataType::Float2},
+		};
+		Engine::BufferLayout m_FClayout =
+		{
+			{Engine::ShaderDataType::Float3},
+			{Engine::ShaderDataType::Float3},
+		};
+
 		glm::mat4 m_FCmodel;
-		glm::mat4 m_TPmodel;
+		glm::mat4 m_TPmodel; 
 		unsigned int m_texSlot;
 		glm::vec3 m_lightColour;
 		glm::vec3 m_lightPosition;
@@ -44,7 +59,7 @@
 		bool m_goingUp = false;	//Is the cube going up?
 		float m_timeSummed = 10.f;	//How much time has elapsed?
 	public:
-		GameLayer(const std::string& name = "Layer") : Layer(name) {};
+		GameLayer(const std::string& name = "Layer");
 		void onAttach() override;
 		void onDetach() override;
 		void onUpdate(float timestep) override;

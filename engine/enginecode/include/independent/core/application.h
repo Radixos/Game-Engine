@@ -34,7 +34,7 @@ namespace Engine {
 		Application(); //!< Constructor
 		std::shared_ptr<LayerStack> m_layerStack;
 	private:
-		std::shared_ptr<Log> m_logger;
+		/*std::shared_ptr<Log> m_logger;
 		std::shared_ptr<Timer> m_timer;
 		std::shared_ptr<Window> m_windows;
 		std::shared_ptr<GLFWWindowsSystem> m_system;
@@ -60,7 +60,7 @@ namespace Engine {
 		{
 			{ShaderDataType::Float3},
 			{ShaderDataType::Float3},
-		};
+		};*/
 
 		static Application* s_instance; //!< Singleton instance of the application
 		float m_LastFrameTime = 0.0f;

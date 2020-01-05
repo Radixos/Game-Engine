@@ -90,102 +90,102 @@ namespace Engine {
 		m_TPVAO.reset(VertexArray::create());
 
 #pragma region TempSetup
-		//  Temporary set up code to be abstracted
-		m_renderer.reset(Renderer::createBasic3D());
-		// Enable standard depth detest (Z-buffer)
-		m_renderer->actionCommand(RenderCommand::setDepthTestLessCommand(true));
-		// Enabling backface culling to ensure triangle vertices are correct ordered (CCW)
-		m_renderer->actionCommand(RenderCommand::setBackfaceCullingCommand(true));
+		//// Create a basic 3D
+		//m_renderer.reset(Renderer::createBasic3D());
+		//// Enable standard depth detest (Z-buffer)
+		//m_renderer->actionCommand(RenderCommand::setDepthTestLessCommand(true));
+		//// Enabling backface culling to ensure triangle vertices are correct ordered (CCW)
+		//m_renderer->actionCommand(RenderCommand::setBackfaceCullingCommand(true));
 
-		float FCvertices[6 * 24] = {
-			-0.5f, -0.5f, -0.5f, 0.8f, 0.2f, 0.2f, // red square
-			 0.5f, -0.5f, -0.5f, 0.8f, 0.2f, 0.2f,
-			 0.5f,  0.5f, -0.5f, 0.8f, 0.2f, 0.2f,
-			-0.5f,  0.5f, -0.5f,  0.8f, 0.2f, 0.2f,
-			-0.5f, -0.5f, 0.5f, 0.2f, 0.8f, 0.2f, // green square
-			 0.5f, -0.5f, 0.5f, 0.2f, 0.8f, 0.2f,
-			 0.5f,  0.5f, 0.5f, 0.2f, 0.8f, 0.2f,
-			-0.5f,  0.5f, 0.5f,  0.2f, 0.8f, 0.2f,
-			-0.5f, -0.5f, -0.5f, 0.8f, 0.2f, 0.8f, // magenta(ish) square
-			 0.5f, -0.5f, -0.5f, 0.8f, 0.2f, 0.8f,
-			 0.5f, -0.5f, 0.5f, 0.8f, 0.2f, 0.8f,
-			-0.5f, -0.5f, 0.5f,  0.8f, 0.2f, 0.8f,
-			-0.5f, 0.5f, -0.5f, 0.8f, 0.8f, 0.2f, // yellow square 
-			 0.5f, 0.5f, -0.5f, 0.8f, 0.8f, 0.2f,
-			 0.5f, 0.5f, 0.5f, 0.8f, 0.8f, 0.2f,
-			-0.5f, 0.5f, 0.5f,  0.8f, 0.8f, 0.2f,
-			-0.5f, -0.5f, -0.5f, 0.2f, 0.8f, 0.8f, // Cyan(ish) square 
-			-0.5f,  0.5f, -0.5f,  0.2f, 0.8f, 0.8f,
-			-0.5f,  0.5f, 0.5f, 0.2f, 0.8f, 0.8f,
-			-0.5f,  -0.5f, 0.5f, 0.2f, 0.8f, 0.8f,
-			0.5f, -0.5f, -0.5f, 0.2f, 0.2f, 0.8f, // Blue square 
-			0.5f,  0.5f, -0.5f,  0.2f, 0.2f, 0.8f,
-			0.5f,  0.5f, 0.5f, 0.2f, 0.2f, 0.8f,
-			0.5f,  -0.5f, 0.5f, 0.2f, 0.2f, 0.8f
-		};
+		//float FCvertices[6 * 24] = {
+		//	-0.5f, -0.5f, -0.5f, 0.8f, 0.2f, 0.2f, // red square
+		//	 0.5f, -0.5f, -0.5f, 0.8f, 0.2f, 0.2f,
+		//	 0.5f,  0.5f, -0.5f, 0.8f, 0.2f, 0.2f,
+		//	-0.5f,  0.5f, -0.5f,  0.8f, 0.2f, 0.2f,
+		//	-0.5f, -0.5f, 0.5f, 0.2f, 0.8f, 0.2f, // green square
+		//	 0.5f, -0.5f, 0.5f, 0.2f, 0.8f, 0.2f,
+		//	 0.5f,  0.5f, 0.5f, 0.2f, 0.8f, 0.2f,
+		//	-0.5f,  0.5f, 0.5f,  0.2f, 0.8f, 0.2f,
+		//	-0.5f, -0.5f, -0.5f, 0.8f, 0.2f, 0.8f, // magenta(ish) square
+		//	 0.5f, -0.5f, -0.5f, 0.8f, 0.2f, 0.8f,
+		//	 0.5f, -0.5f, 0.5f, 0.8f, 0.2f, 0.8f,
+		//	-0.5f, -0.5f, 0.5f,  0.8f, 0.2f, 0.8f,
+		//	-0.5f, 0.5f, -0.5f, 0.8f, 0.8f, 0.2f, // yellow square 
+		//	 0.5f, 0.5f, -0.5f, 0.8f, 0.8f, 0.2f,
+		//	 0.5f, 0.5f, 0.5f, 0.8f, 0.8f, 0.2f,
+		//	-0.5f, 0.5f, 0.5f,  0.8f, 0.8f, 0.2f,
+		//	-0.5f, -0.5f, -0.5f, 0.2f, 0.8f, 0.8f, // Cyan(ish) square 
+		//	-0.5f,  0.5f, -0.5f,  0.2f, 0.8f, 0.8f,
+		//	-0.5f,  0.5f, 0.5f, 0.2f, 0.8f, 0.8f,
+		//	-0.5f,  -0.5f, 0.5f, 0.2f, 0.8f, 0.8f,
+		//	0.5f, -0.5f, -0.5f, 0.2f, 0.2f, 0.8f, // Blue square 
+		//	0.5f,  0.5f, -0.5f,  0.2f, 0.2f, 0.8f,
+		//	0.5f,  0.5f, 0.5f, 0.2f, 0.2f, 0.8f,
+		//	0.5f,  -0.5f, 0.5f, 0.2f, 0.2f, 0.8f
+		//};
 
-		float TPvertices[8 * 24] = {
-			-0.5f, -0.5f, -0.5f, 0.f, 0.f, -1.f, 0.33f, 0.5f,
-			 0.5f, -0.5f, -0.5f, 0.f, 0.f, -1.f, 0.f, 0.5f,
-			 0.5f,  0.5f, -0.5f, 0.f, 0.f, -1.f, 0.f, 0.f,
-			-0.5f,  0.5f, -0.5f, 0.f, 0.f, -1.f, 0.33f, 0.f,
-			-0.5f, -0.5f, 0.5f,  0.f, 0.f, 1.f, 0.33f, 0.5f,
-			 0.5f, -0.5f, 0.5f,  0.f, 0.f, 1.f, 0.66f, 0.5f,
-			 0.5f,  0.5f, 0.5f,  0.f, 0.f, 1.f, 0.66f, 0.f,
-			-0.5f,  0.5f, 0.5f,  0.f, 0.f, 1.f, 0.33, 0.f,
-			-0.5f, -0.5f, -0.5f, 0.f, -1.f, 0.f, 1.f, 0.f,
-			 0.5f, -0.5f, -0.5f, 0.f, -1.f, 0.f, 0.66f, 0.f,
-			 0.5f, -0.5f, 0.5f,  0.f, -1.f, 0.f, 0.66f, 0.5f,
-			-0.5f, -0.5f, 0.5f,  0.f, -1.f, 0.f, 1.0f, 0.5f,
-			-0.5f, 0.5f, -0.5f,  0.f, 1.f, 0.f, 0.33f, 1.0f,
-			 0.5f, 0.5f, -0.5f,  0.f, 1.f, 0.f, 0.f, 1.0f,
-			 0.5f, 0.5f, 0.5f, 0.f, 1.f, 0.f, 0.f, 0.5f,
-			-0.5f, 0.5f, 0.5f,   0.f, 1.f, 0.f, 0.3f, 0.5f,
-			-0.5f, -0.5f, -0.5f, -1.f, 0.f, 0.f, 0.33f, 1.0f,
-			-0.5f,  0.5f, -0.5f, -1.f, 0.f, 0.f, 0.33f, 0.5f,
-			-0.5f,  0.5f, 0.5f,  -1.f, 0.f, 0.f, 0.66f, 0.5f,
-			-0.5f,  -0.5f, 0.5f, -1.f, 0.f, 0.f, 0.66f, 1.0f,
-			0.5f, -0.5f, -0.5f,  1.f, 0.f, 0.f, 1.0f, 1.0f,
-			0.5f,  0.5f, -0.5f,  1.f, 0.f, 0.f, 1.0f, 0.5f,
-			0.5f,  0.5f, 0.5f, 1.f, 0.f, 0.f,  0.66f, 0.5f,
-			0.5f,  -0.5f, 0.5f,  1.f, 0.f, 0.f, 0.66f, 1.0f
-		};
+		//float TPvertices[8 * 24] = {
+		//	-0.5f, -0.5f, -0.5f, 0.f, 0.f, -1.f, 0.33f, 0.5f,
+		//	 0.5f, -0.5f, -0.5f, 0.f, 0.f, -1.f, 0.f, 0.5f,
+		//	 0.5f,  0.5f, -0.5f, 0.f, 0.f, -1.f, 0.f, 0.f,
+		//	-0.5f,  0.5f, -0.5f, 0.f, 0.f, -1.f, 0.33f, 0.f,
+		//	-0.5f, -0.5f, 0.5f,  0.f, 0.f, 1.f, 0.33f, 0.5f,
+		//	 0.5f, -0.5f, 0.5f,  0.f, 0.f, 1.f, 0.66f, 0.5f,
+		//	 0.5f,  0.5f, 0.5f,  0.f, 0.f, 1.f, 0.66f, 0.f,
+		//	-0.5f,  0.5f, 0.5f,  0.f, 0.f, 1.f, 0.33, 0.f,
+		//	-0.5f, -0.5f, -0.5f, 0.f, -1.f, 0.f, 1.f, 0.f,
+		//	 0.5f, -0.5f, -0.5f, 0.f, -1.f, 0.f, 0.66f, 0.f,
+		//	 0.5f, -0.5f, 0.5f,  0.f, -1.f, 0.f, 0.66f, 0.5f,
+		//	-0.5f, -0.5f, 0.5f,  0.f, -1.f, 0.f, 1.0f, 0.5f,
+		//	-0.5f, 0.5f, -0.5f,  0.f, 1.f, 0.f, 0.33f, 1.0f,
+		//	 0.5f, 0.5f, -0.5f,  0.f, 1.f, 0.f, 0.f, 1.0f,
+		//	 0.5f, 0.5f, 0.5f, 0.f, 1.f, 0.f, 0.f, 0.5f,
+		//	-0.5f, 0.5f, 0.5f,   0.f, 1.f, 0.f, 0.3f, 0.5f,
+		//	-0.5f, -0.5f, -0.5f, -1.f, 0.f, 0.f, 0.33f, 1.0f,
+		//	-0.5f,  0.5f, -0.5f, -1.f, 0.f, 0.f, 0.33f, 0.5f,
+		//	-0.5f,  0.5f, 0.5f,  -1.f, 0.f, 0.f, 0.66f, 0.5f,
+		//	-0.5f,  -0.5f, 0.5f, -1.f, 0.f, 0.f, 0.66f, 1.0f,
+		//	0.5f, -0.5f, -0.5f,  1.f, 0.f, 0.f, 1.0f, 1.0f,
+		//	0.5f,  0.5f, -0.5f,  1.f, 0.f, 0.f, 1.0f, 0.5f,
+		//	0.5f,  0.5f, 0.5f, 1.f, 0.f, 0.f,  0.66f, 0.5f,
+		//	0.5f,  -0.5f, 0.5f,  1.f, 0.f, 0.f, 0.66f, 1.0f
+		//};
 
-		unsigned int indices[3 * 12] = {
-			2, 1, 0,
-			0, 3, 2,
-			4, 5, 6,
-			6, 7, 4,
-			8, 9, 10,
-			10, 11, 8,
-			14, 13, 12,
-			12, 15, 14,
-			18, 17, 16,
-			16, 19, 18,
-			20, 21, 22,
-			22, 23, 20
-		};
+		//unsigned int indices[3 * 12] = {
+		//	2, 1, 0,
+		//	0, 3, 2,
+		//	4, 5, 6,
+		//	6, 7, 4,
+		//	8, 9, 10,
+		//	10, 11, 8,
+		//	14, 13, 12,
+		//	12, 15, 14,
+		//	18, 17, 16,
+		//	16, 19, 18,
+		//	20, 21, 22,
+		//	22, 23, 20
+		//};
 
-		m_FCVertexBuffer.reset(VertexBuffer::create(FCvertices, sizeof(FCvertices), m_FClayout));
-		m_FCVAO->setVertexBuffer(m_FCVertexBuffer);
+		//m_FCVertexBuffer.reset(VertexBuffer::create(FCvertices, sizeof(FCvertices), m_FClayout));
+		//m_FCVAO->setVertexBuffer(m_FCVertexBuffer);
 
-		m_FCindexBuffer.reset(IndexBuffer::create(indices ,sizeof(indices)));
-		m_FCVAO->setindexBuffer(m_FCindexBuffer);
+		//m_FCindexBuffer.reset(IndexBuffer::create(indices ,sizeof(indices)));
+		//m_FCVAO->setindexBuffer(m_FCindexBuffer);
 
-		m_TPVertexBuffer.reset(VertexBuffer::create(TPvertices, sizeof(TPvertices), m_TPlayout));
-		m_TPVAO->setVertexBuffer(m_TPVertexBuffer);
+		//m_TPVertexBuffer.reset(VertexBuffer::create(TPvertices, sizeof(TPvertices), m_TPlayout));
+		//m_TPVAO->setVertexBuffer(m_TPVertexBuffer);
 
-		m_TPindexBuffer.reset(IndexBuffer::create(indices, sizeof(indices)));
-		m_TPVAO->setindexBuffer(m_TPindexBuffer);
+		//m_TPindexBuffer.reset(IndexBuffer::create(indices, sizeof(indices)));
+		//m_TPVAO->setindexBuffer(m_TPindexBuffer);
 
-		m_FCShader.reset(Shader::create("assets/shaders/flatColour.glsl"));
-		m_TPShader.reset(Shader::create("assets/shaders/texturedPhong.glsl"));
+		//m_FCShader.reset(Shader::create("assets/shaders/flatColour.glsl"));
+		//m_TPShader.reset(Shader::create("assets/shaders/texturedPhong.glsl"));
 
-		m_TPNumberTex.reset(Texture::createFromFile("assets/textures/letterCube.png"));
-		m_TPLetterTex.reset(Texture::createFromFile("assets/textures/numberCube.png"));
+		//m_TPNumberTex.reset(Texture::createFromFile("assets/textures/letterCube.png"));
+		//m_TPLetterTex.reset(Texture::createFromFile("assets/textures/numberCube.png"));
 
-		FCmodel = glm::translate(glm::mat4(1), glm::vec3(1.5, 0, 3));
-		TPmodel = glm::translate(glm::mat4(1), glm::vec3(-1.5, 0, 3));
+		//FCmodel = glm::translate(glm::mat4(1), glm::vec3(1.5, 0, 3));
+		//TPmodel = glm::translate(glm::mat4(1), glm::vec3(-1.5, 0, 3));
 
 		// End temporary code
 
