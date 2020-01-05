@@ -9,7 +9,7 @@ namespace Engine {
 	class AssetManager
 	{
 	public:
-		bool contains(const std::string& key);	//!<Is this item in the container already
+		bool contains(const std::string& key) /*{return &key}*/;	//!<Is this item in the container already
 		void add(const std::string& key, std::shared_ptr<G>& element);	//!<Add element to the container
 		std::shared_ptr<G> get(const std::string& key);	//!<Get a point to an asset
 	private:

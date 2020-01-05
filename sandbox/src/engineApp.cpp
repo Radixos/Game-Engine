@@ -6,8 +6,8 @@
 
 engineApp::engineApp()
 {
-	//m_layerStack->pushLayer(std::make_shared<GameLayer>(GameLayer("Game Layer")));
-	//m_layerStack->pushLayer(std::make_shared<UILayer>(UILayer("UI Layer")));
+	m_layerStack->pushLayer(std::make_shared<GameLayer>(GameLayer("Game Layer")));
+	m_layerStack->pushLayer(std::make_shared<UILayer>(UILayer("UI Layer")));
 }
 
 engineApp::~engineApp()

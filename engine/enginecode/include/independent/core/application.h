@@ -63,7 +63,6 @@ namespace Engine {
 		};
 
 		static Application* s_instance; //!< Singleton instance of the application
-		//Timer m_timer; //!< Timer for measuring time
 		float m_LastFrameTime = 0.0f;
 		bool m_running = true;
 
@@ -85,17 +84,6 @@ namespace Engine {
 
 #pragma region TempVars
 // Temp stuff
-		//unsigned int m_FCvertexArray; // Flat Colour VAO
-		//unsigned int m_FCvertexBuffer;// Flat Colour VBO
-		//unsigned int m_TPvertexArray; // Textured Phong VAO
-		//unsigned int m_TPvertexBuffer;// Textured Phong VBO
-		//unsigned int m_FCindexBuffer; // Index buffer for colour cube
-		//unsigned int m_TPindexBuffer; // Index buffer for texture Phong cube
-		//unsigned int m_FCprogram; // Flat colour shader ID
-		//unsigned int m_TPprogram; // Textured Phong shader ID
-		//unsigned int m_numberTexture; // Texture ID
-		//unsigned int m_letterTexture; // Texture ID
-		//unsigned int m_textureSlots[2]; // Slot where the textures are stored
 		bool m_goingUp = false; // Is the cude going up?
 		float m_timeSummed = 0.f; // How much timer has elasped?
 #pragma endregion TempVars
