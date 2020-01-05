@@ -36,7 +36,7 @@ namespace Engine {
 	class ComponentMessage	//!<ComponentMessage class
 	{
 	public:
-		//ComponentMessage(ComponentMessage type, std::any data) : m_msgType(type), m_msgData(data) {};
+		ComponentMessage(ComponentMessageType type, std::any data) : m_msgType(type), m_msgData(data) {};
 		ComponentMessageType m_msgType;	//!<Message type
 		std::any m_msgData;	//!<Data associated with the message (could use a void *)
 	};

@@ -5,7 +5,6 @@
 //#include "include/independent/Rendering/Texture.h"
 //#include <include\independent\Rendering\UniformBuffer.h>
 //
-////namespace Engine {
 //	class GameLayer : public Engine::Layer	//Why not just "Layer"
 //	{
 //	private:
@@ -31,4 +30,3 @@
 //		void onUpdate(float timestep) override;
 //		void onEvent(Engine::Event& event) override;
 //	};
-////}

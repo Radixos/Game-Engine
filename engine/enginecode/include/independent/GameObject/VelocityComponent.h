@@ -37,7 +37,7 @@ namespace Engine {
 		void onUpdate(float timestep) override
 		{
 			std::pair<glm::vec3, glm::vec3> data(m_linear * timestep, m_angular * timestep);
-			//sendMessage(ComponentMessage(ComponentMessageType::PositionIntegrate, std::any(data)));
+			sendMessage(ComponentMessage(ComponentMessageType::PositionIntegrate, std::any(data)));
 		}
 	};
 }

@@ -18,6 +18,7 @@
 #include "Rendering/Texture.h"
 #include "Rendering/Shader.h"
 #include "Rendering/Renderer.h"
+#include <include\independent\Layer\LayerStack.h>
 
 namespace Engine {
 
@@ -31,10 +32,11 @@ namespace Engine {
 	{
 	protected:
 		Application(); //!< Constructor
+		std::shared_ptr<LayerStack> m_layerStack;
 	private:
 		std::shared_ptr<Log> m_logger;
 		std::shared_ptr<Timer> m_timer;
-		std::shared_ptr<Window> m_Window;
+		std::shared_ptr<Window> m_windows;
 		std::shared_ptr<GLFWWindowsSystem> m_system;
 		std::shared_ptr<VertexArray> m_FCVAO;
 		std::shared_ptr<VertexArray> m_TPVAO;
@@ -44,9 +46,7 @@ namespace Engine {
 		std::shared_ptr<IndexBuffer> m_TPindexBuffer;
 		std::shared_ptr<Texture> m_TPNumberTex;
 		std::shared_ptr<Texture> m_TPLetterTex;
-
 		std::shared_ptr<Renderer> m_renderer;
-
 		std::shared_ptr<Shader> m_FCShader;
 		std::shared_ptr<Shader> m_TPShader;
 
@@ -91,8 +91,8 @@ namespace Engine {
 		//unsigned int m_TPvertexBuffer;// Textured Phong VBO
 		//unsigned int m_FCindexBuffer; // Index buffer for colour cube
 		//unsigned int m_TPindexBuffer; // Index buffer for texture Phong cube
-		unsigned int m_FCprogram; // Flat colour shader ID
-		unsigned int m_TPprogram; // Textured Phong shader ID
+		//unsigned int m_FCprogram; // Flat colour shader ID
+		//unsigned int m_TPprogram; // Textured Phong shader ID
 		//unsigned int m_numberTexture; // Texture ID
 		//unsigned int m_letterTexture; // Texture ID
 		//unsigned int m_textureSlots[2]; // Slot where the textures are stored
@@ -104,7 +104,7 @@ namespace Engine {
 		virtual ~Application(); //!< Deconstructor
 		inline static Application& getInstance() { return *s_instance; }	//!< Instance getter from singleton pattern
 		inline static float getTimestep() { return s_timestep; }	//!<Declaring and defining function for returning the timestep
-		inline std::shared_ptr<Window> getWindow() { return m_Window; }	//!<Declaring and defining function for returning the window
+		inline std::shared_ptr<Window> getWindow() { return m_windows; }	//!<Declaring and defining function for returning the window
 		void onEvent(Event& e);	//!< Called when an event happens
 		//bool onClose(WindowCloseEvent& e); //!< On close event
 		//bool onResize(WindowResizeEvent& e); //!< On resize event

@@ -1,3 +1,4 @@
+
 /** \file application.cpp
 */
 
@@ -13,6 +14,8 @@ dOxygen
 Report
 ubo
 */
+
+//renderer, camera, layer, clean app
 
 #include "engine_pch.h"
 
@@ -72,17 +75,16 @@ namespace Engine {
 
 		m_system.reset(new GLFWWindowsSystem);
 		m_system->start();
-		//m_Window = std::shared_ptr<Window>(Window::create());
+
 #ifdef NG_PLATFORM_WINDOWS
-		m_Window.reset(Window::create());
+		m_windows.reset(Window::create());
 #endif // NG_PLATFORM_WINDOWS
-		m_Window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
-		//m_Window->start();
+		m_windows->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 		ENG_CLIENT_INFO("Windows system initialised");
 		// Create window
-		m_Window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
+		m_windows->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 		// Set screen resolution
-		Application::s_screenResolution = glm::ivec2(m_Window->getWidth(), m_Window->getHeight());
+		Application::s_screenResolution = glm::ivec2(m_windows->getWidth(), m_windows->getHeight());
 
 		m_FCVAO.reset(VertexArray::create());
 		m_TPVAO.reset(VertexArray::create());
@@ -95,9 +97,6 @@ namespace Engine {
 		glDepthFunc(GL_LESS);
 		// Enabling backface culling to ensure triangle vertices are correct ordered (CCW)
 		m_renderer->actionCommand(RenderCommand::setBackfaceCullingCommand(true));
-		//glEnable(GL_CULL_FACE);
-		//glCullFace(GL_BACK);
-		//setBackfaceCullingCommand();
 
 		float FCvertices[6 * 24] = {
 			-0.5f, -0.5f, -0.5f, 0.8f, 0.2f, 0.2f, // red square
@@ -173,8 +172,6 @@ namespace Engine {
 
 		m_FCindexBuffer.reset(IndexBuffer::create(indices ,sizeof(indices)));
 		m_FCVAO->setindexBuffer(m_FCindexBuffer);
-
-		// Added textuer phong shader and cube
 
 		m_TPVertexBuffer.reset(VertexBuffer::create(TPvertices, sizeof(TPvertices), m_TPlayout));
 		m_TPVAO->setVertexBuffer(m_TPVertexBuffer);
@@ -358,7 +355,7 @@ namespace Engine {
 
 			//GLuint MVPLoc = glGetUniformLocation(m_FCprogram, "u_MVP");
 			//glUniformMatrix4fv(MVPLoc, 1, GL_FALSE, &fcMVP[0][0]);
-			m_FCShader->uploadMat4("u_MVP", &fcMVP[0][0]);
+			m_FCShader->uploadData("u_MVP", &fcMVP[0][0]);
 
 			glDrawElements(GL_TRIANGLES, m_FCVAO->getDrawCount() , GL_UNSIGNED_INT, nullptr);
 
@@ -371,32 +368,30 @@ namespace Engine {
 			if (m_goingUp) m_texSlot = m_TPLetterTex->getSlot();
 			else m_texSlot = m_TPNumberTex->getSlot();
 
-			m_TPShader->uploadInt("u_texData", m_texSlot);
-
 			m_TPShader->bind();
 			//glUseProgram(m_TPprogram);
 			//glBindVertexArray(m_TPvertexArray);	//TO FIX
 			m_TPVAO->bind();
 
-			glm::vec3 m_objectColour(0.2f, 0.8f, 0.5f);
+			//glm::vec3 m_objectColour(0.2f, 0.8f, 0.5f);
 			glm::vec3 m_lightColour(1.0f, 1.0f, 1.0f);
 			glm::vec3 m_lightPosition(0.0f, 3.0f, -6.0f);
 			glm::vec3 m_viewPosition(0.0f, 0.0f, -4.5f);	//m_viewPosition = glm::vec3(0.0f, 0.0f, -4.5f);
 
-			m_TPShader->uploadMat4("u_MVP", &tpMVP[0][0]);
-			m_TPShader->uploadMat4("u_model", &TPmodel[0][0]);
-			m_TPShader->uploadFloat3("u_objectColour", &m_objectColour[0]);
-			m_TPShader->uploadFloat3("u_lightColour", &m_lightColour[0]);
-			m_TPShader->uploadFloat3("u_lightPos", &m_lightPosition[0]);
-			m_TPShader->uploadFloat3("u_viewPos", &m_viewPosition[0]);
-			m_TPShader->uploadInt("u_texData", m_texSlot);
+			m_TPShader->uploadData("u_MVP", &tpMVP[0][0]);
+			m_TPShader->uploadData("u_model", &TPmodel[0][0]);
+			//m_TPShader->uploadData("u_objectColour", &m_objectColour[0]);
+			m_TPShader->uploadData("u_lightColour", &m_lightColour[0]);
+			m_TPShader->uploadData("u_lightPos", &m_lightPosition[0]);
+			m_TPShader->uploadData("u_viewPos", &m_viewPosition[0]);
+			m_TPShader->uploadData("u_texData", (void*)m_texSlot);
 
 			glDrawElements(GL_TRIANGLES, m_TPVAO->getDrawCount(), GL_UNSIGNED_INT, nullptr);
 
 			// End temporary code
 #pragma endregion TempDrawCode
 
-			m_Window->onUpdate(s_timestep);
+			m_windows->onUpdate(s_timestep);
 
 			//if (time > 3.0f)
 			//{

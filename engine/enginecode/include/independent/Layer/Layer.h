@@ -6,13 +6,13 @@
 
 #include <memory>
 #include <string>
-#include <engine.h>
+#include <include\independent\Event\Event.h>
 
 namespace Engine {
 	class Layer
 	{
 	public:
-		Layer(const std::string& name = "Layer") : m_debugName(name) {}	//???	//!<Constructor
+		Layer(const std::string& name = "Layer") : m_debugName(name) {}	//!<Constructor
 		virtual ~Layer() = default; /*{}*/	//!<Destructor
 
 		virtual void onAttach() {}	//!<Virtual onAttach function
