@@ -19,9 +19,9 @@ namespace Engine {
 			unsigned int size;
 			int i = 0;
 
-			//UniformBufferLayout layout = uboPair.first->getLayout();
+			/*UniformBufferLayout layout = uboPair.first->getLayout();
 
-			/*for (auto bufferElement : layout)
+			for (auto bufferElement : layout)
 			{
 				uboPair.first->setData(bufferElement.m_offset, bufferElement.m_size, uboPair.second[i]);
 				i++;
