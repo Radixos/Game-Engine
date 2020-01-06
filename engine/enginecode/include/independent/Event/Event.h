@@ -37,7 +37,7 @@ namespace Engine
 		inline const char* GetName() const { return "GetName working"; }	//!<A function to check if GetName works
 		virtual int getCategoryFlags() const = 0;	//!<Get the event category
 		virtual std::string ToString() const { return GetName(); }	//!<A function for returning the GetName()
-		inline void handle(bool isHandled) { m_handled = isHandled; }	//!<Handle the event
+		inline bool handled(bool isHandled) { return m_handled = isHandled; }	//!<Handle the event
 		inline bool isInCategory(EventCategory category) { return getCategoryFlags() & category; }	//!<Is this event in the category?
 	};
 //

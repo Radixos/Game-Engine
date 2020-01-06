@@ -81,6 +81,11 @@ namespace Engine {
 #endif // NG_PLATFORM_WINDOWS
 		m_windows->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 		ENG_CLIENT_INFO("Windows system initialised");
+		
+		m_layerStack.reset(new LayerStack());
+		m_layerStack->begin();	//???
+		ENG_CORE_INFO("LayerStack initialised");
+		
 		// Create window
 		m_windows->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 		// Set screen resolution
@@ -211,6 +216,12 @@ namespace Engine {
 		dispatcher.dispatch<MouseMoved>(std::bind(&Application::onMouseMoved, this, std::placeholders::_1));
 		dispatcher.dispatch<MouseButtonPressed>(std::bind(&Application::onMouseButtonPressed, this, std::placeholders::_1));
 		dispatcher.dispatch<MouseButtonReleased>(std::bind(&Application::onMouseButtonReleased, this, std::placeholders::_1));
+	
+		for (auto it = m_layerStack->end(); it != m_layerStack->begin(); )
+		{
+			(*--it)->onEvent(e);
+			if (e.handled(true)) break;
+		}
 	}
 
 	bool Application::onClose(WindowCloseEvent& e)
@@ -296,97 +307,107 @@ namespace Engine {
 		{
 			m_timer->setFrameStart();
 
-			m_renderer->actionCommand(RenderCommand::ClearDepthColourBufferCommand(0, 0, 1, 1));	//BLUE
+			////m_renderer->actionCommand(RenderCommand::ClearDepthColourBufferCommand(0, 0, 1, 1));	//BLUE
 
-			glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f); // Basic 4:3 camera
+			////glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f); // Basic 4:3 camera
 
-			glm::mat4 view = glm::lookAt(
-				glm::vec3(0.0f, 0.0f, -4.5f), // Camera is at (0.0,0.0,-4.5), in World Space
-				glm::vec3(0.f, 0.f, 0.f), // and looks at the origin
-				glm::vec3(0.f, 1.f, 0.f)  // Standing straight  up
-			);
+			//glm::mat4 view = glm::lookAt(
+			//	glm::vec3(0.0f, 0.0f, -4.5f), // Camera is at (0.0,0.0,-4.5), in World Space
+			//	glm::vec3(0.f, 0.f, 0.f), // and looks at the origin
+			//	glm::vec3(0.f, 1.f, 0.f)  // Standing straight  up
+			//);
 
-			// Code to make the cube move.
-			glm::mat4 FCtranslation, TPtranslation;
+//			// Code to make the cube move.
+//			glm::mat4 FCtranslation, TPtranslation;
+//
+//			if (m_goingUp)
+//			{
+//				FCtranslation = glm::translate(FCmodel, glm::vec3(0.0f, 0.2f * s_timestep, 0.0f));
+//				TPtranslation = glm::translate(TPmodel, glm::vec3(0.0f, -0.2f * s_timestep, 0.0f));
+//			}
+//			else
+//			{
+//				FCtranslation = glm::translate(FCmodel, glm::vec3(0.0f, -0.2f * s_timestep, 0.0f));
+//				TPtranslation = glm::translate(TPmodel, glm::vec3(0.0f, 0.2f * s_timestep, 0.0f));
+//			}
+//
+//			if (m_timer->getTimeSinceMarkerStart() > 4.0f /*&& temp > 0*/)
+//			{
+//				m_timer->setMarkerStart();
+//				m_goingUp = !m_goingUp;
+//			}
+//
+//			FCmodel = glm::rotate(FCtranslation, glm::radians(20.f) * s_timestep, glm::vec3(0.f, 1.f, 0.f)); // Spin the cube at 20 degrees per second
+//			TPmodel = glm::rotate(TPtranslation, glm::radians(-20.f) * s_timestep, glm::vec3(0.f, 1.f, 0.f)); // Spin the cube at 20 degrees per second
+//
+//			// End of code to make the cube move.
+//
+//			glm::mat4 fcMVP = projection * view * FCmodel;
+//
+//			m_FCShader->bind();
+//
+//			m_FCVAO->bind();
+//
+//			GLuint loc;
+//
+//			m_FCShader->uploadData("u_MVP", &fcMVP[0][0]);
+//
+//			glDrawElements(GL_TRIANGLES, m_FCVAO->getDrawCount() , GL_UNSIGNED_INT, nullptr);
+//
+//			glm::mat4 tpMVP = projection * view * TPmodel;
+//			m_TPShader->bind();
+//			m_TPVAO->bind();
+//
+//			unsigned int m_texSlot;
+//
+//			if (m_goingUp) m_texSlot = m_TPLetterTex->getSlot();
+//			else m_texSlot = m_TPNumberTex->getSlot();
+//
+//			m_TPShader->bind();
+//			m_TPVAO->bind();
+//
+//			//glm::vec3 m_objectColour(0.2f, 0.8f, 0.5f);
+//			glm::vec3 m_lightColour(1.0f, 1.0f, 1.0f);
+//			glm::vec3 m_lightPosition(0.0f, 3.0f, -6.0f);
+//			glm::vec3 m_viewPosition(0.0f, 0.0f, -4.5f);	//m_viewPosition = glm::vec3(0.0f, 0.0f, -4.5f);
+//
+//			m_TPShader->uploadData("u_MVP", &tpMVP[0][0]);
+//			m_TPShader->uploadData("u_model", &TPmodel[0][0]);
+//			//m_TPShader->uploadData("u_objectColour", &m_objectColour[0]);
+//			m_TPShader->uploadData("u_lightColour", &m_lightColour[0]);
+//			m_TPShader->uploadData("u_lightPos", &m_lightPosition[0]);
+//			m_TPShader->uploadData("u_viewPos", &m_viewPosition[0]);
+//			m_TPShader->uploadData("u_texData", (void*)m_texSlot);
+//
+//			glDrawElements(GL_TRIANGLES, m_TPVAO->getDrawCount(), GL_UNSIGNED_INT, nullptr);
+//
+//			// End temporary code
+//#pragma endregion TempDrawCode
+//
+//			m_windows->onUpdate(s_timestep);
+//
+//			//if (time > 3.0f)
+//			//{
+//			//	WindowResizeEvent e(1024, 720);
+//			//	onEvent(e);
+//			//	m_running = false;
+//			//	//ENG_CORE_INFO("Time elapsed: {0}. Shutting down.", time);
+//			//}
+//			//end = std::chrono::high_resolution_clock::now();
+//			//std::chrono::duration<float> diff = end - start;
+//			//s_timestep = diff.count();
 
-			if (m_goingUp)
-			{
-				FCtranslation = glm::translate(FCmodel, glm::vec3(0.0f, 0.2f * s_timestep, 0.0f));
-				TPtranslation = glm::translate(TPmodel, glm::vec3(0.0f, -0.2f * s_timestep, 0.0f));
-			}
-			else
-			{
-				FCtranslation = glm::translate(FCmodel, glm::vec3(0.0f, -0.2f * s_timestep, 0.0f));
-				TPtranslation = glm::translate(TPmodel, glm::vec3(0.0f, 0.2f * s_timestep, 0.0f));
-			}
-
-			if (m_timer->getTimeSinceMarkerStart() > 4.0f /*&& temp > 0*/)
-			{
-				m_timer->setMarkerStart();
-				m_goingUp = !m_goingUp;
-			}
-
-			FCmodel = glm::rotate(FCtranslation, glm::radians(20.f) * s_timestep, glm::vec3(0.f, 1.f, 0.f)); // Spin the cube at 20 degrees per second
-			TPmodel = glm::rotate(TPtranslation, glm::radians(-20.f) * s_timestep, glm::vec3(0.f, 1.f, 0.f)); // Spin the cube at 20 degrees per second
-
-			// End of code to make the cube move.
-
-			glm::mat4 fcMVP = projection * view * FCmodel;
-
-			m_FCShader->bind();
-
-			m_FCVAO->bind();
-
-			GLuint loc;
-
-			m_FCShader->uploadData("u_MVP", &fcMVP[0][0]);
-
-			glDrawElements(GL_TRIANGLES, m_FCVAO->getDrawCount() , GL_UNSIGNED_INT, nullptr);
-
-			glm::mat4 tpMVP = projection * view * TPmodel;
-			m_TPShader->bind();
-			m_TPVAO->bind();
-
-			unsigned int m_texSlot;
-
-			if (m_goingUp) m_texSlot = m_TPLetterTex->getSlot();
-			else m_texSlot = m_TPNumberTex->getSlot();
-
-			m_TPShader->bind();
-			m_TPVAO->bind();
-
-			//glm::vec3 m_objectColour(0.2f, 0.8f, 0.5f);
-			glm::vec3 m_lightColour(1.0f, 1.0f, 1.0f);
-			glm::vec3 m_lightPosition(0.0f, 3.0f, -6.0f);
-			glm::vec3 m_viewPosition(0.0f, 0.0f, -4.5f);	//m_viewPosition = glm::vec3(0.0f, 0.0f, -4.5f);
-
-			m_TPShader->uploadData("u_MVP", &tpMVP[0][0]);
-			m_TPShader->uploadData("u_model", &TPmodel[0][0]);
-			//m_TPShader->uploadData("u_objectColour", &m_objectColour[0]);
-			m_TPShader->uploadData("u_lightColour", &m_lightColour[0]);
-			m_TPShader->uploadData("u_lightPos", &m_lightPosition[0]);
-			m_TPShader->uploadData("u_viewPos", &m_viewPosition[0]);
-			m_TPShader->uploadData("u_texData", (void*)m_texSlot);
-
-			glDrawElements(GL_TRIANGLES, m_TPVAO->getDrawCount(), GL_UNSIGNED_INT, nullptr);
-
-			// End temporary code
-#pragma endregion TempDrawCode
-
-			m_windows->onUpdate(s_timestep);
-
-			//if (time > 3.0f)
-			//{
-			//	WindowResizeEvent e(1024, 720);
-			//	onEvent(e);
-			//	m_running = false;
-			//	//ENG_CORE_INFO("Time elapsed: {0}. Shutting down.", time);
-			//}
-			//end = std::chrono::high_resolution_clock::now();
-			//std::chrono::duration<float> diff = end - start;
-			//s_timestep = diff.count();
 			s_timestep = m_timer->getTimeSinceFrameStart();
 			//ENG_CORE_INFO("FPS: {0}", (int)(1.0f / s_timestep));
+		
+#ifdef NG_DEBUG
+			ENG_CORE_INFO("FPS: {0}", (int)(1.0f / s_timestep));
+#endif
+			for (auto it = m_layerStack->begin(); it != m_layerStack->end(); it++)
+				(*it)->onUpdate(s_timestep);
+
+			m_windows->onUpdate(s_timestep);
+		
 		}
 	}
 }

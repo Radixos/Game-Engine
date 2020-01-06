@@ -34,33 +34,33 @@ namespace Engine {
 		Application(); //!< Constructor
 		std::shared_ptr<LayerStack> m_layerStack;
 	private:
-		/*std::shared_ptr<Log> m_logger;
+		std::shared_ptr<Log> m_logger;
 		std::shared_ptr<Timer> m_timer;
 		std::shared_ptr<Window> m_windows;
 		std::shared_ptr<GLFWWindowsSystem> m_system;
 		std::shared_ptr<VertexArray> m_FCVAO;
 		std::shared_ptr<VertexArray> m_TPVAO;
-		std::shared_ptr<VertexBuffer> m_FCVertexBuffer;
-		std::shared_ptr<VertexBuffer> m_TPVertexBuffer;
-		std::shared_ptr<IndexBuffer> m_FCindexBuffer;
-		std::shared_ptr<IndexBuffer> m_TPindexBuffer;
-		std::shared_ptr<Texture> m_TPNumberTex;
-		std::shared_ptr<Texture> m_TPLetterTex;
-		std::shared_ptr<Renderer> m_renderer;
-		std::shared_ptr<Shader> m_FCShader;
-		std::shared_ptr<Shader> m_TPShader;
-
-		BufferLayout m_TPlayout = 
-		{
-			{ShaderDataType::Float3},
-			{ShaderDataType::Float3},
-			{ShaderDataType::Float2},
-		};
-		BufferLayout m_FClayout = 
-		{
-			{ShaderDataType::Float3},
-			{ShaderDataType::Float3},
-		};*/
+		//std::shared_ptr<VertexBuffer> m_FCVertexBuffer;
+		//std::shared_ptr<VertexBuffer> m_TPVertexBuffer;
+		//std::shared_ptr<IndexBuffer> m_FCindexBuffer;
+		//std::shared_ptr<IndexBuffer> m_TPindexBuffer;
+		//std::shared_ptr<Texture> m_TPNumberTex;
+		//std::shared_ptr<Texture> m_TPLetterTex;
+		//std::shared_ptr<Renderer> m_renderer;
+		//std::shared_ptr<Shader> m_FCShader;
+		//std::shared_ptr<Shader> m_TPShader;
+		//
+		//BufferLayout m_TPlayout = 
+		//{
+		//	{ShaderDataType::Float3},
+		//	{ShaderDataType::Float3},
+		//	{ShaderDataType::Float2},
+		//};
+		//BufferLayout m_FClayout = 
+		//{
+		//	{ShaderDataType::Float3},
+		//	{ShaderDataType::Float3},
+		//};
 
 		static Application* s_instance; //!< Singleton instance of the application
 		float m_LastFrameTime = 0.0f;
