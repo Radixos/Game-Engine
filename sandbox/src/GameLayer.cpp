@@ -81,6 +81,9 @@ GameLayer::GameLayer(const std::string& name) : Layer(name)
 		22, 23, 20
 	};
 
+	m_FCVAO.reset(Engine::VertexArray::create());
+	m_TPVAO.reset(Engine::VertexArray::create());
+
 	m_FCVertexBuffer.reset(Engine::VertexBuffer::create(FCvertices, sizeof(FCvertices), m_FClayout));
 	m_FCVAO->setVertexBuffer(m_FCVertexBuffer);
 
@@ -101,6 +104,9 @@ GameLayer::GameLayer(const std::string& name) : Layer(name)
 
 	FCmodel = glm::translate(glm::mat4(1), glm::vec3(1.5, 0, 3));
 	TPmodel = glm::translate(glm::mat4(1), glm::vec3(-1.5, 0, 3));
+
+	m_FCcube.reset(Engine::Material::create(m_FCShader, m_FCVAO));
+	m_TPcube.reset(Engine::Material::create(m_TPShader, m_TPVAO));
 }
 
 void GameLayer::onAttach()
@@ -140,10 +146,18 @@ void GameLayer::onUpdate(float timestep)
 		TPtranslation = glm::translate(TPmodel, glm::vec3(0.0f, 0.2f * timestep, 0.0f));
 	}
 
-	if (m_timer->getTimeSinceMarkerStart() > 4.0f /*&& temp > 0*/)
+	/*if (m_timer->getTimeSinceMarkerStart() > 4.0f)
 	{
 		m_timer->setMarkerStart();
 		m_goingUp = !m_goingUp;
+	}*/
+
+	m_timeSummed += timestep;
+	if (m_timeSummed > 4.f)
+	{
+		m_goingUp = !m_goingUp;
+		m_timeSummed = 0.0f;
+		//reset m_timeSummed
 	}
 
 	FCmodel = glm::rotate(FCtranslation, glm::radians(20.f) * timestep, glm::vec3(0.f, 1.f, 0.f)); // Spin the cube at 20 degrees per second
@@ -161,7 +175,8 @@ void GameLayer::onUpdate(float timestep)
 
 	m_FCShader->uploadData("u_MVP", &fcMVP[0][0]);
 
-	glDrawElements(GL_TRIANGLES, m_FCVAO->getDrawCount(), GL_UNSIGNED_INT, nullptr);
+	m_renderer->submit(m_FCcube);
+	//glDrawElements(GL_TRIANGLES, m_FCVAO->getDrawCount(), GL_UNSIGNED_INT, nullptr);
 
 	glm::mat4 tpMVP = projection * view * TPmodel;
 	m_TPShader->bind();
@@ -188,7 +203,8 @@ void GameLayer::onUpdate(float timestep)
 	m_TPShader->uploadData("u_viewPos", &m_viewPosition[0]);
 	m_TPShader->uploadData("u_texData", (void*)m_texSlot);
 
-	glDrawElements(GL_TRIANGLES, m_TPVAO->getDrawCount(), GL_UNSIGNED_INT, nullptr);
+	m_renderer->submit(m_TPcube);
+	//glDrawElements(GL_TRIANGLES, m_TPVAO->getDrawCount(), GL_UNSIGNED_INT, nullptr);
 
 	// End temporary code
 #pragma endregion TempDrawCode

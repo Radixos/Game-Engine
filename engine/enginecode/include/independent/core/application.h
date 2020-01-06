@@ -10,9 +10,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#ifdef NG_PLATFORM_WINDOWS
-#include "../platform/GLFW/GLFWWindowsSystem.h"
-#endif // NG_PLATFORM_WINDOWS
+#include "windows/WindowSystem.h"
 #include <include\independent\Rendering\Buffer.h>
 #include <include\independent\Rendering\VertexArray.h>
 #include "Rendering/Texture.h"
@@ -36,10 +34,10 @@ namespace Engine {
 	private:
 		std::shared_ptr<Log> m_logger;
 		std::shared_ptr<Timer> m_timer;
-		std::shared_ptr<Window> m_windows;
-		std::shared_ptr<GLFWWindowsSystem> m_system;
-		std::shared_ptr<VertexArray> m_FCVAO;
-		std::shared_ptr<VertexArray> m_TPVAO;
+		std::shared_ptr<Window> m_window;
+		std::shared_ptr<WindowSystem> m_windowsSystem;
+		//std::shared_ptr<VertexArray> m_FCVAO;
+		//std::shared_ptr<VertexArray> m_TPVAO;
 		//std::shared_ptr<VertexBuffer> m_FCVertexBuffer;
 		//std::shared_ptr<VertexBuffer> m_TPVertexBuffer;
 		//std::shared_ptr<IndexBuffer> m_FCindexBuffer;
@@ -77,22 +75,16 @@ namespace Engine {
 		bool onKeyReleased(KeyReleased& e);	//!<On key released
 		bool onKeyTyped(KeyTyped& e);	//!<On key Typed
 
-		int temp = 0;
+		//int temp = 0;
 
 		static float s_timestep; //!< last frame timestep
 		static glm::ivec2 s_screenResolution; //!< Screen res
-
-#pragma region TempVars
-// Temp stuff
-		bool m_goingUp = false; // Is the cude going up?
-		float m_timeSummed = 0.f; // How much timer has elasped?
-#pragma endregion TempVars
 
 	public:
 		virtual ~Application(); //!< Deconstructor
 		inline static Application& getInstance() { return *s_instance; }	//!< Instance getter from singleton pattern
 		inline static float getTimestep() { return s_timestep; }	//!<Declaring and defining function for returning the timestep
-		inline std::shared_ptr<Window> getWindow() { return m_windows; }	//!<Declaring and defining function for returning the window
+		inline std::shared_ptr<Window> getWindow() { return m_window; }	//!<Declaring and defining function for returning the window
 		void onEvent(Event& e);	//!< Called when an event happens
 		//bool onClose(WindowCloseEvent& e); //!< On close event
 		//bool onResize(WindowResizeEvent& e); //!< On resize event

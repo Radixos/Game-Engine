@@ -47,6 +47,7 @@ ubo
 #ifdef NG_PLATFORM_WINDOWS
 #include "include/platform/GLFW/WindowsWindow.h"
 //#include "include/platform/GLFW/InputPoller.h"
+#include "../platform/GLFW/GLFWWindowsSystem.h"
 #endif // NG_PLATFORM_WINDOWS
 #include <include\independent\Rendering\RenderCommand.h>
 
@@ -66,33 +67,41 @@ namespace Engine {
 			s_instance = this;
 		}
 		//!Starting systems
-		m_logger.reset(new Log);
+		m_logger.reset(new Log);	//() - same in rest
 		m_logger->start();
 		ENG_CORE_INFO("Logger started");
 		m_timer.reset(new Timer);
 		m_timer->start();
 		ENG_CORE_INFO("Timer initialised");
-
-		m_system.reset(new GLFWWindowsSystem);
-		m_system->start();
+		//m_system.reset(new GLFWWindowsSystem);
+		//m_system->start();
+		//ENG_CORE_INFO("GLFWWindowsSystem initialised");
 
 #ifdef NG_PLATFORM_WINDOWS
-		m_windows.reset(Window::create());
+		m_windowsSystem = std::shared_ptr<WindowSystem>(new GLFWWindowsSystem);
 #endif // NG_PLATFORM_WINDOWS
-		m_windows->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
-		ENG_CLIENT_INFO("Windows system initialised");
+
+		m_window.reset(Window::create());
+		ENG_CORE_INFO("GLFWWindowsSystem initialised");
+
+		//m_windows->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
+		//ENG_CLIENT_INFO("Windows system initialised");
 		
 		m_layerStack.reset(new LayerStack());
 		m_layerStack->begin();	//???
 		ENG_CORE_INFO("LayerStack initialised");
 		
 		// Create window
-		m_windows->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
+		//m_windows = std::shared_ptr<Window>(Window::create());
+		m_window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 		// Set screen resolution
-		Application::s_screenResolution = glm::ivec2(m_windows->getWidth(), m_windows->getHeight());
+		Application::s_screenResolution = glm::ivec2(m_window->getWidth(), m_window->getHeight());
 
-		m_FCVAO.reset(VertexArray::create());
-		m_TPVAO.reset(VertexArray::create());
+		//m_FCVAO.reset(VertexArray::create());
+		//m_TPVAO.reset(VertexArray::create());
+
+		//Reset timer
+		m_timer->getTimeSinceFrameStart();	//???
 
 #pragma region TempSetup
 		//// Create a basic 3D
@@ -406,7 +415,7 @@ namespace Engine {
 			for (auto it = m_layerStack->begin(); it != m_layerStack->end(); it++)
 				(*it)->onUpdate(s_timestep);
 
-			m_windows->onUpdate(s_timestep);
+			m_window->onUpdate(s_timestep);
 		
 		}
 	}

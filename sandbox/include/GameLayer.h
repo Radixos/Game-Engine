@@ -17,12 +17,12 @@
 		std::shared_ptr<Engine::Material> m_TPcube;	//Textured Phone cube material
 		std::shared_ptr<Engine::UniformBuffer> m_UBOMatrices;	//Uniform buffer object for view
 		std::shared_ptr<Engine::UniformBuffer> m_UBOLights;	//Uniform buffer object for light
-		//std::shared_ptr<Engine::Texture> m_numberTex;	//Number texture
-		//std::shared_ptr<Engine::Texture> m_letterTex;	//Letter texture
+		std::shared_ptr<Engine::Texture> m_numberTex;	//Number texture
+		std::shared_ptr<Engine::Texture> m_letterTex;	//Letter texture
 		std::shared_ptr<Engine::Log> m_logger;
 		std::shared_ptr<Engine::Timer> m_timer;
 		std::shared_ptr<Engine::Window> m_windows;
-		std::shared_ptr<Engine::GLFWWindowsSystem> m_system;
+		std::shared_ptr<Engine::GLFWWindowsSystem> m_windowsSystem;
 		std::shared_ptr<Engine::VertexArray> m_FCVAO;
 		std::shared_ptr<Engine::VertexArray> m_TPVAO;
 		std::shared_ptr<Engine::VertexBuffer> m_FCVertexBuffer;
@@ -49,15 +49,15 @@
 			{Engine::ShaderDataType::Float3},
 		};
 
-		glm::mat4 m_FCmodel;
-		glm::mat4 m_TPmodel; 
+		//glm::mat4 m_FCmodel;
+		//glm::mat4 m_TPmodel; 
 		unsigned int m_texSlot;
 		glm::vec3 m_lightColour;
 		glm::vec3 m_lightPosition;
 		glm::vec3 m_viewPosition;
 		Engine::SceneData sceneData;
 		bool m_goingUp = false;	//Is the cube going up?
-		float m_timeSummed = 10.f;	//How much time has elapsed?
+		float m_timeSummed = 0.0f;	//How much time has elapsed?
 	public:
 		GameLayer(const std::string& name = "Layer");
 		void onAttach() override;

@@ -22,7 +22,7 @@ namespace Engine {
 		virtual std::variant<std::shared_ptr<VertexArray>, std::shared_ptr<VertexBuffer>> getGeometry() = 0;	//!<Get the geometry
 		virtual std::map<std::string, void*> getData() = 0;	//!<Get the per draw data
 
-		static Material* create(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray> & VAO);	//!<Create VAO
-		static Material* create(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexBuffer> & VBO);	//!<Create VBO
+		static Material* create(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& VAO);	//!<Create VAO
+		static Material* create(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexBuffer>& VBO);	//!<Create VBO
 	};
 }
