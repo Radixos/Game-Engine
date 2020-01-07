@@ -1,4 +1,5 @@
-/** \file UniformBuffer.h
+/**
+/class UniformBuffer class
 */
 #pragma once
 

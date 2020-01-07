@@ -1,6 +1,9 @@
+/**
+/class GLFWWindowsSystem class
+*/
+
 #pragma once
 
-//#include "WindowsWindow.h"
 #include "windows/WindowSystem.h"
 #include "../include/GLFW/glfw3.h"
 #include "systems/Log.h"

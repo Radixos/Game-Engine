@@ -1,4 +1,5 @@
-/** \file graphicsContext
+/**
+/class GraphicsContext class
 */
 
 #pragma once
@@ -11,6 +12,6 @@
 class GraphicsContext
 {
 public:
-	virtual void init() = 0;
-	virtual void swapBuffers() = 0;
+	virtual void init() = 0;	//!<Virtual init function
+	virtual void swapBuffers() = 0;	//!<Virtual function for swapping buffers
 };

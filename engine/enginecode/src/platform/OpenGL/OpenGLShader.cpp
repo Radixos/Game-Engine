@@ -160,62 +160,6 @@ namespace Engine {
 		glDetachShader(m_OpenGL_ID, fragmentShader);
 	}
 
-	//void OpenGLShader::uploadMat4(const std::string& name, float* data)
-	//{
-	//	//loc = glGetUniformLocation(m_TPShader->id(), "u_MVP");
-	//	//glUniformMatrix4fv(loc, 1, GL_FALSE, &tpMVP[0][0]);
-	//	GLuint loc = glGetUniformLocation(id(), name.c_str());
-	//	glUniformMatrix4fv(loc, 1, GL_FALSE, data);
-	//}
-
-	//void OpenGLShader::uploadFloat3(const std::string& name, float a, float b, float c)
-	//{
-	//	GLuint loc = glGetUniformLocation(id(), name.c_str());
-	//	glUniform3f(loc, a, b, c);
-	//}
-
-	//void OpenGLShader::uploadFloat3(const std::string& name, float* data)
-	//{
-	//	GLuint loc = glGetUniformLocation(id(), name.c_str());
-	//	glUniform3fv(loc, 1, data);
-	//}
-
-	//void OpenGLShader::uploadInt(const std::string& name, int data)
-	//{
-	//	GLuint loc = glGetUniformLocation(id(), name.c_str());
-	//	glUniform1i(loc, data);
-	//}
-
-	//void OpenGLShader::uploadInt2(const std::string& name, int a, int b)
-	//{
-	//	GLuint loc = glGetUniformLocation(id(), name.c_str());
-	//	glUniform2i(loc, a, b);
-	//}
-
-	//void OpenGLShader::uploadBool(const std::string& name, bool data)
-	//{
-	//	GLuint loc = glGetUniformLocation(id(), name.c_str());
-	//	glUniform1i(loc, data);
-	//}
-
-	//void OpenGLShader::uploadVec2(const std::string& name, glm::vec2 data)
-	//{
-	//	GLuint loc = glGetUniformLocation(id(), name.c_str());
-	//	// To finish
-	//}
-
-	//void OpenGLShader::uploadVec3(const std::string& name, glm::vec3 data)
-	//{
-	//	GLuint loc = glGetUniformLocation(id(), name.c_str());
-	//	// To finish
-	//}
-
-	/*void OpenGLShader::uploadFloatVector4(const std::string& name, GLfloat* data)
-	{
-		GLuint loc = glGetUniformLocation(id(), name.c_str());
-		glUniform4fv(loc, 1, data);
-	}*/
-
 	void OpenGLShader::uniformLayout(const std::string& path)
 	{
 		std::fstream readPath(path, std::ios::in);

@@ -1,4 +1,5 @@
-/** /file AssetManager.h
+/**
+/class AssetManager class
 */
 #pragma once
 #include <iostream>

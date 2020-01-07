@@ -1,3 +1,6 @@
+/**
+/class Log class
+*/
 #pragma once
 
 #include "system.h"
@@ -13,8 +16,8 @@ namespace Engine {
 		inline static std::shared_ptr<spdlog::logger>&GetCoreLogger() { return s_CoreLogger; }	//!< inline static pointer for Core Logger
 		inline static std::shared_ptr<spdlog::logger>&GetClientLogger() { return s_ClientLogger; }	//!< inline static pointer for Client Logger
 	
-		virtual void start(SystemSignal init = SystemSignal::None, ...) override;
-		virtual void stop(SystemSignal close = SystemSignal::None, ...) override;
+		virtual void start(SystemSignal init = SystemSignal::None, ...) override;	//!<Virtual start function for a log
+		virtual void stop(SystemSignal close = SystemSignal::None, ...) override;	//!<Virtual stop function for a log
 	
 	private:
 		static std::shared_ptr<spdlog::logger> s_CoreLogger;
@@ -22,8 +25,6 @@ namespace Engine {
 	};
 
 }
-
-// HOW MACROS WORK?
 
 //!Core log macros
 

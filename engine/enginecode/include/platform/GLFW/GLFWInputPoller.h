@@ -1,5 +1,5 @@
 /**
-\class GLFWInputPoller.h base class
+\class GLFWInputPoller class
 */
 
 #pragma once

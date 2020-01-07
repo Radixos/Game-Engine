@@ -1,4 +1,5 @@
-/** /file ResourceManager.h
+/**
+/class ResourceManager class
 */
 #pragma once
 
@@ -33,17 +34,17 @@ namespace Engine
 		void start(SystemSignal init = SystemSignal::None, ...) {};	//!<Start the system
 		void stop(SystemSignal close = SystemSignal::None, ...) {};	//!<Stop the system - change this to free all resources
 
-		static std::shared_ptr<IndexBuffer> addIndexBuffer(const std::string& name, unsigned int* indices, unsigned int count);
-		static std::shared_ptr<Shader> addShader(const std::string& filepath);
-		static std::shared_ptr<Texture> addTexture(const std::string& filepath);
-		static std::shared_ptr<Texture> addTexture(const std::string& name, unsigned int width, unsigned int height, unsigned int channel);	//or channels?
-		static std::shared_ptr<VertexArray> addVAO(const std::string& name);
-		static std::shared_ptr<VertexBuffer> addVBO(const std::string& name, float* vertices, unsigned int size, BufferLayout& layout);
-		static std::shared_ptr<UniformBuffer> addUBO(const std::string& name, unsigned int size, UniformBufferLayout& layout);
-		static std::shared_ptr<UniformBuffer> addUBO(const std::string& name, unsigned int size, unsigned int rangeStart, unsigned int rangeEnd);
-		//static std::shared_ptr<Material> addMaterial(const std::string& name, const std::shared_ptr<Shader& shader, const std::...);
-		static void populateCharacters(std::unordered_map<std::string, unsigned int> fontsAndSizes);
-		static std::shared_ptr<Character>getCharacter(std::string font, unsigned int ASCIIcode);
-		inline static std::shared_ptr<Texture> getFontTexture() { return m_fontTexture; };
+		static std::shared_ptr<IndexBuffer> addIndexBuffer(const std::string& name, unsigned int* indices, unsigned int count);	//!<Add index buffer function
+		static std::shared_ptr<Shader> addShader(const std::string& filepath);	//!<Add shader function
+		static std::shared_ptr<Texture> addTexture(const std::string& filepath);	//!<Add texture function using filepath
+		static std::shared_ptr<Texture> addTexture(const std::string& name, unsigned int width, unsigned int height, unsigned int channel);	//or channels?	//!<Add texture function using parameters
+		static std::shared_ptr<VertexArray> addVAO(const std::string& name);	//!<Add VAO function
+		static std::shared_ptr<VertexBuffer> addVBO(const std::string& name, float* vertices, unsigned int size, BufferLayout& layout);	//!<Add VBO function
+		static std::shared_ptr<UniformBuffer> addUBO(const std::string& name, unsigned int size, UniformBufferLayout& layout);	//!<Add UBO function using layout
+		static std::shared_ptr<UniformBuffer> addUBO(const std::string& name, unsigned int size, unsigned int rangeStart, unsigned int rangeEnd);	//!<Add UBO function using parameters
+		//static std::shared_ptr<Material> addMaterial(const std::string& name, const std::shared_ptr<Shader& shader, const std::...);	//!<Add material function
+		static void populateCharacters(std::unordered_map<std::string, unsigned int> fontsAndSizes);	//!<Populate characters function
+		static std::shared_ptr<Character>getCharacter(std::string font, unsigned int ASCIIcode);	//!<Get character function
+		inline static std::shared_ptr<Texture> getFontTexture() { return m_fontTexture; };	//!<Get font texture function
 	};
 }

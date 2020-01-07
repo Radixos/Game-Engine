@@ -21,28 +21,29 @@ namespace Engine {
 	class WindowsWindow : public Window
 	{
 	public:
-		WindowsWindow(const WindowProperties& props);
-		virtual ~WindowsWindow();
+		WindowsWindow(const WindowProperties& props);	//!<Window constructor
+		virtual ~WindowsWindow();	//!<Window destructor
 
-		void onUpdate(float timestep) override;
+		void onUpdate(float timestep) override;	//!<onUpdate function for window
 
-		inline unsigned int getWidth() const override { return m_Data.m_width; }
-		inline unsigned int getHeight() const override { return m_Data.m_height; }
+		inline unsigned int getWidth() const override { return m_Data.m_width; }	//!<Inline funtion for getting the width
+		inline unsigned int getHeight() const override { return m_Data.m_height; }	//!<Inline funtion for getting the height
 
 		// Window attributes
-		inline void setEventCallback(const std::function<void(Event&)>& callback) override { 
+		inline void setEventCallback(const std::function<void(Event&)>& callback) override	//!<Inline function for setting event callback
+		{ 
 			m_callback = callback;
 			glfwSetWindowUserPointer(m_Window, &m_callback);
 		}
-		void setVSync(bool enabled) override;
-		bool isVSync() const override;
-		void onResize(unsigned int width, unsigned int height) override;
-		inline bool isFullScreenMode() const override { return m_Data.m_isFullScreen; }
-		inline void* getNativeWindow() const override { return m_Window; }
+		void setVSync(bool enabled) override;	//!<Overrided function for setting the VSync
+		bool isVSync() const override;	//!<Overrided boolean function for setting the VSync
+		void onResize(unsigned int width, unsigned int height) override;	//!<Overrided function for resizing
+		inline bool isFullScreenMode() const override { return m_Data.m_isFullScreen; }	//!<Inline overrided function for setting full screen mode
+		inline void* getNativeWindow() const override { return m_Window; }	//!<Inline overrided function for returning the window
 
 	private:
-		void init(const WindowProperties& props) override;
-		void close();
+		void init(const WindowProperties& props) override;	//!<Overrided initialize function
+		void close() override;	//!<Function for closing the window
 
 		GLFWwindow* m_Window;
 		//scope<GraphicsContext> m_Context;

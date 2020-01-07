@@ -162,7 +162,6 @@ void GameLayer::onUpdate(float timestep)
 
 	FCmodel = glm::rotate(FCtranslation, glm::radians(20.f) * timestep, glm::vec3(0.f, 1.f, 0.f)); // Spin the cube at 20 degrees per second
 	TPmodel = glm::rotate(TPtranslation, glm::radians(-20.f) * timestep, glm::vec3(0.f, 1.f, 0.f)); // Spin the cube at 20 degrees per second
-
 	// End of code to make the cube move.
 
 	glm::mat4 fcMVP = projection * view * FCmodel;
@@ -210,17 +209,6 @@ void GameLayer::onUpdate(float timestep)
 #pragma endregion TempDrawCode
 
 	m_windows->onUpdate(timestep);
-
-	//if (time > 3.0f)
-	//{
-	//	WindowResizeEvent e(1024, 720);
-	//	onEvent(e);
-	//	m_running = false;
-	//	//ENG_CORE_INFO("Time elapsed: {0}. Shutting down.", time);
-	//}
-	//end = std::chrono::high_resolution_clock::now();
-	//std::chrono::duration<float> diff = end - start;
-	//s_timestep = diff.count();
 }
 
 void GameLayer::onEvent(Engine::Event& event)

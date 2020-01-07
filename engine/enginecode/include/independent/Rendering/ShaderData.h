@@ -1,6 +1,8 @@
-#pragma once
+/**
+\class ShaderData class
+*/
 
-//#include <glad\glad.h>
+#pragma once
 
 namespace Engine {
 	enum class ShaderDataType	//!<ShaderDataType enum class

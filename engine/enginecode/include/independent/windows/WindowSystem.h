@@ -1,3 +1,7 @@
+/**
+/class WindowSystem class
+*/
+
 #pragma once
 
 #include "systems/system.h"

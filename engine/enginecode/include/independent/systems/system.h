@@ -1,6 +1,6 @@
-/** \file system.h
+/**
+/class system class
 */
-
 #pragma once
 
 #include <cstdarg>
@@ -17,7 +17,7 @@ namespace Engine {
 	{
 	public:
 		virtual ~System() {};
-		virtual void start(SystemSignal init = SystemSignal::None, ...) = 0; //!< Start the system
-		virtual void stop(SystemSignal close = SystemSignal::None, ...) = 0; //!< Stop the system
+		virtual void start(SystemSignal init = SystemSignal::None, ...) = 0; //!<Start the system
+		virtual void stop(SystemSignal close = SystemSignal::None, ...) = 0; //!<Stop the system
 	};
 }

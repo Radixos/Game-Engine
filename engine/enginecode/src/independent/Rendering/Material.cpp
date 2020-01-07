@@ -1,3 +1,7 @@
+/** \file Material file
+*/
+
+#include "engine_pch.h"
 #include "include/independent/Rendering/Material.h"
 #include "Rendering/RenderAPI.h"
 #include "systems/Log.h"
