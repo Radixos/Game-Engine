@@ -1,10 +1,9 @@
-
-/** \file application.cpp
+/**
+\file application.cpp
 */
 
 /*
 TO DO:
-Composable Game Objects
 Layer Stack
 Draw 2D text
 Cameras

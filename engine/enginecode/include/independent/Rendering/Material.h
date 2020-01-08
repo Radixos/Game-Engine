@@ -1,4 +1,5 @@
-/** \class Material class
+/**
+\class Material class
 */
 #pragma once
 

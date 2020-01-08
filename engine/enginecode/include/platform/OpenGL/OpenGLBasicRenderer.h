@@ -1,4 +1,5 @@
-/** \file OpenGLBasicRenderer.h
+/**
+\class OpenGLBasicRenderer class
 */
 #pragma once
 

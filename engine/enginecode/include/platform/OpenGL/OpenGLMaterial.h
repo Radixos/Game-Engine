@@ -1,4 +1,5 @@
-/** \file OpenGLMaterial.h
+/**
+\class OpenGLMaterial class
 */
 #pragma once
 
@@ -7,6 +8,9 @@ namespace Engine {
 	class OpenGLMaterial : public Material
 	{
 	public:
+		OpenGLMaterial(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& VAO);	//!<Constructor
+		//OpenGLMaterial(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexBuffer>& VBO);	//!<Constructor
+
 		void init(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& VAO);	//!<Initialise the material
 		void setShader(const std::shared_ptr<Shader>& shader) override;	//!<Set the shader
 		void setGeometry(const std::variant<std::shared_ptr<VertexArray>, std::shared_ptr<VertexBuffer>>& geometry) override;	//!<Set the geometry using variant

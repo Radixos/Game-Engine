@@ -1,3 +1,6 @@
+/**
+\class OpenGLVertexArray class
+*/
 #pragma once
 
 #include "include/independent/rendering/VertexArray.h"

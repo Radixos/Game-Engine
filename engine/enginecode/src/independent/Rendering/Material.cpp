@@ -35,7 +35,8 @@ namespace Engine {
 			ENG_CORE_ERROR("Lack of graphics API not supported.");
 			break;
 		case RenderAPI::API::OpenGL:
-			return new OpenGLMaterial(shader, VBO);
+			//return new OpenGLMaterial(shader, VBO);
+			ENG_CORE_ERROR("Can not create material using VBO.");
 			break;
 		case RenderAPI::API::Direct3D:
 			ENG_CORE_ERROR("Direct3D not supported.");

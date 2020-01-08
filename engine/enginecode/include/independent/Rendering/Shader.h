@@ -23,7 +23,7 @@ namespace Engine {
 		virtual bool uploadData(const std::string& dataName, void* data) = 0;	//!<Virtual uploadData function
 
 		static Shader* create(const std::string& filepath); //!<Create, compile and link API specific shader from single filepath
-		static Shader* create(const std::string& vvertexfilepath, const std::string& fragmentFilepath);	//!<Create, compile and link API specific shader from vertex filepath and fragment filepath
+		//static Shader* create(const std::string& vvertexfilepath, const std::string& fragmentFilepath);	//!<Create, compile and link API specific shader from vertex filepath and fragment filepath
 	protected:
 		std::map<std::string, std::pair<ShaderDataType, unsigned int>> m_uniform;
 	};

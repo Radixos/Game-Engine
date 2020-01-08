@@ -1,4 +1,5 @@
-/** /class OpenGLShader
+/**
+/class OpenGLShader class
 */
 #pragma once
 

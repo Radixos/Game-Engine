@@ -1,3 +1,7 @@
+/**
+\class OpenGLUniformBuffer class
+*/
+
 #pragma once
 
 #include "Rendering/UniformBuffer.h"
@@ -10,7 +14,7 @@ namespace Engine {
 		unsigned int m_uniformBuffer;
 		unsigned int m_bindingPoint;
 	public:
-		OpenGLUniformBuffer(unsigned int id, unsigned int size);
+		OpenGLUniformBuffer(unsigned int id, unsigned int size);	//!<Constructor
 		void bind() override; //!<Bind the buffer
 		void unbind() override;	//!<Unbind the buffer
 		void attachShaderBlock(const std::shared_ptr<Shader>& shader, const std::string& blockName) override;	//!<Bind shader block

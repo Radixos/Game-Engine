@@ -1,4 +1,5 @@
-/** \file OpenGLSuperSimpleRenderer.h
+/**
+\class OpenGLSuperSimpleRenderer class
 */
 
 #pragma once

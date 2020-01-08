@@ -1,5 +1,5 @@
-#pragma once
-/** \file OpenGLBasicRenderer.h
+/**
+\class OpenGLBasicTextRenderer.h
 */
 #pragma once
 
@@ -10,10 +10,10 @@ namespace Engine {
 	{
 	private:
 	public:
-		void actionCommand(RenderCommand* command) override;
-		void beginScene(const SceneData& sceneData) override {};
-		void endScene() override {};
-		void submit(const std::shared_ptr<Material>& material) override;
-		void flush() override {};
+		void actionCommand(RenderCommand* command) override;	//!<Action a render command
+		void beginScene(const SceneData& sceneData) override {};	//!<Prepare a scene
+		void endScene() override {};	//!<End of scene
+		void submit(const std::shared_ptr<Material>& material) override;	//!<Submit a material for drawing
+		void flush() override {};	//!<Draw everything
 	};
 }
