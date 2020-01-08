@@ -82,3 +82,17 @@ bool OnMouseButtonPressedFalse(Engine::MouseButtonPressed& e)
 {
 	return false;
 }
+
+/////////////////////////////////////////MOUSE BUTTON RELEASED/////////////////////////////////////////
+
+Engine::MouseButtonReleased mre(button);
+
+bool OnMouseButtonReleasedTrue(Engine::MouseButtonReleased& e)
+{
+	return true;
+}
+
+bool OnMouseButtonReleasedFalse(Engine::MouseButtonReleased& e)
+{
+	return false;
+}

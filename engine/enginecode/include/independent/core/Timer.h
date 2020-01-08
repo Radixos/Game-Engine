@@ -21,7 +21,7 @@ namespace Engine {
 		}
 		void stop(SystemSignal close = SystemSignal::None, ...) override {}	//!<Stop function for time
 
-		void setFrameStart() { m_frameStart = std::chrono::high_resolution_clock::now(); }	//!<Frame start function
+		std::chrono::high_resolution_clock::time_point setFrameStart() { return m_frameStart = std::chrono::high_resolution_clock::now(); }	//!<Frame start function
 		float getTimeSinceFrameStart() { return (std::chrono::high_resolution_clock::now() - m_frameStart).count() / GetSeconds(); }	//!<getTimeSinceFrameStart function as seconds
 		float getTimeSinceFrameStartAsMilliseconds() { return (std::chrono::high_resolution_clock::now() - m_frameStart).count() / GetMilliSeconds();}	//!<getTimeSinceFrameStart function as miliseconds
 

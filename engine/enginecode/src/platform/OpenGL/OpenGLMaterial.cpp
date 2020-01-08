@@ -10,6 +10,7 @@ namespace Engine {
 	{
 		m_shader = shader;
 		shader->bind();
+		m_geometry = VAO;
 		VAO->bind();
 	}
 

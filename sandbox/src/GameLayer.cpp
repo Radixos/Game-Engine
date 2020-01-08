@@ -11,6 +11,9 @@ GameLayer::GameLayer(const std::string& name) : Layer(name)
 	// Enabling backface culling to ensure triangle vertices are correct ordered (CCW)
 	m_renderer->actionCommand(Engine::RenderCommand::setBackfaceCullingCommand(true));
 
+	m_resources.reset(new Engine::ResourceManager());
+	m_resources->start(Engine::SystemSignal::None);
+
 	//Vertices and indices
 	float FCvertices[6 * 24] = {
 			-0.5f, -0.5f, -0.5f, 0.8f, 0.2f, 0.2f, // red square
@@ -81,14 +84,16 @@ GameLayer::GameLayer(const std::string& name) : Layer(name)
 		22, 23, 20
 	};
 
-	m_FCVAO.reset(Engine::VertexArray::create());
+	//m_FCVAO.reset(Engine::VertexArray::create());
 	m_TPVAO.reset(Engine::VertexArray::create());
 
+	m_resources->addVAO("FCVAO");
+
 	m_FCVertexBuffer.reset(Engine::VertexBuffer::create(FCvertices, sizeof(FCvertices), m_FClayout));
-	m_FCVAO->setVertexBuffer(m_FCVertexBuffer);
+	m_resources->getVAO().get("FCVAO")->setVertexBuffer(m_FCVertexBuffer);
 
 	m_FCindexBuffer.reset(Engine::IndexBuffer::create(indices, sizeof(indices)));
-	m_FCVAO->setindexBuffer(m_FCindexBuffer);
+	m_resources->getVAO().get("FCVAO")->setindexBuffer(m_FCindexBuffer);
 
 	m_TPVertexBuffer.reset(Engine::VertexBuffer::create(TPvertices, sizeof(TPvertices), m_TPlayout));
 	m_TPVAO->setVertexBuffer(m_TPVertexBuffer);
@@ -105,8 +110,11 @@ GameLayer::GameLayer(const std::string& name) : Layer(name)
 	FCmodel = glm::translate(glm::mat4(1), glm::vec3(1.5, 0, 3));
 	TPmodel = glm::translate(glm::mat4(1), glm::vec3(-1.5, 0, 3));
 
-	m_FCcube.reset(Engine::Material::create(m_FCShader, m_FCVAO));
+	m_FCcube.reset(Engine::Material::create(m_FCShader, m_resources->getVAO().get("FCVAO")));
 	m_TPcube.reset(Engine::Material::create(m_TPShader, m_TPVAO));
+
+	m_FCcube->setGeometry(m_FCVAO);
+	m_TPcube->setGeometry(m_TPVAO);
 }
 
 void GameLayer::onAttach()
@@ -130,6 +138,12 @@ void GameLayer::onUpdate(float timestep)
 		glm::vec3(0.0f, 0.0f, -4.5f), // Camera is at (0.0,0.0,-4.5), in World Space
 		glm::vec3(0.f, 0.f, 0.f), // and looks at the origin
 		glm::vec3(0.f, 1.f, 0.f)  // Standing straight  up
+	);
+
+	glm::mat4 view2 = glm::lookAt(
+		glm::vec3(0.0f, 0.0f, -2.0f),
+		glm::vec3(0.f, 0.f, 0.f),
+		glm::vec3(0.f, 1.f, 0.f)
 	);
 
 	// Code to make the cube move.
@@ -168,7 +182,7 @@ void GameLayer::onUpdate(float timestep)
 
 	m_FCShader->bind();
 
-	m_FCVAO->bind();
+	m_resources->getVAO().get("FCVAO")->bind();
 
 	GLuint loc;
 
@@ -192,7 +206,7 @@ void GameLayer::onUpdate(float timestep)
 	//glm::vec3 m_objectColour(0.2f, 0.8f, 0.5f);
 	glm::vec3 m_lightColour(1.0f, 1.0f, 1.0f);
 	glm::vec3 m_lightPosition(0.0f, 3.0f, -6.0f);
-	glm::vec3 m_viewPosition(0.0f, 0.0f, -4.5f);	//m_viewPosition = glm::vec3(0.0f, 0.0f, -4.5f);
+	glm::vec3 m_viewPosition(0.0f, 0.0f, -4.5f);
 
 	m_TPShader->uploadData("u_MVP", &tpMVP[0][0]);
 	m_TPShader->uploadData("u_model", &TPmodel[0][0]);
@@ -207,8 +221,6 @@ void GameLayer::onUpdate(float timestep)
 
 	// End temporary code
 #pragma endregion TempDrawCode
-
-	m_windows->onUpdate(timestep);
 }
 
 void GameLayer::onEvent(Engine::Event& event)

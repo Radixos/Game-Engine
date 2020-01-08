@@ -9,6 +9,9 @@
 #include <include\independent\core\Timer.h>
 #include <include\independent\windows\window.h>
 #include <include\platform\GLFW\GLFWWindowsSystem.h>
+#include "include/independent/Camera/OrthographicCamera2D.h"
+#include "include/independent/Camera/PerspectiveCamera3D.h"
+#include "include/independent/systems/ResourceManager.h"
 
 	class GameLayer : public Engine::Layer
 	{
@@ -34,6 +37,13 @@
 		std::shared_ptr<Engine::Renderer> m_renderer;	//!<Renderer
 		std::shared_ptr<Engine::Shader> m_FCShader;	//!<Shader for flat colour cube
 		std::shared_ptr<Engine::Shader> m_TPShader;	//!<Shader for textured cube
+		std::shared_ptr<Engine::ResourceManager> m_resources;
+		//std::shared_ptr<Engine::VertexArray> m_FCgeometry;
+		//std::shared_ptr<Engine::VertexArray> m_TPgeometry;
+		std::shared_ptr<Engine::OrthographicCamera2D> m_OrtoCamera1;
+		std::shared_ptr<Engine::OrthographicCamera2D> m_OrtoCamera2;
+		std::shared_ptr<Engine::PerspectiveCamera3D> m_PerspCamera1;
+		std::shared_ptr<Engine::PerspectiveCamera3D> m_PerspCamera2;
 
 		glm::mat4 FCmodel, TPmodel;
 
@@ -57,7 +67,7 @@
 		glm::vec3 m_viewPosition;
 		Engine::SceneData sceneData;
 		bool m_goingUp = false;	//!<Is the cube going up?
-		float m_timeSummed = 0.0f;	//!<Time elapsed
+		float m_timeSummed = 2.0f;	//!<Time elapsed
 	public:
 		GameLayer(const std::string& name = "Layer");
 		void onAttach() override;

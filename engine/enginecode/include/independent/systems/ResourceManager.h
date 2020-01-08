@@ -29,14 +29,15 @@ namespace Engine
 		static const int m_ASCIIstart = 32;
 		static const int m_ASCIIend = 126;
 		static std::shared_ptr<Texture> m_fontTexture;	//!<Texture which stores fonts
-		static std::string parseFilePath(const std::string& str);	//!<Strip preceding dirs and file extension
+		//static std::string parseFilePath(const std::string& str);	//!<Strip preceding dirs and file extension
 	public:
 		void start(SystemSignal init = SystemSignal::None, ...) {};	//!<Start the system
 		void stop(SystemSignal close = SystemSignal::None, ...) {};	//!<Stop the system - change this to free all resources
 
+		ResourceManager() {};
 		static std::shared_ptr<IndexBuffer> addIndexBuffer(const std::string& name, unsigned int* indices, unsigned int count);	//!<Add index buffer function
-		static std::shared_ptr<Shader> addShader(const std::string& filepath);	//!<Add shader function
-		static std::shared_ptr<Texture> addTexture(const std::string& filepath);	//!<Add texture function using filepath
+		static std::shared_ptr<Shader> addShader(const std::string &name, const std::string& filepath);	//!<Add shader function
+		static std::shared_ptr<Texture> addTexture(const std::string &name, const std::string& filepath);	//!<Add texture function using filepath
 		static std::shared_ptr<Texture> addTexture(const std::string& name, unsigned int width, unsigned int height, unsigned int channel);	//or channels?	//!<Add texture function using parameters
 		static std::shared_ptr<VertexArray> addVAO(const std::string& name);	//!<Add VAO function
 		static std::shared_ptr<VertexBuffer> addVBO(const std::string& name, float* vertices, unsigned int size, BufferLayout& layout);	//!<Add VBO function
@@ -46,5 +47,7 @@ namespace Engine
 		static void populateCharacters(std::unordered_map<std::string, unsigned int> fontsAndSizes);	//!<Populate characters function
 		static std::shared_ptr<Character>getCharacter(std::string font, unsigned int ASCIIcode);	//!<Get character function
 		inline static std::shared_ptr<Texture> getFontTexture() { return m_fontTexture; };	//!<Get font texture function
+
+		AssetManager<VertexArray> getVAO() { return m_VAOs; }
 	};
 }
