@@ -6,7 +6,8 @@
 #include "Rendering/Buffer.h"
 //#include "include/platform/OpenGL/OpenGLIndexBuffer"
 #include "systems/Log.h"
-#include "include/platform/OpenGL/OpenGLBuffer.h"
+#include "include/platform/OpenGL/OpenGLVertexBuffer.h"
+#include "include/platform/OpenGL/OpenGLIndexBuffer.h"
 
 namespace Engine {
 

@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 
 #include "include/platform/OpenGL/OpenGLVertexArray.h"
+#include "include/platform/OpenGL/OpenGLIndexBuffer.h"
 #include "systems/Log.h"
 
 namespace Engine {
