@@ -1,3 +1,6 @@
+/**
+\file Log.cpp
+*/
 #include "engine_pch.h"
 #include "systems/Log.h"
 #include "spdlog/sinks/stdout_color_sinks.h"

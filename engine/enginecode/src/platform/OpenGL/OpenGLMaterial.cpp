@@ -1,4 +1,5 @@
-/** \file OpenGLMaterial.h
+/**
+\file OpenGLMaterial.h
 */
 
 #include "engine_pch.h"
@@ -13,13 +14,6 @@ namespace Engine {
 		m_geometry = VAO;
 		VAO->bind();
 	}
-
-	/*OpenGLMaterial::OpenGLMaterial(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexBuffer>& VBO)
-	{
-		m_shader = shader;
-		shader->bind();
-		VBO->bind();
-	}*/
 
 	void OpenGLMaterial::init(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& VAO)
 	{

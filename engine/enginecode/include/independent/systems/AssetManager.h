@@ -24,7 +24,7 @@ namespace Engine {
 		auto asset = m_container.find(key);
 		if (asset != m_container.end())
 			return true;
-		
+
 		return false;
 	}
 
@@ -36,7 +36,7 @@ namespace Engine {
 			m_container[key] = element;
 			return;
 		}
-			
+
 		ENG_CORE_ERROR("Asset with key {0} already included", key);
 
 	}

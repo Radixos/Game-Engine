@@ -27,6 +27,8 @@ namespace Engine {
 
 	class OpenGLSetDepthTestLessCommand : public RenderCommand
 	{
+	private:
+		bool m_enabled;
 	public:
 		OpenGLSetDepthTestLessCommand(bool enabled) {};	//!<Constructor for setting depth test
 		void action() override;	//!<Virtual action function
@@ -34,8 +36,19 @@ namespace Engine {
 
 	class OpenGLSetBackfaceCullingCommand : public RenderCommand
 	{
+	private:
+		bool m_enabled;
 	public:
 		OpenGLSetBackfaceCullingCommand(bool enabled) {};	//!<Constructor for setting backface culling
 		void action() override;	//!<Virtual action function
+	};
+
+	class OpenGLSetOneMinusAlphaBlending : public RenderCommand
+	{
+	private:
+		bool m_enabled;
+	public:
+		OpenGLSetOneMinusAlphaBlending(bool enabled) : m_enabled(enabled) {};
+		void action() override;
 	};
 }

@@ -1,4 +1,5 @@
-/** \file WindowsWindow.cpp
+/**
+\file WindowsWindow.cpp
 */
 
 #include "engine_pch.h"
@@ -32,9 +33,9 @@ namespace Engine {
 
 	void WindowsWindow::init(const WindowProperties& props)
 	{
-		m_Data.m_title = props.m_title;
-		m_Data.m_width = props.m_width;
-		m_Data.m_height = props.m_height;
+		m_data.m_title = props.m_title;
+		m_data.m_width = props.m_width;
+		m_data.m_height = props.m_height;
 
 		ENG_CORE_INFO("Creating window {0} ({1}, {2})", props.m_title, props.m_width, props.m_height);
 
@@ -46,7 +47,7 @@ namespace Engine {
 			s_GLFWInitialized = true;
 		}
 
-		m_Window = glfwCreateWindow((int)props.m_width, (int)props.m_height, m_Data.m_title.c_str(), nullptr, nullptr);
+		m_Window = glfwCreateWindow((int)props.m_width, (int)props.m_height, m_data.m_title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);
 		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
@@ -63,7 +64,7 @@ namespace Engine {
 		}, 0
 		);
 
-		//glfwSetWindowUserPointer(m_Window, &m_Data);
+		glfwSetWindowUserPointer(m_Window, &m_data);
 		setVSync(true);
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
@@ -164,17 +165,17 @@ namespace Engine {
 		else
 			glfwSwapInterval(0);
 
-		m_Data.m_isVSync = enabled;
+		m_data.m_isVSync = enabled;
 	}
 
 	bool WindowsWindow::isVSync() const
 	{
-		return m_Data.m_isVSync;
+		return m_data.m_isVSync;
 	}
 
 	void WindowsWindow::onResize(unsigned int width, unsigned int height)
 	{
-		m_Data.m_width = width;
-		m_Data.m_height = height;
+		m_data.m_width = width;
+		m_data.m_height = height;
 	}
 }

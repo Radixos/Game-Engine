@@ -1,4 +1,5 @@
-/** \file indexBuffer.cpp
+/**
+\file for indexBuffer and vertexBuffer
 */
 #include "engine_pch.h"
 

@@ -26,8 +26,8 @@ namespace Engine {
 
 		void onUpdate(float timestep) override;	//!<onUpdate function for window
 
-		inline unsigned int getWidth() const override { return m_Data.m_width; }	//!<Inline funtion for getting the width
-		inline unsigned int getHeight() const override { return m_Data.m_height; }	//!<Inline funtion for getting the height
+		inline unsigned int getWidth() const override { return m_data.m_width; }	//!<Inline funtion for getting the width
+		inline unsigned int getHeight() const override { return m_data.m_height; }	//!<Inline funtion for getting the height
 
 		// Window attributes
 		inline void setEventCallback(const std::function<void(Event&)>& callback) override	//!<Inline function for setting event callback
@@ -38,7 +38,7 @@ namespace Engine {
 		void setVSync(bool enabled) override;	//!<Overrided function for setting the VSync
 		bool isVSync() const override;	//!<Overrided boolean function for setting the VSync
 		void onResize(unsigned int width, unsigned int height) override;	//!<Overrided function for resizing
-		inline bool isFullScreenMode() const override { return m_Data.m_isFullScreen; }	//!<Inline overrided function for setting full screen mode
+		inline bool isFullScreenMode() const override { return m_data.m_isFullScreen; }	//!<Inline overrided function for setting full screen mode
 		inline void* getNativeWindow() const override { return m_Window; }	//!<Inline overrided function for returning the window
 
 	private:
@@ -57,9 +57,8 @@ namespace Engine {
 
 			EventCallbackFn EventCallback;
 		};*/
-		WindowProperties m_Data;
+		WindowProperties m_data;
 		std::function<void(Event&)> m_callback;
-		//WindowData m_Data;
 	};
 
 }

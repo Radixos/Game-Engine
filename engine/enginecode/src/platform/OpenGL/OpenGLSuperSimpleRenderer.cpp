@@ -1,4 +1,5 @@
-/** \file OpenGLSuperSimpleRenderer.cpp
+/**
+\file OpenGLSuperSimpleRenderer.cpp
 */
 #include "engine_pch.h"
 #include "include/platform/OpenGL/OpenGLSuperSimpleRenderer.h"

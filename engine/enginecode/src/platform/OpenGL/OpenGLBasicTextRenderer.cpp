@@ -1,3 +1,6 @@
+/**
+\file OpenGLBasicTextRenderer.cpp
+*/
 #include "engine_pch.h"
 #include "include/platform/OpenGL/OpenGLBasicTextRenderer.h"
 
@@ -20,9 +23,9 @@ namespace Engine {
 		auto perDrawData = material->getData();
 		for (auto dataPair : perDrawData)
 		{
-			//shader->upload(dataPair.first, dataPair.second);
+			shader->uploadData(dataPair.first, dataPair.second);
 		}
-		glDrawElements(GL_TRIANGLES, geometry->getDrawCount(), GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_QUADS, geometry->getDrawCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
 }

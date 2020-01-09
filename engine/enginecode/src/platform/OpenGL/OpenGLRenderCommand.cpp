@@ -1,3 +1,6 @@
+/**
+\file OpenGLRenderCommands.cpp
+*/
 #include "engine_pch.h"
 #include "include/platform/OpenGL/OpenGLRenderCommand.h"
 #include <glad\glad.h>
@@ -16,13 +19,40 @@ namespace Engine {
 
 	void OpenGLSetDepthTestLessCommand::action()
 	{
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(GL_LESS);
+		if (m_enabled)
+		{
+			glEnable(GL_DEPTH_TEST);
+			glDepthFunc(GL_LESS);
+		}
+		else
+		{
+			glDisable(GL_DEPTH_TEST);
+		}
 	}
 
 	void OpenGLSetBackfaceCullingCommand::action()
 	{
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_BACK);
+		if (m_enabled)
+		{
+			glEnable(GL_CULL_FACE);
+			glCullFace(GL_BACK);
+		}
+		else
+		{
+			glDisable(GL_CULL_FACE);
+		}
+	}
+
+	void OpenGLSetOneMinusAlphaBlending::action()
+	{
+		if (m_enabled)
+		{
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		}
+		else
+		{
+			glDisable(GL_BLEND);
+		}
 	}
 }

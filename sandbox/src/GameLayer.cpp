@@ -14,6 +14,9 @@ GameLayer::GameLayer(const std::string& name) : Layer(name)
 	m_resources.reset(new Engine::ResourceManager());
 	m_resources->start(Engine::SystemSignal::None);
 
+	m_OrthoCameraContr.reset(new Engine::FreeOrthoCameraController2D);
+	m_OrthoCameraContr->init(0.0f, 0.0f, 800.f, 600.f);
+
 	//Vertices and indices
 	float FCvertices[6 * 24] = {
 			-0.5f, -0.5f, -0.5f, 0.8f, 0.2f, 0.2f, // red square
@@ -88,6 +91,7 @@ GameLayer::GameLayer(const std::string& name) : Layer(name)
 	m_TPVAO.reset(Engine::VertexArray::create());
 
 	m_resources->addVAO("FCVAO");
+	//m_resources->addVAO("TPVAO");
 
 	m_FCVertexBuffer.reset(Engine::VertexBuffer::create(FCvertices, sizeof(FCvertices), m_FClayout));
 	m_resources->getVAO().get("FCVAO")->setVertexBuffer(m_FCVertexBuffer);
@@ -115,6 +119,24 @@ GameLayer::GameLayer(const std::string& name) : Layer(name)
 
 	m_FCcube->setGeometry(m_FCVAO);
 	m_TPcube->setGeometry(m_TPVAO);
+
+	//////////////////////////////For text//////////////////////////////
+
+	unsigned int textIndice[4] = { 0,1,2,3 };
+	m_textRenderer.reset(Engine::Renderer::createBasicTextRenderer2D());
+
+	m_textVAO.reset(Engine::VertexArray::create());
+
+	textVBO.reset(Engine::VertexBuffer::create(textVerts, sizeof(textVerts), vbl));
+	m_textVAO->setVertexBuffer(textVBO);
+
+	textIBO.reset(Engine::IndexBuffer::create(textIndice, 4));
+	m_textVAO->setindexBuffer(textIBO);
+
+	m_textTexture.reset(Engine::Texture::createFromFile("assets/textures/DMU.png"));
+	m_textShader.reset(Engine::Shader::create("assets/shaders/text.glsl"));
+
+	m_textMaterial.reset(Engine::Material::create(m_textShader, m_textVAO));
 }
 
 void GameLayer::onAttach()
@@ -131,19 +153,17 @@ void GameLayer::onUpdate(float timestep)
 {
 	m_renderer->actionCommand(Engine::RenderCommand::setClearColourCommand(0.0f, 0.0f, 1.0f, 1.0f));
 	m_renderer->actionCommand(Engine::RenderCommand::ClearDepthColourBufferCommand(0.0f, 0.0f, 1.0f, 1.0f));
-	
+
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f); // Basic 4:3 camera
+	
+	m_OrthoCameraContr->onUpdate(timestep);
+
+	//m_OrthoCamera1->setPositionRotation(m_position, m_rotation);
 
 	glm::mat4 view = glm::lookAt(
 		glm::vec3(0.0f, 0.0f, -4.5f), // Camera is at (0.0,0.0,-4.5), in World Space
 		glm::vec3(0.f, 0.f, 0.f), // and looks at the origin
 		glm::vec3(0.f, 1.f, 0.f)  // Standing straight  up
-	);
-
-	glm::mat4 view2 = glm::lookAt(
-		glm::vec3(0.0f, 0.0f, -2.0f),
-		glm::vec3(0.f, 0.f, 0.f),
-		glm::vec3(0.f, 1.f, 0.f)
 	);
 
 	// Code to make the cube move.
@@ -159,12 +179,6 @@ void GameLayer::onUpdate(float timestep)
 		FCtranslation = glm::translate(FCmodel, glm::vec3(0.0f, -0.2f * timestep, 0.0f));
 		TPtranslation = glm::translate(TPmodel, glm::vec3(0.0f, 0.2f * timestep, 0.0f));
 	}
-
-	/*if (m_timer->getTimeSinceMarkerStart() > 4.0f)
-	{
-		m_timer->setMarkerStart();
-		m_goingUp = !m_goingUp;
-	}*/
 
 	m_timeSummed += timestep;
 	if (m_timeSummed > 4.f)
@@ -189,7 +203,6 @@ void GameLayer::onUpdate(float timestep)
 	m_FCShader->uploadData("u_MVP", &fcMVP[0][0]);
 
 	m_renderer->submit(m_FCcube);
-	//glDrawElements(GL_TRIANGLES, m_FCVAO->getDrawCount(), GL_UNSIGNED_INT, nullptr);
 
 	glm::mat4 tpMVP = projection * view * TPmodel;
 	m_TPShader->bind();
@@ -217,7 +230,23 @@ void GameLayer::onUpdate(float timestep)
 	m_TPShader->uploadData("u_texData", (void*)m_texSlot);
 
 	m_renderer->submit(m_TPcube);
-	//glDrawElements(GL_TRIANGLES, m_TPVAO->getDrawCount(), GL_UNSIGNED_INT, nullptr);
+
+	//////////////////////////////For text//////////////////////////////
+
+	glm::mat4 textProjection = glm::ortho(0.f, 800.f, 600.f, 0.f);
+	glm::mat4 textView = glm::mat4(1.0f);
+	glm::mat4 textModel = glm::translate(glm::mat4(1.f), glm::vec3(100.f, 100.f, 0.f));
+
+	m_texSlot = m_textTexture->getSlot();
+
+	m_textMaterial->setDataElement("u_projection", (void*)&textProjection[0][0]);
+	m_textMaterial->setDataElement("u_view", (void*)&textView[0][0]);
+	m_textMaterial->setDataElement("u_model", (void*)&textModel[0][0]);
+	m_textMaterial->setDataElement("u_texData", (void*)&m_texSlot);
+
+	m_textRenderer->actionCommand(Engine::RenderCommand::setOneMinusAlphaBlending(true));
+	m_textRenderer->submit(m_textMaterial);
+	m_textRenderer->actionCommand(Engine::RenderCommand::setOneMinusAlphaBlending(false));
 
 	// End temporary code
 #pragma endregion TempDrawCode

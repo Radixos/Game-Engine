@@ -47,41 +47,42 @@ $(function() {
 <div class="title">OpenGLBasicTextRenderer.cpp</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="_open_g_l_basic_text_renderer_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="engine__pch_8h.html">engine_pch.h</a>&quot;</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_open_g_l_basic_text_renderer_8h.html">include/platform/OpenGL/OpenGLBasicTextRenderer.h</a>&quot;</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;glad\glad.h&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_engine.html">Engine</a> {</div>
-<div class="line"><a name="l00006"></a><span class="lineno"><a class="line" href="class_engine_1_1_open_g_l_basic_text_renderer.html#ad33d8ce79cc8fc931ed76fde31680924">    6</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_engine_1_1_open_g_l_basic_text_renderer.html#ad33d8ce79cc8fc931ed76fde31680924">OpenGLBasicTextRenderer::actionCommand</a>(<a class="code" href="class_engine_1_1_render_command.html">RenderCommand</a>* command)</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;        command-&gt;<a class="code" href="class_engine_1_1_render_command.html#a3658c27f2c4b60c802ebfd9515255c6f">action</a>();</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;        <span class="keyword">delete</span> command;</div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    }</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="class_engine_1_1_open_g_l_basic_text_renderer.html#a3eeaedaa2d40a14d047492ee6ac7e148">   12</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_engine_1_1_open_g_l_basic_text_renderer.html#a3eeaedaa2d40a14d047492ee6ac7e148">OpenGLBasicTextRenderer::submit</a>(<span class="keyword">const</span> std::shared_ptr&lt;Material&gt;&amp; material)</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;        <span class="keyword">auto</span> shader = material-&gt;getShader();</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        shader-&gt;bind();</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">auto</span> geometry = std::get&lt;std::shared_ptr&lt;VertexArray&gt;&gt;(material-&gt;getGeometry());</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        geometry-&gt;bind();</div>
+<a href="_open_g_l_basic_text_renderer_8cpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="engine__pch_8h.html">engine_pch.h</a>&quot;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="_open_g_l_basic_text_renderer_8h.html">include/platform/OpenGL/OpenGLBasicTextRenderer.h</a>&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;glad\glad.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespace_engine.html">Engine</a> {</div>
+<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="class_engine_1_1_open_g_l_basic_text_renderer.html#ad33d8ce79cc8fc931ed76fde31680924">    9</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_engine_1_1_open_g_l_basic_text_renderer.html#ad33d8ce79cc8fc931ed76fde31680924">OpenGLBasicTextRenderer::actionCommand</a>(<a class="code" href="class_engine_1_1_render_command.html">RenderCommand</a>* command)</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    {</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        command-&gt;<a class="code" href="class_engine_1_1_render_command.html#a3658c27f2c4b60c802ebfd9515255c6f">action</a>();</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        <span class="keyword">delete</span> command;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    }</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="class_engine_1_1_open_g_l_basic_text_renderer.html#a3eeaedaa2d40a14d047492ee6ac7e148">   15</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_engine_1_1_open_g_l_basic_text_renderer.html#a3eeaedaa2d40a14d047492ee6ac7e148">OpenGLBasicTextRenderer::submit</a>(<span class="keyword">const</span> std::shared_ptr&lt;Material&gt;&amp; material)</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="keyword">auto</span> shader = material-&gt;getShader();</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        shader-&gt;bind();</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">auto</span> perDrawData = material-&gt;getData();</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> dataPair : perDrawData)</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        {</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            <span class="comment">//shader-&gt;upload(dataPair.first, dataPair.second);</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        }</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        glDrawElements(GL_TRIANGLES, geometry-&gt;getDrawCount(), GL_UNSIGNED_INT, <span class="keyword">nullptr</span>);</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    }</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;}</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">auto</span> geometry = std::get&lt;std::shared_ptr&lt;VertexArray&gt;&gt;(material-&gt;getGeometry());</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        geometry-&gt;bind();</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">auto</span> perDrawData = material-&gt;getData();</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> dataPair : perDrawData)</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        {</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            shader-&gt;uploadData(dataPair.first, dataPair.second);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        }</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        glDrawElements(GL_QUADS, geometry-&gt;getDrawCount(), GL_UNSIGNED_INT, <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    }</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anamespace_engine_html"><div class="ttname"><a href="namespace_engine.html">Engine</a></div><div class="ttdef"><b>Definition:</b> <a href="_camera_8h_source.html#l00007">Camera.h:7</a></div></div>
 <div class="ttc" id="aclass_engine_1_1_render_command_html_a3658c27f2c4b60c802ebfd9515255c6f"><div class="ttname"><a href="class_engine_1_1_render_command.html#a3658c27f2c4b60c802ebfd9515255c6f">Engine::RenderCommand::action</a></div><div class="ttdeci">virtual void action()=0</div><div class="ttdoc">Virtual action function.</div></div>
 <div class="ttc" id="a_open_g_l_basic_text_renderer_8h_html"><div class="ttname"><a href="_open_g_l_basic_text_renderer_8h.html">OpenGLBasicTextRenderer.h</a></div></div>
-<div class="ttc" id="aclass_engine_1_1_open_g_l_basic_text_renderer_html_a3eeaedaa2d40a14d047492ee6ac7e148"><div class="ttname"><a href="class_engine_1_1_open_g_l_basic_text_renderer.html#a3eeaedaa2d40a14d047492ee6ac7e148">Engine::OpenGLBasicTextRenderer::submit</a></div><div class="ttdeci">void submit(const std::shared_ptr&lt; Material &gt; &amp;material) override</div><div class="ttdoc">End of scene.</div><div class="ttdef"><b>Definition:</b> <a href="_open_g_l_basic_text_renderer_8cpp_source.html#l00012">OpenGLBasicTextRenderer.cpp:12</a></div></div>
+<div class="ttc" id="aclass_engine_1_1_open_g_l_basic_text_renderer_html_a3eeaedaa2d40a14d047492ee6ac7e148"><div class="ttname"><a href="class_engine_1_1_open_g_l_basic_text_renderer.html#a3eeaedaa2d40a14d047492ee6ac7e148">Engine::OpenGLBasicTextRenderer::submit</a></div><div class="ttdeci">void submit(const std::shared_ptr&lt; Material &gt; &amp;material) override</div><div class="ttdoc">End of scene.</div><div class="ttdef"><b>Definition:</b> <a href="_open_g_l_basic_text_renderer_8cpp_source.html#l00015">OpenGLBasicTextRenderer.cpp:15</a></div></div>
 <div class="ttc" id="aengine__pch_8h_html"><div class="ttname"><a href="engine__pch_8h.html">engine_pch.h</a></div></div>
-<div class="ttc" id="aclass_engine_1_1_open_g_l_basic_text_renderer_html_ad33d8ce79cc8fc931ed76fde31680924"><div class="ttname"><a href="class_engine_1_1_open_g_l_basic_text_renderer.html#ad33d8ce79cc8fc931ed76fde31680924">Engine::OpenGLBasicTextRenderer::actionCommand</a></div><div class="ttdeci">void actionCommand(RenderCommand *command) override</div><div class="ttdoc">Action a render command.</div><div class="ttdef"><b>Definition:</b> <a href="_open_g_l_basic_text_renderer_8cpp_source.html#l00006">OpenGLBasicTextRenderer.cpp:6</a></div></div>
+<div class="ttc" id="aclass_engine_1_1_open_g_l_basic_text_renderer_html_ad33d8ce79cc8fc931ed76fde31680924"><div class="ttname"><a href="class_engine_1_1_open_g_l_basic_text_renderer.html#ad33d8ce79cc8fc931ed76fde31680924">Engine::OpenGLBasicTextRenderer::actionCommand</a></div><div class="ttdeci">void actionCommand(RenderCommand *command) override</div><div class="ttdoc">Action a render command.</div><div class="ttdef"><b>Definition:</b> <a href="_open_g_l_basic_text_renderer_8cpp_source.html#l00009">OpenGLBasicTextRenderer.cpp:9</a></div></div>
 <div class="ttc" id="aclass_engine_1_1_render_command_html"><div class="ttname"><a href="class_engine_1_1_render_command.html">Engine::RenderCommand</a></div><div class="ttdoc">&lt;RenderCommand class</div><div class="ttdef"><b>Definition:</b> <a href="_render_command_8h_source.html#l00009">RenderCommand.h:9</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

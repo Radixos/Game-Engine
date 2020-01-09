@@ -1,3 +1,6 @@
+/**
+\file Renderer.cpp
+*/
 #include "engine_pch.h"
 #include "include\independent\Rendering\Renderer.h"
 #include "include/platform/OpenGL/OpenGLBasicRenderer.h"

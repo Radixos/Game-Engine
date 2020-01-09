@@ -9,7 +9,7 @@
 namespace Engine {
 	class FreeOrthoCameraController2D : public CameraController
 	{
-	private:
+	public:
 		std::shared_ptr<OrthographicCamera2D> m_camera;
 		glm::vec2 m_position = glm::vec3(0.f);
 		float m_rotation = 0.f;

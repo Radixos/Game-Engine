@@ -1,4 +1,5 @@
-/** \file OpenGLShader.cpp
+/**
+\file OpenGLShader.cpp
 */
 
 #include "engine_pch.h"
@@ -306,30 +307,4 @@ namespace Engine {
 		//return m_uniform;
 		return cos;
 	}
-
-	/*void OpenGLShader::dispatchUniformUpload(ShaderDataType type, GLuint location, void* data)
-	{
-		const float* addrf;
-		const int* addri;
-		GLfloat valueFloat;
-		GLint valueInt;
-
-		switch (type)
-		{
-		case ShaderDataType::Bool:
-			valueInt = *(bool*)data;
-			glUniform1i(location, valueInt);
-			break;
-		case ShaderDataType::Int:
-			valueInt = *(int*)data;
-			glUniform1i(location, valueInt);
-			break;
-		case ShaderDataType::Int2:
-			valueInt = *(const int*)data;
-			glUniform2iv(location, 1, addri);
-			break;
-
-			//To finish???
-		}
-	}*/
 }

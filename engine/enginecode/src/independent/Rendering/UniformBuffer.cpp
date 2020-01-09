@@ -1,3 +1,6 @@
+/**
+\file UniformBuffer.cpp
+*/
 #include "engine_pch.h"
 #include "Rendering/UniformBuffer.h"
 #include <include\independent\Rendering\RenderAPI.h>

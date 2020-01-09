@@ -1,3 +1,6 @@
+/**
+\file FPSCameraControllerEuler.cpp
+*/
 #include "engine_pch.h"
 #include "include/independent/Camera/FPSCameraControllerEuler.h"
 #include "include/independent/Camera/Camera.h"

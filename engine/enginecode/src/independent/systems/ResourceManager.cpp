@@ -1,3 +1,6 @@
+/**
+\file ResourceManager.cpp
+*/
 #include "engine_pch.h"
 
 #include "systems/AssetManager.h"

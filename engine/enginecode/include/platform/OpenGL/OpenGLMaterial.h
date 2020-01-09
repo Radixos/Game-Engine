@@ -9,7 +9,6 @@ namespace Engine {
 	{
 	public:
 		OpenGLMaterial(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& VAO);	//!<Constructor
-		//OpenGLMaterial(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexBuffer>& VBO);	//!<Constructor
 
 		void init(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& VAO);	//!<Initialise the material
 		void setShader(const std::shared_ptr<Shader>& shader) override;	//!<Set the shader

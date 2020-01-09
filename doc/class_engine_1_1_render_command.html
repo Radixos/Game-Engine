@@ -66,6 +66,7 @@ Inheritance diagram for Engine::RenderCommand:</div>
 <area href="class_engine_1_1_open_g_l_set_backface_culling_command.html" alt="Engine::OpenGLSetBackfaceCullingCommand" shape="rect" coords="306,56,602,80"/>
 <area href="class_engine_1_1_open_g_l_set_clear_colour_command.html" alt="Engine::OpenGLSetClearColourCommand" shape="rect" coords="612,56,908,80"/>
 <area href="class_engine_1_1_open_g_l_set_depth_test_less_command.html" alt="Engine::OpenGLSetDepthTestLessCommand" shape="rect" coords="918,56,1214,80"/>
+<area href="class_engine_1_1_open_g_l_set_one_minus_alpha_blending.html" alt="Engine::OpenGLSetOneMinusAlphaBlending" shape="rect" coords="1224,56,1520,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -89,6 +90,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:aded81c2395f3687fee56c06cc3334f24"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_engine_1_1_render_command.html">RenderCommand</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_engine_1_1_render_command.html#aded81c2395f3687fee56c06cc3334f24">setBackfaceCullingCommand</a> (bool enabled)</td></tr>
 <tr class="memdesc:aded81c2395f3687fee56c06cc3334f24"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for setting back face culling.  <a href="class_engine_1_1_render_command.html#aded81c2395f3687fee56c06cc3334f24">More...</a><br /></td></tr>
 <tr class="separator:aded81c2395f3687fee56c06cc3334f24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac17b832465b0939b75b27fd0f2f525bd"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_engine_1_1_render_command.html">RenderCommand</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_engine_1_1_render_command.html#ac17b832465b0939b75b27fd0f2f525bd">setOneMinusAlphaBlending</a> (bool enabled)</td></tr>
+<tr class="memdesc:ac17b832465b0939b75b27fd0f2f525bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">A function for setting blending.  <a href="class_engine_1_1_render_command.html#ac17b832465b0939b75b27fd0f2f525bd">More...</a><br /></td></tr>
+<tr class="separator:ac17b832465b0939b75b27fd0f2f525bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>&lt;<a class="el" href="class_engine_1_1_render_command.html" title="&lt;RenderCommand class">RenderCommand</a> class </p>
@@ -120,7 +124,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Virtual action function. </p>
 
-<p>Implemented in <a class="el" href="class_engine_1_1_open_g_l_set_backface_culling_command.html#add930c659e2c6c5eff0ef2260832ed74">Engine::OpenGLSetBackfaceCullingCommand</a>, <a class="el" href="class_engine_1_1_open_g_l_set_depth_test_less_command.html#a0ddaf5133cdfdcb07282c98a58d472d4">Engine::OpenGLSetDepthTestLessCommand</a>, <a class="el" href="class_engine_1_1_open_g_l_set_clear_colour_command.html#a75ba9aafe67538979aa2e20066d1637a">Engine::OpenGLSetClearColourCommand</a>, and <a class="el" href="class_engine_1_1_open_g_l_clear_depth_colour_buffer_command.html#a65a946fe8f73c29b701d503a06522409">Engine::OpenGLClearDepthColourBufferCommand</a>.</p>
+<p>Implemented in <a class="el" href="class_engine_1_1_open_g_l_set_one_minus_alpha_blending.html#a5f7bf7bf13d5a66089f959259a9dcbd1">Engine::OpenGLSetOneMinusAlphaBlending</a>, <a class="el" href="class_engine_1_1_open_g_l_set_backface_culling_command.html#add930c659e2c6c5eff0ef2260832ed74">Engine::OpenGLSetBackfaceCullingCommand</a>, <a class="el" href="class_engine_1_1_open_g_l_set_depth_test_less_command.html#a0ddaf5133cdfdcb07282c98a58d472d4">Engine::OpenGLSetDepthTestLessCommand</a>, <a class="el" href="class_engine_1_1_open_g_l_set_clear_colour_command.html#a75ba9aafe67538979aa2e20066d1637a">Engine::OpenGLSetClearColourCommand</a>, and <a class="el" href="class_engine_1_1_open_g_l_clear_depth_colour_buffer_command.html#a65a946fe8f73c29b701d503a06522409">Engine::OpenGLClearDepthColourBufferCommand</a>.</p>
 
 </div>
 </div>
@@ -172,7 +176,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>A function for clearing depth colour. </p>
 
-<p class="definition">Definition at line <a class="el" href="_render_command_8cpp_source.html#l00010">10</a> of file <a class="el" href="_render_command_8cpp_source.html">RenderCommand.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_render_command_8cpp_source.html#l00013">13</a> of file <a class="el" href="_render_command_8cpp_source.html">RenderCommand.cpp</a>.</p>
 
 </div>
 </div>
@@ -202,7 +206,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>A function for setting back face culling. </p>
 
-<p class="definition">Definition at line <a class="el" href="_render_command_8cpp_source.html#l00067">67</a> of file <a class="el" href="_render_command_8cpp_source.html">RenderCommand.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_render_command_8cpp_source.html#l00070">70</a> of file <a class="el" href="_render_command_8cpp_source.html">RenderCommand.cpp</a>.</p>
 
 </div>
 </div>
@@ -254,7 +258,7 @@ Static Public Member Functions</h2></td></tr>
 
 <p>A function for setting clear colour. </p>
 
-<p class="definition">Definition at line <a class="el" href="_render_command_8cpp_source.html#l00029">29</a> of file <a class="el" href="_render_command_8cpp_source.html">RenderCommand.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_render_command_8cpp_source.html#l00032">32</a> of file <a class="el" href="_render_command_8cpp_source.html">RenderCommand.cpp</a>.</p>
 
 </div>
 </div>
@@ -284,7 +288,37 @@ Static Public Member Functions</h2></td></tr>
 
 <p>A function for setting depth test. </p>
 
-<p class="definition">Definition at line <a class="el" href="_render_command_8cpp_source.html#l00048">48</a> of file <a class="el" href="_render_command_8cpp_source.html">RenderCommand.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_render_command_8cpp_source.html#l00051">51</a> of file <a class="el" href="_render_command_8cpp_source.html">RenderCommand.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac17b832465b0939b75b27fd0f2f525bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac17b832465b0939b75b27fd0f2f525bd">&#9670;&nbsp;</a></span>setOneMinusAlphaBlending()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_engine_1_1_render_command.html">RenderCommand</a> * RenderCommand::setOneMinusAlphaBlending </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enabled</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A function for setting blending. </p>
+
+<p class="definition">Definition at line <a class="el" href="_render_command_8cpp_source.html#l00089">89</a> of file <a class="el" href="_render_command_8cpp_source.html">RenderCommand.cpp</a>.</p>
 
 </div>
 </div>

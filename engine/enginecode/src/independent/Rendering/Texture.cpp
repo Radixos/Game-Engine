@@ -1,3 +1,6 @@
+/**
+\file Texture.cpp
+*/
 #include "engine_pch.h"
 #include "include/independent/Rendering/Texture.h"
 #include "Rendering/RenderAPI.h"

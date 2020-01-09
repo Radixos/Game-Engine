@@ -4,7 +4,6 @@
 
 /*
 TO DO:
-Layer Stack
 Draw 2D text
 Cameras
 JSON Loader
@@ -45,7 +44,7 @@ ubo
 
 #ifdef NG_PLATFORM_WINDOWS
 #include "include/platform/GLFW/WindowsWindow.h"
-//#include "include/platform/GLFW/InputPoller.h"
+#include "include/platform/GLFW/GLFWInputPoller.h"
 #include "../platform/GLFW/GLFWWindowsSystem.h"
 #endif // NG_PLATFORM_WINDOWS
 #include <include\independent\Rendering\RenderCommand.h>
@@ -54,6 +53,10 @@ namespace Engine {
 	Application* Application::s_instance = nullptr;
 	float Application::s_timestep = 0.f;
 	glm::ivec2 Application::s_screenResolution = glm::ivec2(0, 0);
+
+#ifdef NG_PLATFORM_WINDOWS
+	InputPoller* InputPoller::s_instance = new GLFWInputPoller();
+#endif // NG_PLATFORM_WINDOWS
 
 #pragma region TempGlobalVars
 	glm::mat4 FCmodel, TPmodel;
@@ -66,15 +69,12 @@ namespace Engine {
 			s_instance = this;
 		}
 		//!Starting systems
-		m_logger.reset(new Log);	//() - same in rest
+		m_logger.reset(new Log);
 		m_logger->start();
 		ENG_CORE_INFO("Logger started");
 		m_timer.reset(new Timer);
 		m_timer->start();
 		ENG_CORE_INFO("Timer initialised");
-		//m_system.reset(new GLFWWindowsSystem);
-		//m_system->start();
-		//ENG_CORE_INFO("GLFWWindowsSystem initialised");
 
 #ifdef NG_PLATFORM_WINDOWS
 		m_windowsSystem = std::shared_ptr<WindowSystem>(new GLFWWindowsSystem);
@@ -91,18 +91,13 @@ namespace Engine {
 		ENG_CORE_INFO("LayerStack initialised");
 		
 		// Create window
-		//m_windows = std::shared_ptr<Window>(Window::create());
 		m_window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));
 		// Set screen resolution
 		Application::s_screenResolution = glm::ivec2(m_window->getWidth(), m_window->getHeight());
 
-		//m_FCVAO.reset(VertexArray::create());
-		//m_TPVAO.reset(VertexArray::create());
-
 		//Reset timer
-		m_timer->getTimeSinceFrameStart();	//???
+		m_timer->getTimeSinceFrameStart();
 
-		// Reset timer
 		m_timer->GetSeconds();
 	}
 
@@ -215,13 +210,11 @@ namespace Engine {
 		while (m_running)
 		{
 			fS = m_timer->setFrameStart();
-			
-			//s_timestep = m_timer->getTimeSinceFrameStart();
-			//ENG_CORE_INFO("FPS: {0}", (int)(1.0f / s_timestep));
-		
+	
 #ifdef NG_DEBUG
-			//ENG_CORE_INFO("FPS: {0}", (int)(1.0f / s_timestep));
+			ENG_CORE_INFO("FPS: {0} T: {1}", (int)(1.0f / s_timestep), s_timestep);
 #endif
+
 			for (auto it = m_layerStack->begin(); it != m_layerStack->end(); it++)
 			{
 				
@@ -234,8 +227,6 @@ namespace Engine {
 
 			ts = fE - fS;
 			s_timestep = ts.count();
-
-			ENG_CORE_ERROR("{0}", s_timestep);
 		}
 	}
 }

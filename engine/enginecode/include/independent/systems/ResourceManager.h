@@ -49,5 +49,8 @@ namespace Engine
 		inline static std::shared_ptr<Texture> getFontTexture() { return m_fontTexture; };	//!<Get font texture function
 
 		AssetManager<VertexArray> getVAO() { return m_VAOs; }
+		AssetManager<VertexBuffer> getVBO() { return m_VBOs; }
+		AssetManager<UniformBuffer> getUBO() { return m_UBOs; }
+
 	};
 }
