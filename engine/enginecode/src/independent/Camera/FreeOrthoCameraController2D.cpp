@@ -25,26 +25,26 @@ namespace Engine {
 
 		if (InputPoller::isKeyPressed(KEY_I))
 		{
-			m_position.x += -sin(glm::radians(m_rotation)) * m_translationSpeed * timestep;
-			m_position.y += cos(glm::radians(m_rotation)) * m_translationSpeed * timestep;
-			m_camera->setPositionRotation(m_position, m_rotation);
-		}
-		if (InputPoller::isKeyPressed(KEY_K))
-		{
 			m_position.x -= -sin(glm::radians(m_rotation)) * m_translationSpeed * timestep;
 			m_position.y -= cos(glm::radians(m_rotation)) * m_translationSpeed * timestep;
 			m_camera->setPositionRotation(m_position, m_rotation);
 		}
+		if (InputPoller::isKeyPressed(KEY_K))
+		{
+			m_position.x += -sin(glm::radians(m_rotation)) * m_translationSpeed * timestep;
+			m_position.y += cos(glm::radians(m_rotation)) * m_translationSpeed * timestep;
+			m_camera->setPositionRotation(m_position, m_rotation);
+		}
 		if (InputPoller::isKeyPressed(KEY_J))
 		{
-			m_position.x += cos(glm::radians(m_rotation)) * m_translationSpeed * timestep;
-			m_position.y += sin(glm::radians(m_rotation)) * m_translationSpeed * timestep;
+			m_position.x -= cos(glm::radians(m_rotation)) * m_translationSpeed * timestep;
+			m_position.y -= sin(glm::radians(m_rotation)) * m_translationSpeed * timestep;
 			m_camera->setPositionRotation(m_position, m_rotation);
 		}
 		if (InputPoller::isKeyPressed(KEY_L))
 		{
-			m_position.x -= cos(glm::radians(m_rotation)) * m_translationSpeed * timestep;
-			m_position.y -= sin(glm::radians(m_rotation)) * m_translationSpeed * timestep;
+			m_position.x += cos(glm::radians(m_rotation)) * m_translationSpeed * timestep;
+			m_position.y += sin(glm::radians(m_rotation)) * m_translationSpeed * timestep;
 			m_camera->setPositionRotation(m_position, m_rotation);
 		}
 
@@ -55,12 +55,14 @@ namespace Engine {
 			m_rotation -= timestep * m_rotationSpeed;
 			if (m_rotation > 100.0f) m_rotation -= 360.0f;
 			else if (m_rotation <= -100.0f) m_rotation += 360.0f;
+			m_camera->setPositionRotation(m_position, m_rotation);
 		}
 		if (InputPoller::isKeyPressed(KEY_E))
 		{
 			m_rotation += timestep * m_rotationSpeed;
 			if (m_rotation > 100.0f) m_rotation -= 360.0f;
 			else if (m_rotation <= -100.0f) m_rotation += 360.0f;
+			m_camera->setPositionRotation(m_position, m_rotation);
 		}
 	}
 }

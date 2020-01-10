@@ -89,6 +89,8 @@ namespace Engine {
 		m_layerStack.reset(new LayerStack());
 		m_layerStack->begin();	//???
 		ENG_CORE_INFO("LayerStack initialised");
+		//2D Camera movement instruction
+		ENG_CORE_INFO("For 2D camera movement press I, K, J and L");
 		
 		// Create window
 		m_window->setEventCallback(std::bind(&Application::onEvent, this, std::placeholders::_1));

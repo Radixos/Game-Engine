@@ -239,6 +239,9 @@ void GameLayer::onUpdate(float timestep)
 
 	m_texSlot = m_textTexture->getSlot();
 
+	//textProjection = m_OrthoCameraContr->getCamera()->getProjection();	//Error here, say hello
+	textView = m_OrthoCameraContr->getCamera()->getView();
+
 	m_textMaterial->setDataElement("u_projection", (void*)&textProjection[0][0]);
 	m_textMaterial->setDataElement("u_view", (void*)&textView[0][0]);
 	m_textMaterial->setDataElement("u_model", (void*)&textModel[0][0]);

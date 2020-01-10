@@ -40,6 +40,7 @@ namespace Engine {
 
 	void OpenGLMaterial::setDataElement(const std::string& dataName, void* data)
 	{
+		m_data[dataName] = data;
 
 	}
 

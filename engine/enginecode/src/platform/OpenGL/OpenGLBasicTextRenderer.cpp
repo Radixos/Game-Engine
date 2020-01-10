@@ -20,11 +20,17 @@ namespace Engine {
 		auto geometry = std::get<std::shared_ptr<VertexArray>>(material->getGeometry());
 		geometry->bind();
 
-		auto perDrawData = material->getData();
+		auto uniforms = material->getData();
+		for (auto it = uniforms.begin(); it != uniforms.end(); ++it)
+		{
+			shader->uploadData(it->first, it->second);
+		}
+
+		/*auto perDrawData = material->getData();
 		for (auto dataPair : perDrawData)
 		{
 			shader->uploadData(dataPair.first, dataPair.second);
-		}
+		}*/
 		glDrawElements(GL_QUADS, geometry->getDrawCount(), GL_UNSIGNED_INT, nullptr);
 	}
 
