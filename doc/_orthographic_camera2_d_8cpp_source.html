@@ -57,7 +57,7 @@ $(function() {
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    {</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;        glm::mat4 translate = glm::translate(glm::mat4(1.f), glm::vec3(<a class="code" href="class_engine_1_1_orthographic_camera2_d.html#afc7ceeea4f25a0ff6888e111d6cbac30">m_position</a>, 1.f));</div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;        glm::mat4 rotate = glm::rotate(glm::mat4(1.0f), glm::radians(<a class="code" href="class_engine_1_1_orthographic_camera2_d.html#af02092c986c010173a85a770ea352256">m_rotation</a>), glm::vec3(0.0f, 0.0f, 1.0f));</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="class_engine_1_1_camera.html#ab3d7b6eab7565dd9b495e8f7504de298">m_view</a> = translate * rotate;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;        <a class="code" href="class_engine_1_1_camera.html#ab3d7b6eab7565dd9b495e8f7504de298">m_view</a> = rotate * translate;</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <a class="code" href="class_engine_1_1_camera.html#a28ba2744a766e525479c2969fd646a09">m_viewProjection</a> = <a class="code" href="class_engine_1_1_camera.html#ac629e3e7624bce74c451f4f488799148">m_projection</a> * <a class="code" href="class_engine_1_1_camera.html#ab3d7b6eab7565dd9b495e8f7504de298">m_view</a>;</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    }</div>

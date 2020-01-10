@@ -67,15 +67,21 @@ $(function() {
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">auto</span> geometry = std::get&lt;std::shared_ptr&lt;VertexArray&gt;&gt;(material-&gt;getGeometry());</div>
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        geometry-&gt;bind();</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">auto</span> perDrawData = material-&gt;getData();</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> dataPair : perDrawData)</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        {</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            shader-&gt;uploadData(dataPair.first, dataPair.second);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        }</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        glDrawElements(GL_QUADS, geometry-&gt;getDrawCount(), GL_UNSIGNED_INT, <span class="keyword">nullptr</span>);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    }</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;}</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="comment">/*auto uniforms = material-&gt;getData();</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="comment">        for (auto it = uniforms.begin(); it != uniforms.end(); ++it)</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="comment">        {</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="comment">            shader-&gt;uploadData(it-&gt;first, it-&gt;second);</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="comment">        }*/</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">auto</span> perDrawData = material-&gt;getData();</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordflow">for</span> (<span class="keyword">auto</span> dataPair : perDrawData)</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        {</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            shader-&gt;uploadData(dataPair.first, dataPair.second);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        }</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;        glDrawElements(GL_QUADS, geometry-&gt;getDrawCount(), GL_UNSIGNED_INT, <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    }</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160; </div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="anamespace_engine_html"><div class="ttname"><a href="namespace_engine.html">Engine</a></div><div class="ttdef"><b>Definition:</b> <a href="_camera_8h_source.html#l00007">Camera.h:7</a></div></div>
 <div class="ttc" id="aclass_engine_1_1_render_command_html_a3658c27f2c4b60c802ebfd9515255c6f"><div class="ttname"><a href="class_engine_1_1_render_command.html#a3658c27f2c4b60c802ebfd9515255c6f">Engine::RenderCommand::action</a></div><div class="ttdeci">virtual void action()=0</div><div class="ttdoc">Virtual action function.</div></div>

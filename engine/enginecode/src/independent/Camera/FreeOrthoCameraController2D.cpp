@@ -52,14 +52,14 @@ namespace Engine {
 
 		if (InputPoller::isKeyPressed(KEY_Q))
 		{
-			m_rotation -= timestep * m_rotationSpeed;
+			m_rotation += timestep * m_rotationSpeed;
 			if (m_rotation > 100.0f) m_rotation -= 360.0f;
 			else if (m_rotation <= -100.0f) m_rotation += 360.0f;
 			m_camera->setPositionRotation(m_position, m_rotation);
 		}
 		if (InputPoller::isKeyPressed(KEY_E))
 		{
-			m_rotation += timestep * m_rotationSpeed;
+			m_rotation -= timestep * m_rotationSpeed;
 			if (m_rotation > 100.0f) m_rotation -= 360.0f;
 			else if (m_rotation <= -100.0f) m_rotation += 360.0f;
 			m_camera->setPositionRotation(m_position, m_rotation);
