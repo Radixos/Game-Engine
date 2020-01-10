@@ -127,16 +127,18 @@ GameLayer::GameLayer(const std::string& name) : Layer(name)
 
 	m_textVAO.reset(Engine::VertexArray::create());
 
-	textVBO.reset(Engine::VertexBuffer::create(textVerts, sizeof(textVerts), vbl));
-	m_textVAO->setVertexBuffer(textVBO);
+	m_textVBO.reset(Engine::VertexBuffer::create(textVerts, sizeof(textVerts), vbl));
+	m_textVAO->setVertexBuffer(m_textVBO);
 
-	textIBO.reset(Engine::IndexBuffer::create(textIndice, 4));
-	m_textVAO->setindexBuffer(textIBO);
+	m_textIBO.reset(Engine::IndexBuffer::create(textIndice, sizeof(textIndice)));
+	m_textVAO->setindexBuffer(m_textIBO);
 
-	m_textTexture.reset(Engine::Texture::createFromFile("assets/textures/DMU.png"));
 	m_textShader.reset(Engine::Shader::create("assets/shaders/text.glsl"));
+	m_textTexture.reset(Engine::Texture::createFromFile("assets/textures/DMU2.png"));
 
 	m_textMaterial.reset(Engine::Material::create(m_textShader, m_textVAO));
+
+	//m_textMaterial->setGeometry(m_textVAO);	//Not needed -> ?
 }
 
 void GameLayer::onAttach()
@@ -235,18 +237,19 @@ void GameLayer::onUpdate(float timestep)
 
 	glm::mat4 textProjection = glm::ortho(0.f, 800.f, 600.f, 0.f);
 	glm::mat4 textView = glm::mat4(1.0f);
-	glm::mat4 textModel = glm::translate(glm::mat4(1.f), glm::vec3(100.f, 100.f, 0.f));
+	glm::mat4 textModel = glm::translate(glm::mat4(1.f), glm::vec3(550.f, 500.f, 0.f));
 
-	m_texSlot = m_textTexture->getSlot();
 
 	//textProjection = m_OrthoCameraContr->getCamera()->getProjection();	//Error here, say hello
 	textView = m_OrthoCameraContr->getCamera()->getView();
 
+	m_texSlot = m_textTexture->getSlot();
+	
 	m_textMaterial->setDataElement("u_projection", (void*)&textProjection[0][0]);
 	m_textMaterial->setDataElement("u_view", (void*)&textView[0][0]);
 	m_textMaterial->setDataElement("u_model", (void*)&textModel[0][0]);
-	m_textMaterial->setDataElement("u_texData", (void*)&m_texSlot);
-
+	m_textMaterial->setDataElement("u_texData", (void*)m_texSlot);
+	
 	m_textRenderer->actionCommand(Engine::RenderCommand::setOneMinusAlphaBlending(true));
 	m_textRenderer->submit(m_textMaterial);
 	m_textRenderer->actionCommand(Engine::RenderCommand::setOneMinusAlphaBlending(false));

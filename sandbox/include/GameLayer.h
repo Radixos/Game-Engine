@@ -32,10 +32,10 @@
 		std::shared_ptr<Engine::VertexArray> m_textVAO;	//!<Vertex Array for text
 		std::shared_ptr<Engine::VertexBuffer> m_FCVertexBuffer;	//!<Vertex Buffer for flat colour cube
 		std::shared_ptr<Engine::VertexBuffer> m_TPVertexBuffer;	//!<Vertex Buffer for textured cube
-		std::shared_ptr<Engine::VertexBuffer> textVBO;	//!<VertexBuffer for text
+		std::shared_ptr<Engine::VertexBuffer> m_textVBO;	//!<VertexBuffer for text
 		std::shared_ptr<Engine::IndexBuffer> m_FCindexBuffer;	//!<Index Buffer for flat colour cube
 		std::shared_ptr<Engine::IndexBuffer> m_TPindexBuffer;	//!<Index Buffer for textured cube
-		std::shared_ptr<Engine::IndexBuffer> textIBO;	//!<IndexBuffer for text
+		std::shared_ptr<Engine::IndexBuffer> m_textIBO;	//!<IndexBuffer for text
 		std::shared_ptr<Engine::Texture> m_TPNumberTex;	//!<Number texture for textured cube
 		std::shared_ptr<Engine::Texture> m_TPLetterTex;	//!<Letter texture for textured cube
 		std::shared_ptr<Engine::Texture> m_textTexture;	//!<Texture for text
@@ -68,9 +68,9 @@
 		float textVerts[4 * 4] =
 		{
 			0.f, 0.f, 0.f, 0.f,
-			0.f, 160.f, 0.f, 1.f,
-			260.f, 160.f, 1.f, 1.f,
-			260.f, 0.f, 1.f, 0.f
+			0.f, 100.f, 0.f, 1.f,
+			250.f, 100.f, 1.f, 1.f,
+			250.f, 0.f, 1.f, 0.f
 		};	//!<Text Vertex for text
 
 		Engine::BufferLayout vbl = { {Engine::ShaderDataType::Float2}, {Engine::ShaderDataType::Float2} };
